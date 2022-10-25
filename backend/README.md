@@ -38,3 +38,4 @@ Projeto para simular o funcionamento de um e-commerce.
 ### Para o Knex
 - Comando para início: `knex init`
 - Comando para criação de tabela (criei três): `knex migrate:make [nome da tabela]`
+- Comando para executar as Migrations: `knex migrate:latest`
