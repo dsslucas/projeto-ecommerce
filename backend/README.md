@@ -20,6 +20,7 @@ Projeto para simular o funcionamento de um e-commerce.
 - Consign associa as informações dentro do Index. Espera que a chamada seja apenas uma função
 - ExtractJwt: extrai da requisição as autorizações e tokens
 - **Knex precisa ser instalado globalmente**
+- Para o login, existe um token que passa pelo Header da requisição. é necessário informar `bearer [TOKEN QUE VEM DO POSTMAN]`
 
 ## Como executar?
 - É necessário ter as dependências instaladas `npm i`
@@ -39,3 +40,4 @@ Projeto para simular o funcionamento de um e-commerce.
 - Comando para início: `knex init`
 - Comando para criação de tabela (criei três): `knex migrate:make [nome da tabela]`
 - Comando para executar as Migrations: `knex migrate:latest`
+- Comando para atualizar as Migrations: `knex migrate:rollback`

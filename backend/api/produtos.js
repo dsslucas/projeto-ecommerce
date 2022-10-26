@@ -7,7 +7,9 @@ module.exports = app => {
             valorProduto: req.body.valorProduto,
             dataAquisicaoProduto: req.body.dataAquisicaoProduto
         })
+            .then(() => res.status(204).send("Produto cadastrado"))
+            .catch(erro => res.status(400).json(erro))
     }
 
-    return {cadastroProdutos}
+    return { cadastroProdutos }
 }

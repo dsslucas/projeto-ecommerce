@@ -21,6 +21,8 @@ module.exports = app => {
                 nomeUsuario: req.body.nomeUsuario,
                 senhaUsuario: password,
                 enderecoUsuario: req.body.enderecoUsuario,
+                cidadeUsuario: req.body.cidadeUsuario,
+                estadoUsuario: req.body.estadoUsuario,
                 cepUsuario: req.body.cepUsuario,
                 isAdmin: req.body.isAdmin
             })

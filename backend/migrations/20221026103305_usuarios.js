@@ -6,6 +6,8 @@ exports.up = function(knex) {
         table.string('nomeUsuario').notNull()
         table.string('senhaUsuario').notNull()
         table.string('enderecoUsuario').notNull()
+        table.string('cidadeUsuario').notNull()
+        table.string('estadoUsuario').notNull()
         table.string('cepUsuario').notNull()
         table.boolean('isAdmin').notNull()
       })
