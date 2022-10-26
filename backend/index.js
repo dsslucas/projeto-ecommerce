@@ -9,6 +9,7 @@ const consign = require('consign')
 
 // Inicia o sistema
 consign()
+    .include('./config/passaporte.js')
     .then('./config/middlewares.js')
     .then('./api')
     .then('./config/rotas.js')
