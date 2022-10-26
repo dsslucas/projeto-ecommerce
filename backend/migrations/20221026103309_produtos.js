@@ -1,11 +1,8 @@
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
+
 exports.up = function(knex) {
     return knex.schema.createTable('produtos', table => {
-        table.increments('idProduto').primary()
-        table.string('nomeProduto').notNull()
+        table.increments('id').primary()
+        table.string('nomeProduto').unique().notNull()
         table.string('descProduto').notNull()
         table.integer('qtdProduto').notNull()
         table.double('valorProduto').notNull()
@@ -13,10 +10,6 @@ exports.up = function(knex) {
       })
 };
 
-/**
- * @param { import("knex").Knex } knex
- * @returns { Promise<void> }
- */
 exports.down = function(knex) {
-    return knex.schema.dropTable('produtos')
+    return knex.schema.dropTableIfExists('produtos')
 };
