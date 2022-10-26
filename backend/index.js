@@ -10,6 +10,8 @@ const consign = require('consign')
 // Inicia o sistema
 consign()
     .then('./config/middlewares.js')
+    .then('./api')
+    .then('./config/rotas.js')
     .into(app) // Passa o App como padrão para todos os Then
 
 // Permite fazer inserções junto ao Knex
