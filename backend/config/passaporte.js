@@ -6,14 +6,14 @@ const passaporteJwt = require('passport-jwt')
 
 // Destructuring do passport JWT
 // ExtractJwt é o responsável por extrair do cabeçalho da requisição, incluindo o token
-const { Strategy, ExtractJwt } = passportJwt
+const { Strategy, ExtractJwt } = passaporteJwt
 
 module.exports = app => {
     const parametros = {
-        segredoChave: segredoAutenticacao,
+        secretOrKey: segredoAutenticacao,
 
         // Onde está o JWT a partir do Request? (Header, body...)
-        requisicaoJwt: ExtractJwt.fromAuthHeaderAsBearerToken
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     }
 
     const estrategia = new Strategy(parametros, (payload, concluido) => {
@@ -39,6 +39,6 @@ module.exports = app => {
 
     return {
         initialize: () => passaporte.initialize(),
-        authenticate: () => passaport.authenticate('jwt', { session: false })
+        authenticate: () => passaporte.authenticate('jwt', { session: false })
     }
 }

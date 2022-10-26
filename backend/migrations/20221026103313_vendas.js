@@ -7,15 +7,14 @@ exports.up = function(knex) {
         table.datetime('dataEnvio')
         table.datetime('dataEntrega')
         table.string('statusEntrega').notNull()
-
-        table.integer('idProduto').references('id').inTable('produtos').notNull().unique()
+        table.integer('idProduto').references('id').inTable('produtos').notNull()
         table.integer('qtdProduto').notNull()
         table.double('valorProduto').notNull()
         table.boolean('trocaProduto').notNull()
         table.boolean('devolucaoProduto').notNull()
         table.float('valorFrete').notNull()
-        
-        table.integer('idUsuario').references('idUsuario').inTable('usuarios').notNull().unique()
+        table.boolean('produtoEntregue').notNull()
+        table.integer('idUsuario').references('idUsuario').inTable('usuarios').notNull()
       })
 };
 
