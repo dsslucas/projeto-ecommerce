@@ -10,10 +10,19 @@ module.exports = app => {
         })
     }
 
+    const getUsuarios = (req, res) => {
+        app.db('usuarios')
+            .orderBy('idUsuario')
+            .then((resultado) => res.json(resultado))
+            .catch((erro) => res.status(400).json(erro))
+    }
+
     const salvarSenha = (req, res) => {
         obterHash(req.body.senhaUsuario, hash => {
             // Aqui, não é armazenado a senha limpa, mas sim um hash calculado
             const password = hash
+
+            console.log("Entrei aqui no Cadastro")
 
             // Armazena no Banco
             app.db('usuarios').insert({
@@ -31,5 +40,28 @@ module.exports = app => {
         })
     }
 
-    return { salvarSenha }
+    const editarUsuario = (req, res) => {
+        app.db('usuarios')
+            .where({idUsuario: req.user.idUsuario})
+            .update(req.body)
+            .then(() => res.status(204).send("Alteração realizada!"))
+            .catch((erro) => res.status(204).json(erro))
+    }
+
+    const deletarUsuario = (req, res) => {
+        app.db('usuarios')
+            .where({idUsuario: req.params.id})
+            .del()
+            .then((rowsDeleted) => {
+                if (rowsDeleted > 0) {
+                    res.status(204).send("O usuário foi excluído.")
+                }
+                else {
+                    res.status(400).send("Usuário não foi encontrado em nossa base de dados.")
+                }
+            })
+            .catch((erro) => res.status(400).json(erro))
+    }
+
+    return { getUsuarios, salvarSenha, editarUsuario, deletarUsuario }
 }

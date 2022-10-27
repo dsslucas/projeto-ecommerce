@@ -4,8 +4,11 @@ const moment = require('moment')
 module.exports = app => {
     const venda = (req, res) => {
         // if(!req.body.metodoPagamento.trim()) return res.status(400).send("O método de pagamento é obrigatório!")
+        console.log(req)
 
-        app.db('vendas').insert(req.body)
+        app.db('vendas').insert({
+            ...req.body, idUsuario: req.user.idUsuario
+        })
             .then(() => res.status(204).send("Venda efetuada"))
             .catch(erro => res.status(400).json(erro))
     }
@@ -15,11 +18,10 @@ module.exports = app => {
         // Pega a data que vem da requisição, caso contrário pega a data atual
         const date = req.query.date ? req.query.date : moment().endOf('day').toDate()
 
-        console.log(req.usuario.idUsuario)
+        // console.log(req)
         // Consulta no banco de dados
         app.db('vendas')
-            .where({ idUsuario: req.usuario.idUsuario })
-            .orderBy('dataEnvio')
+            .orderBy('idVenda')
             .then((vendasRealizadas) => res.json(vendasRealizadas))
             .catch((erro) => res.status(400).json(erro))
     }
