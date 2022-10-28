@@ -4,13 +4,35 @@ const moment = require('moment')
 module.exports = app => {
     const venda = (req, res) => {
         // if(!req.body.metodoPagamento.trim()) return res.status(400).send("O método de pagamento é obrigatório!")
-        console.log(req)
+        console.log(req.user)
+        // if(req.body.produtos){
+            // app.db('produto_carrinho')
+            //     .insert(...req.body.produtos)
+            //     .then(() => res.status(204).send("Produtos do carrinho cadastrados!"))
+            //     .catch((erro) => res.status(400).json(erro))
+        // }
 
-        app.db('vendas').insert({
-            ...req.body, idUsuario: req.user.idUsuario
-        })
+        // app.db('vendas')
+        //     .insert({
+        //         idVenda: req.body.idVenda,
+        //         dataVenda: req.body.dataVenda,
+        //         metodoPagamento: req.body.metodoPagamento,
+        //         statusVenda: req.body.statusVenda,
+        //         valorFrete: req.body.valorFrete,
+        //         valorTotal: req.body.valorTotal,
+        //         produtoEntregue: req.body.produtoEntregue
+        //     })
+        //     .then(() => res.status(204).send("Venda efetuada"))
+        //     .catch((erro) => res.status(400).json(erro))
+
+        app.db('vendas')
+            .insert({
+                ...req.body,
+                idUsuario: req.user.idUsuario
+            })
             .then(() => res.status(204).send("Venda efetuada"))
-            .catch(erro => res.status(400).json(erro))
+            .catch((erro) => res.status(400).json(erro))
+
     }
 
     // Pega a lista das vendas

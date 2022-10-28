@@ -9,7 +9,7 @@ exports.up = function(knex) {
         table.string('cidadeUsuario').notNull()
         table.string('estadoUsuario').notNull()
         table.string('cepUsuario').notNull()
-        table.boolean('isAdmin').notNull()
+        table.boolean('isAdmin').defaultTo(false).notNull()
       })
 };
 
