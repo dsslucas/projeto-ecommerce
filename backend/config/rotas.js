@@ -23,10 +23,10 @@ module.exports = app => {
         .put(app.api.produtos.editarProduto)
         .delete(app.api.produtos.deletarProduto)
 
-    // app.route('/venda')
-    //     .all(app.config.passaporte.authenticate())
-    //     .get(app.api.vendas.getVendas)
-    //     .post(app.api.vendas.venda)
+    app.route('/venda')
+        .all(app.config.passaporte.authenticate())
+        .get(app.api.vendas.getVendas)
+        .post(app.api.vendas.venda)
 
     // Rota para edição
     // app.route('/venda/sinalizaEntrega/:idVenda')

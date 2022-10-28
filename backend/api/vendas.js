@@ -4,9 +4,9 @@ const moment = require('moment')
 module.exports = app => {
     const venda = (req, res) => {
         // if(!req.body.metodoPagamento.trim()) return res.status(400).send("O método de pagamento é obrigatório!")
-        console.log(req.user)
+        console.log(JSON.stringify(req.body.produtos))
         // if(req.body.produtos){
-            // app.db('produto_carrinho')
+            // await app.db('produto_carrinho')
             //     .insert(...req.body.produtos)
             //     .then(() => res.status(204).send("Produtos do carrinho cadastrados!"))
             //     .catch((erro) => res.status(400).json(erro))
@@ -25,7 +25,7 @@ module.exports = app => {
         //     .then(() => res.status(204).send("Venda efetuada"))
         //     .catch((erro) => res.status(400).json(erro))
 
-        app.db('vendas')
+       app.db('vendas')
             .insert({
                 ...req.body,
                 idUsuario: req.user.idUsuario
