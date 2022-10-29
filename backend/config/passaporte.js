@@ -17,14 +17,15 @@ module.exports = app => {
     }
 
     const estrategia = new Strategy(parametros, (payload, concluido) => {
-        // Acessa o usuário no BD
+        // Acessa o usuário no BD e manda para o header
         app.db('usuarios').where({ idUsuario: payload.idUsuario }).first()
             .then((usuario) => {
                 if (usuario) {
-                    // O usuário está presente
+                    // O usuário está presente. Aqui manda pros Headers
                     concluido(null, {
                         idUsuario: usuario.idUsuario,
-                        emailUsuario: usuario.emailUsuario
+                        emailUsuario: usuario.emailUsuario,
+                        estadoUsuario: usuario.estadoUsuario
                     })
                 }
                 else {

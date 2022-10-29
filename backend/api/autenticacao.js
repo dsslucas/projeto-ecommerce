@@ -15,6 +15,8 @@ module.exports = app => {
         // Recebe o que vem da API de usuários, consultando o email (que é chave única)
         const usuario = await app.db('usuarios').where({ emailUsuario: req.body.emailUsuario }).first()
 
+        console.log(usuario)
+
         // Se for válido...
         if (usuario) {
             // Recebe a senha da requisição e compara com a senha vinda da API. Se der certo, parte para uma callback.

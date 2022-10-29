@@ -5,6 +5,8 @@ module.exports = app => {
     const venda = async (req, res) => {
         const compras = req.body.compras
 
+        console.log(req.user)
+
         if (compras.some(compra => compra.quantidade <= 0)) { //mínimo de produtos é 1
             res.status(404).json('min compras')
             return
@@ -95,31 +97,31 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
-    const editaDataEnvioVenda = (req, res, dataEnvio) => {
-        app.db('vendas')
-            .where({ idVenda: req.params.idVenda })
-            .update({ dataEnvio })
-            .then(() => res.status(204).send("A data de envio do produto foi definida"))
-            .catch((erro) => res.status(400).json(erro))
-    }
+    // const editaDataEnvioVenda = (req, res, dataEnvio) => {
+    //     app.db('vendas')
+    //         .where({ idVenda: req.params.idVenda })
+    //         .update({ dataEnvio })
+    //         .then(() => res.status(204).send("A data de envio do produto foi definida"))
+    //         .catch((erro) => res.status(400).json(erro))
+    // }
 
-    const sinalizaEnvio = (req, res) => {
-        app.db('vendas')
-            .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
-    }
+    // const sinalizaEnvio = (req, res) => {
+    //     app.db('vendas')
+    //         .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
+    // }
 
-    // Sinaliza se o produto foi entregue, finalizando a venda
-    const sinalizaEntrega = (req, res, entregue) => {
-        app.db('vendas')
-            .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
-            .first()
-            .then((venda) => {
-                if (!venda) return res.status(400).send("Não existe nenhuma compra para que você possa confirmar a entrega.")
+    // // Sinaliza se o produto foi entregue, finalizando a venda
+    // const sinalizaEntrega = (req, res, entregue) => {
+    //     app.db('vendas')
+    //         .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
+    //         .first()
+    //         .then((venda) => {
+    //             if (!venda) return res.status(400).send("Não existe nenhuma compra para que você possa confirmar a entrega.")
 
-                entregue = venda.produtoEntregue ? true : false
-            })
-            .catch((erro) => res.status(400).json(erro))
-    }
+    //             entregue = venda.produtoEntregue ? true : false
+    //         })
+    //         .catch((erro) => res.status(400).json(erro))
+    // }
 
-    return { venda, getVendaEspecifica, getVendasGerais, sinalizaEntrega }
+    return { venda, getVendaEspecifica, getVendasGerais }
 }
