@@ -1,16 +1,14 @@
+
 exports.up = function(knex) {
-    // return knex.schema.alterTable('produto_carrinho', table => {
-    //     table.dropColumn('idVenda')
-    //     table.string('first_name');
-    //     // table.dropColumn('idProduto')
-    //     // table.dropColumn('qtdProduto').notNull()
-    //     // table.dropColumn('valorProduto').notNull()
-    //     // table.dropColumn('subtotalProduto').notNull()
-    //     // table.dropColumn('trocaProduto').notNull()
-    //     // table.dropColumn('devolucaoProduto').notNull()
-    //   })
+    return knex.schema.createTable('produto_carrinho', table => {
+        table.increments('id').primary()
+        table.integer('idVenda')
+        table.integer('idProduto')
+        table.integer('qtdProduto').notNull()
+        table.double('valorProduto').notNull()
+      })
 };
 
 exports.down = function(knex) {
-    // return knex.schema.alterTable('produto_carrinho')
+    return knex.schema.dropTableIfExists('produto_carrinho')
 };

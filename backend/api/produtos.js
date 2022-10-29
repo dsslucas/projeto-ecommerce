@@ -11,6 +11,15 @@ module.exports = app => {
             .catch(erro => res.status(400).json(erro))
     }
 
+    const getProduto = (req, res) => {
+        // console.log(req.user)
+        app.db('produtos')
+            .where({ idProduto: req.params.id })
+            .first()
+            .then((resultado) => res.json(resultado))
+            .catch((erro) => res.status(400).json(erro))
+    }
+
     const getProdutos = (req, res) => {
         // console.log(req.user)
         app.db('produtos')
@@ -42,5 +51,5 @@ module.exports = app => {
         .catch((erro) => res.status(400).json(erro))
     }
 
-    return { cadastroProdutos, getProdutos, editarProduto, deletarProduto }
+    return { cadastroProdutos, getProduto, getProdutos, editarProduto, deletarProduto }
 }
