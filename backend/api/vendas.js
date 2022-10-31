@@ -5,11 +5,49 @@ module.exports = app => {
     const venda = async (req, res) => {
         const compras = req.body.compras
 
+        // Frete
+        var valorFrete
+
         console.log(req.user)
 
         // Validação sobre o valor do frete
-        if(req.user.estadoUsuario === 'DF') 
+        // Norte
+        if(req.user.estadoUsuario === 'AC') valorFrete = 38.50
+        if(req.user.estadoUsuario === "AP") valorFrete = 38.50
+        if(req.user.estadoUsuario === "AM") valorFrete = 34.20
+        if(req.user.estadoUsuario === "PA") valorFrete = 33.50
+        if(req.user.estadoUsuario === 'RO') valorFrete = 32.20
+        if(req.user.estadoUsuario === "RR") valorFrete = 40.50
+        if(req.user.estadoUsuario === "TO") valorFrete = 28.00
 
+        // Nordeste
+        if(req.user.estadoUsuario === 'AL') valorFrete = 40.50
+        if(req.user.estadoUsuario === "BA") valorFrete = 32.40
+        if(req.user.estadoUsuario === "CE") valorFrete = 38.50
+        if(req.user.estadoUsuario === "MA") valorFrete = 38.50
+        if(req.user.estadoUsuario === "PB") valorFrete = 39.10
+        if(req.user.estadoUsuario === 'PE') valorFrete = 36.20
+        if(req.user.estadoUsuario === "PI") valorFrete = 37.40
+        if(req.user.estadoUsuario === "RN") valorFrete = 38.00
+        if(req.user.estadoUsuario === 'SE') valorFrete = 36.60
+
+        // Centro-Oeste
+        if(req.user.estadoUsuario === 'DF') valorFrete = 12.00
+        if(req.user.estadoUsuario === "GO") valorFrete = 16.50
+        if(req.user.estadoUsuario === "MT") valorFrete = 20.40
+        if(req.user.estadoUsuario === "MS") valorFrete = 21.50
+
+        // Sudeste
+        if(req.user.estadoUsuario === 'SP') valorFrete = 21.50
+        if(req.user.estadoUsuario === "RJ") valorFrete = 25.00
+        if(req.user.estadoUsuario === "MG") valorFrete = 20.40
+        if(req.user.estadoUsuario === "ES") valorFrete = 25.00
+
+        // Sul
+        if(req.user.estadoUsuario === 'PR') valorFrete = 40.00
+        if(req.user.estadoUsuario === "SC") valorFrete = 41.00
+        if(req.user.estadoUsuario === "RS") valorFrete = 42.00
+ 
         if (compras.some(compra => compra.quantidade <= 0)) { //mínimo de produtos é 1
             res.status(404).json('min compras')
             return
@@ -46,8 +84,8 @@ module.exports = app => {
             .insert({
                 idUsuario: req.user.idUsuario,
                 dataVenda: new Date(),
-                valorFrete: 25.99,
-                valorTotal: total,
+                valorFrete: valorFrete,
+                valorTotal: total + valorFrete,
                 metodoPagamento: req.body.metodoPagamento
             })
             .returning('idVenda')
@@ -98,6 +136,13 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
+    const getVendasPeloUsuario = (req, res) => {
+        app.db('vendas')
+            .where({idUsuario: req.user.idUsuario})
+            .then((vendasRealizadas) => res.json(vendasRealizadas))
+            .catch((erro) => res.status(400).json(erro))
+    }
+
     const devolucaoCompra = (req, res) => {
         app.db('vendas')
             .orderBy({idVenda: req.body.idVenda})
@@ -114,5 +159,5 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
-    return { venda, getVendaEspecifica, getVendasGerais, devolucaoCompra, trocaCompra }
+    return { venda, getVendaEspecifica, getVendasGerais, devolucaoCompra, trocaCompra, getVendasPeloUsuario }
 }

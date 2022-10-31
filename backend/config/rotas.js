@@ -35,6 +35,10 @@ module.exports = app => {
         .put(app.api.vendas.devolucaoCompra)
         .put(app.api.vendas.trocaCompra)
 
+    app.route('/venda/usuario/:id')
+        .all(app.config.passaporte.authenticate())
+        .get(app.api.vendas.getVendasPeloUsuario)
+
     // Rota para edição
     // app.route('/venda/sinalizaEntrega/:idVenda')
     //     .all(app.config.passaporte.authenticate())
