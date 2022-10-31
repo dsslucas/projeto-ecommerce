@@ -22,27 +22,30 @@ module.exports = app => {
             // Aqui, não é armazenado a senha limpa, mas sim um hash calculado
             const password = hash
 
-            console.log("Entrei aqui no Cadastro")
-
-            // Armazena no Banco
-            app.db('usuarios').insert({
-                emailUsuario: req.body.emailUsuario,
-                nomeUsuario: req.body.nomeUsuario,
-                senhaUsuario: password,
-                enderecoUsuario: req.body.enderecoUsuario,
-                cidadeUsuario: req.body.cidadeUsuario,
-                estadoUsuario: req.body.estadoUsuario,
-                cepUsuario: req.body.cepUsuario,
-                isAdmin: req.body.isAdmin
-            })
-            .then(() => res.status(204).send("Usuário cadastrado"))
-            .catch(erro => res.status(400).json(erro))
+            if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".")) {
+                // Armazena no Banco
+                app.db('usuarios').insert({
+                    emailUsuario: req.body.emailUsuario.toLowerCase(),
+                    nomeUsuario: req.body.nomeUsuario,
+                    senhaUsuario: password,
+                    enderecoUsuario: req.body.enderecoUsuario,
+                    cidadeUsuario: req.body.cidadeUsuario,
+                    estadoUsuario: req.body.estadoUsuario,
+                    cepUsuario: req.body.cepUsuario,
+                    isAdmin: req.body.isAdmin
+                })
+                    .then(() => res.status(204).send("Usuário cadastrado"))
+                    .catch(erro => res.status(400).json(erro))
+            }
+            else {
+                res.status(400).send("O e-mail informado não está formatado.")
+            }
         })
     }
 
     const editarUsuario = (req, res) => {
         app.db('usuarios')
-            .where({idUsuario: req.user.idUsuario})
+            .where({ idUsuario: req.user.idUsuario })
             .update(req.body)
             .then(() => res.status(204).send("Alteração realizada!"))
             .catch((erro) => res.status(204).json(erro))
@@ -50,7 +53,7 @@ module.exports = app => {
 
     const deletarUsuario = (req, res) => {
         app.db('usuarios')
-            .where({idUsuario: req.params.id})
+            .where({ idUsuario: req.params.id })
             .del()
             .then((rowsDeleted) => {
                 if (rowsDeleted > 0) {
