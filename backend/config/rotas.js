@@ -24,7 +24,7 @@ module.exports = app => {
         .put(app.api.produtos.editarProduto)
         .delete(app.api.produtos.deletarProduto)
 
-        app.route('/venda')
+    app.route('/venda')
         .all(app.config.passaporte.authenticate())
         .get(app.api.vendas.getVendasGerais)
         .post(app.api.vendas.venda)
@@ -32,6 +32,8 @@ module.exports = app => {
     app.route('/venda/:id')
         .all(app.config.passaporte.authenticate())
         .get(app.api.vendas.getVendaEspecifica)
+        .put(app.api.vendas.devolucaoCompra)
+        .put(app.api.vendas.trocaCompra)
 
     // Rota para edição
     // app.route('/venda/sinalizaEntrega/:idVenda')

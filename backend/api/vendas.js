@@ -7,6 +7,9 @@ module.exports = app => {
 
         console.log(req.user)
 
+        // Validação sobre o valor do frete
+        if(req.user.estadoUsuario === 'DF') 
+
         if (compras.some(compra => compra.quantidade <= 0)) { //mínimo de produtos é 1
             res.status(404).json('min compras')
             return
@@ -89,39 +92,27 @@ module.exports = app => {
         // Pega a data que vem da requisição, caso contrário pega a data atual
         const date = req.query.date ? req.query.date : moment().endOf('day').toDate()
 
-        // console.log(req)
-        // Consulta no banco de dados
         app.db('vendas')
             .orderBy('idVenda')
             .then((vendasRealizadas) => res.json(vendasRealizadas))
             .catch((erro) => res.status(400).json(erro))
     }
 
-    // const editaDataEnvioVenda = (req, res, dataEnvio) => {
-    //     app.db('vendas')
-    //         .where({ idVenda: req.params.idVenda })
-    //         .update({ dataEnvio })
-    //         .then(() => res.status(204).send("A data de envio do produto foi definida"))
-    //         .catch((erro) => res.status(400).json(erro))
-    // }
+    const devolucaoCompra = (req, res) => {
+        app.db('vendas')
+            .orderBy({idVenda: req.body.idVenda})
+            .update(req.body)
+            .then(() => res.status(200).send("Alteração realizada!"))
+            .catch((erro) => res.status(400).json(erro))
+    }
 
-    // const sinalizaEnvio = (req, res) => {
-    //     app.db('vendas')
-    //         .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
-    // }
+    const trocaCompra = (req, res) => {
+        app.db('vendas')
+            .orderBy({idVenda: req.body.idVenda})
+            .update(req.body)
+            .then(() => res.status(200).send("Alteração realizada!"))
+            .catch((erro) => res.status(400).json(erro))
+    }
 
-    // // Sinaliza se o produto foi entregue, finalizando a venda
-    // const sinalizaEntrega = (req, res, entregue) => {
-    //     app.db('vendas')
-    //         .where({ idVenda: req.params.idVenda, idUsuario: req.user.idUsuario })
-    //         .first()
-    //         .then((venda) => {
-    //             if (!venda) return res.status(400).send("Não existe nenhuma compra para que você possa confirmar a entrega.")
-
-    //             entregue = venda.produtoEntregue ? true : false
-    //         })
-    //         .catch((erro) => res.status(400).json(erro))
-    // }
-
-    return { venda, getVendaEspecifica, getVendasGerais }
+    return { venda, getVendaEspecifica, getVendasGerais, devolucaoCompra, trocaCompra }
 }
