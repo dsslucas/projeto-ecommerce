@@ -49,12 +49,12 @@ module.exports = app => {
         if(req.user.estadoUsuario === "RS") valorFrete = 42.00
  
         if (compras.some(compra => compra.quantidade <= 0)) { //mínimo de produtos é 1
-            res.status(404).json('min compras')
+            res.status(404).json('Mínimo de compras.')
             return
         }
 
         if(compras.map(compra => compra.idProduto).length !== new Set(compras.map(compra => compra.idProduto)).size) { //não pode haver duplicatas
-            res.status(404).json('id produto duplicado')
+            res.status(404).json('ID do produto está duplicado.')
             return
         }
 
@@ -69,7 +69,7 @@ module.exports = app => {
 
         const produtos = await Promise.all(produtosPromises)
         if (produtos.some(produto => !produto)) { //produto precisa existir
-            res.status(404).json('produto nao encontrado')
+            res.status(404).json('Produto não encontrado.')
             return
         }
 
@@ -104,7 +104,7 @@ module.exports = app => {
                     valorProduto: produto.valorProduto
                 })
         }))
-        res.status(200).json('kdopqwkjgnf')
+        res.status(200).json('A venda foi realizada com sucesso!')
     }
 
     // Pega a lista dos detalhes da venda
@@ -114,7 +114,7 @@ module.exports = app => {
             .first()
 
         if(!venda) {
-            res.status(404).json('venda nao encontrada')
+            res.status(404).json('A venda não foi encontrada')
             return
         }
 
