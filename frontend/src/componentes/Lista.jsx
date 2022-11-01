@@ -14,39 +14,40 @@ import PersonIcon from '@mui/icons-material/Person';
 import PeopleIcon from '@mui/icons-material/People';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import { Link } from 'react-router-dom';
+import { Cores } from '../styles';
 
 export const listaOpcoesGerais = (
     <React.Fragment>
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/produtos">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/produtos">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <LocalMallIcon />
                 </ListItemIcon>
                 <ListItemText primary="Produtos" />
             </ListItemButton>
         </Link>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/carrinho">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/carrinho">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <ShoppingCartIcon />
                 </ListItemIcon>
                 <ListItemText primary="Carrinho" />
             </ListItemButton>
         </Link>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/compras">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/compras">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <InventoryIcon />
                 </ListItemIcon>
                 <ListItemText primary="Compras" />
             </ListItemButton>
         </Link>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/usuario">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/usuario">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuário" />
@@ -60,32 +61,32 @@ export const listaOpcoesAdmin = (
     <React.Fragment>
         <ListSubheader
             component="div" inset
-            sx={{ background: '#543851', color: "#ab906d", textAlign: 'center' }}
+            sx={{ background: Cores.fundoCabecalho, color: Cores.textoOpcoes, textAlign: 'center' }}
         >
             Área Administrativa
         </ListSubheader>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/admin/relatorio">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/admin/relatorio">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary="Relatório de Vendas" />
             </ListItemButton>
         </Link>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/admin/usuarios">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/admin/usuarios">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary="Usuários" />
             </ListItemButton>
         </Link>
 
-        <Link style={{ color: "#ab906d", textDecoration: 'none' }} to="/admin/estoque">
+        <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/admin/estoque">
             <ListItemButton>
-                <ListItemIcon sx={{ color: "#ab906d" }}>
+                <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                     <WarehouseIcon />
                 </ListItemIcon>
                 <ListItemText primary="Estoque" />

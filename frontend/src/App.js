@@ -1,9 +1,7 @@
 import * as React from 'react';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
-import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -13,62 +11,12 @@ import Container from '@mui/material/Container';
 import { listaOpcoesAdmin, listaOpcoesGerais } from './componentes/Lista';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-//import NotificationsIcon from '@mui/icons-material/Notifications';
-//import { mainListItems, secondaryListItems } from './listItems';
-//import Chart from './Chart';
-//import Deposits from './Deposits';
-//import Orders from './Orders';
 
 // Rotas
 import Rotas from './Routes'
 
-const drawerWidth = 240;
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
-  zIndex: theme.zIndex.drawer + 1,
-  transition: theme.transitions.create(['width', 'margin'], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
-
-const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    '& .MuiDrawer-paper': {
-      position: 'relative',
-      whiteSpace: 'nowrap',
-      width: drawerWidth,
-      background: '#543851',
-      color: "#ab906d",
-      transition: theme.transitions.create('width', {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      boxSizing: 'border-box',
-      ...(!open && {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-          easing: theme.transitions.easing.sharp,
-          duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(0),
-        [theme.breakpoints.up('sm')]: {
-          width: theme.spacing(7)
-        },
-      }),
-    },
-  }),
-);
+// Estilização
+import {Drawer, AppBar, Cores} from './styles'
 
 const mdTheme = createTheme();
 
@@ -86,8 +34,7 @@ function DashboardContent() {
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
-              background: '#543851',
-              color: "#ab906d"
+              color: Cores.textoTitulo
             }}
           >
             <IconButton
@@ -116,19 +63,18 @@ function DashboardContent() {
         </AppBar>
 
         <Drawer variant="permanent" open={open} 
-          // onMouseOver={!open ? toggleDrawer : null}
-          // onMouseLeave={open ? toggleDrawer : null}
+          onMouseOver={!open ? toggleDrawer : null}
+          onMouseLeave={open ? toggleDrawer : null}
         >
           <Toolbar
             sx={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'flex-end',
-              px: [1],
-              background: '#543851'
+              px: [1]
             }}
           >
-            <IconButton onClick={toggleDrawer} sx={{color: "#ab906d",}}>
+            <IconButton onClick={toggleDrawer} sx={{color: Cores.textoOpcoes}}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
@@ -136,7 +82,7 @@ function DashboardContent() {
           <Divider />
           <List component="nav">
             {listaOpcoesGerais}
-            <Divider sx={{ my: 1, background:'#543851' }} />
+            <Divider sx={{ my: 1 }} />
             {listaOpcoesAdmin}
           </List>
         </Drawer>
@@ -144,10 +90,7 @@ function DashboardContent() {
         <Box
           component="main"
           sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
+            backgroundColor: Cores.fundoAbaixoConteudo,
             flexGrow: 1,
             height: '100vh',
             overflow: 'auto',
@@ -155,7 +98,7 @@ function DashboardContent() {
         >
           <Toolbar />
 
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
             <Rotas />
           </Container>
         </Box>
