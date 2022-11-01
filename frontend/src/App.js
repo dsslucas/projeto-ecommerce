@@ -19,6 +19,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 //import Deposits from './Deposits';
 //import Orders from './Orders';
 
+// Rotas
+import Rotas from './Routes'
+
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
@@ -113,8 +116,8 @@ function DashboardContent() {
         </AppBar>
 
         <Drawer variant="permanent" open={open} 
-          onMouseOver={!open ? toggleDrawer : null}
-          onMouseLeave={open ? toggleDrawer : null}
+          // onMouseOver={!open ? toggleDrawer : null}
+          // onMouseLeave={open ? toggleDrawer : null}
         >
           <Toolbar
             sx={{
@@ -153,7 +156,7 @@ function DashboardContent() {
           <Toolbar />
 
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-            <p>Lorem</p>
+            <Rotas />
           </Container>
         </Box>
       </Box>
