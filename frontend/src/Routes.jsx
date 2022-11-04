@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import Compra from './paginas/Compra';
+import Carrinho from './paginas/Carrinho';
 import Estoque from './paginas/Estoque';
 import ListaCompras from './paginas/ListaCompras';
 import Produtos from './paginas/Produtos';
@@ -11,7 +11,7 @@ export default function Router() {
     return (
         <Routes>
             <Route path="/produtos" element={<Produtos />} />
-            <Route path="/carrinho" element={<Compra />} />
+            <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/compras" element={<ListaCompras />} />
             <Route path="/usuario" element={<Usuario />} />
             <Route path="/admin">

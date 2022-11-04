@@ -77,7 +77,7 @@ const EstilosConteudo = {
 }
 
 // Cartões para os produtos
-const GridWrapper = theme => ({
+const GridWrapperItems = theme => ({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -101,12 +101,59 @@ const GridWrapper = theme => ({
 
 // Botão de compras
 const ButtonBuy = {
-    width: '100%', 
-    background: Cores.fundoCabecalho, 
+    width: '100%',
+    background: Cores.fundoCabecalho,
     color: Cores.textoCabecalho,
     '&:hover': {
         background: Cores.fundoBotaoHover,
     },
 }
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapper, ButtonBuy }
+// Display para o Carrinho
+const WrapperCarrinho = theme => ({
+    display: 'flex',
+    height: 330,
+    marginBottom: '8px',
+    borderRadius: '8px',
+    paddingTop: 0,
+    width: '100%',
+
+    [theme.breakpoints.up('sm')]: {
+        width: '95%',
+        height: 130,
+    },   
+})
+
+// Conteúdo do Card
+const ConteudoCardCarrinho = theme => ({
+    display: 'flex',
+    background: Cores.fundoAbaixoConteudo,
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+
+    [theme.breakpoints.up('sm')]: {        
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    }
+})
+
+// Imagem do card de Carrinho
+const ImageCardCarrinho = theme => ({
+    width: 200,
+    height: 200,
+    [theme.breakpoints.up('sm')]: {
+       width: 90,
+       height: 90
+    }
+})
+
+// Quantidade e preço do item
+const QtdPrecoCardCarrinho = theme => ({
+    display: 'flex',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignContent: 'center'
+})
+
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho }
