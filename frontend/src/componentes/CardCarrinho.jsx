@@ -26,73 +26,74 @@ export default function CardCarrinho(props) {
                     image={props.image}
                 />
 
-                <Typography 
-                    gutterBottom 
+                <Typography
+                    gutterBottom
                     variant="h5" component="div"
-                    sx={{marginLeft: '10px', marginRight: '10px'}}
+                    sx={{ marginLeft: '10px', marginRight: '10px' }}
                 >
                     {props.titulo}
                 </Typography>
 
-                <Box 
-                    component="div" 
-                    sx={QtdPrecoCardCarrinho}
-                >
                 <Box
                     component="div"
-                    sx={{
-                        textAlign: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
+                    sx={QtdPrecoCardCarrinho}
                 >
-                    Quantidade
+
                     <Box
                         component="div"
                         sx={{
                             textAlign: 'center',
                             display: 'flex',
-                            justifyContent: 'center'
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center'
                         }}
                     >
-                        <Button
+                        Quantidade
+                        <Box
+                            component="div"
                             sx={{
-                                ...ButtonBuy,
-                                maxWidth: '30px', maxHeight: '30px',
-                                minWidth: '30px', minHeight: '30px'
+                                textAlign: 'center',
+                                display: 'flex',
+                                justifyContent: 'center'
                             }}
                         >
-                            -
-                        </Button>
-                        <Span number={1} />
-                        <Button
-                            sx={{
-                                ...ButtonBuy,
-                                maxWidth: '30px', maxHeight: '30px',
-                                minWidth: '30px', minHeight: '30px'
-                            }}
-                        >
-                            +
-                        </Button>
+                            <Button
+                                sx={{
+                                    ...ButtonBuy,
+                                    maxWidth: '30px', maxHeight: '30px',
+                                    minWidth: '30px', minHeight: '30px'
+                                }}
+                            >
+                                -
+                            </Button>
+                            <Span number={1} />
+                            <Button
+                                sx={{
+                                    ...ButtonBuy,
+                                    maxWidth: '30px', maxHeight: '30px',
+                                    minWidth: '30px', minHeight: '30px'
+                                }}
+                            >
+                                +
+                            </Button>
+                        </Box>
                     </Box>
-                </Box>
 
-                <Box
-                    component="div"
-                    sx={{
-                        textAlign: 'center',
-                        width: '40%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        background: Cores.fundoCabecalho,
-                        color: Cores.textoCabecalho,
-                        borderRadius: '8px'
-                    }}
-                >
-                    <Span number={`R$ ${props.preco}`} />
-                </Box>
+                    <Box
+                        component="div"
+                        sx={{
+                            textAlign: 'center',
+                            width: '40%',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            background: Cores.fundoCabecalho,
+                            color: Cores.textoCabecalho,
+                            borderRadius: '8px'
+                        }}
+                    >
+                        <Span number={`R$ ${props.preco}`} />
+                    </Box>
 
 
 

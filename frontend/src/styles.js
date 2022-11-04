@@ -70,7 +70,7 @@ const AppBar = styled(MuiAppBar, {
 
 const EstilosConteudo = {
     background: '#ffffff',
-    height: 'calc(100vh - 128px)',
+    minHeight: 'calc(100vh - 128px)',
     borderRadius: '10px',
     padding: "20px",
     overflow: 'auto'
@@ -119,9 +119,12 @@ const WrapperCarrinho = theme => ({
     width: '100%',
 
     [theme.breakpoints.up('sm')]: {
-        width: '95%',
         height: 130,
-    },   
+    },
+
+    [theme.breakpoints.up('lg')]: {
+        width: '95%'
+    },
 })
 
 // Conteúdo do Card
@@ -132,7 +135,7 @@ const ConteudoCardCarrinho = theme => ({
     alignItems: 'center',
     width: '100%',
 
-    [theme.breakpoints.up('sm')]: {        
+    [theme.breakpoints.up('sm')]: {
         flexDirection: 'row',
         justifyContent: 'space-between'
     }
@@ -143,8 +146,8 @@ const ImageCardCarrinho = theme => ({
     width: 200,
     height: 200,
     [theme.breakpoints.up('sm')]: {
-       width: 90,
-       height: 90
+        width: 90,
+        height: 90
     }
 })
 
@@ -156,4 +159,27 @@ const QtdPrecoCardCarrinho = theme => ({
     alignContent: 'center'
 })
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho }
+// Coluna das informações da compra
+const InformacoesCarrinho = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    background: Cores.fundoAbaixoConteudo,
+    borderRadius: '8px',
+    justifyContent: 'center',
+    height: 'auto',
+
+    [theme.breakpoints.up('lg')]: {
+        height: 'calc(100vh - 260px)',
+    }
+})
+
+const CommonBox = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    borderRadius: '8px',
+    width: '100%',
+    paddingRight: '5px'
+}
+
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox }
