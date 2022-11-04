@@ -7,25 +7,14 @@ import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 const drawerWidth = 240;
 
 const Cores = {
-    // roxo: {
-    //     1000: "#543851",
-    //     900: "#63425f",
-    //     800: "#734c6f",
-    //     700: "#82577e",
-    //     600: "#92628e",
-    //     500: "#9f6f9a",
-    //     400: "#aa7fa6",
-    //     300: "#b58fb1",
-    //     200: "#bf9fbc",
-    //     100: "#caadc7",
-    //     050: "#d4bfd2",
-    // },
     fundoCabecalho: "#543851",
     textoCabecalho: "#ab906d",
-
     fundoAbaixoConteudo: "#dfcfdd",
     textoTitulo: "#ab906d",
     textoOpcoes: "#ab906d",
+
+    fundoBotao: "#543851",
+    fundoBotaoHover: "#382436"
 }
 
 // Estilização do menu
@@ -87,4 +76,37 @@ const EstilosConteudo = {
     overflow: 'auto'
 }
 
-export { Drawer, AppBar, Cores, EstilosConteudo }
+// Cartões para os produtos
+const GridWrapper = theme => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gridGap: '15px',
+
+    [theme.breakpoints.up('sm')]: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(2, 2fr)',
+        gridTemplateRows: '420px',
+        flexWrap: 'wrap'
+    },
+
+    [theme.breakpoints.up('md')]: {
+        display: 'grid',
+        gridTemplateColumns: 'repeat(4, 2fr)',
+        gridTemplateRows: '420px',
+        flexWrap: 'wrap'
+    },
+})
+
+// Botão de compras
+const ButtonBuy = {
+    width: '100%', 
+    background: Cores.fundoCabecalho, 
+    color: Cores.textoCabecalho,
+    '&:hover': {
+        background: Cores.fundoBotaoHover,
+    },
+}
+
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapper, ButtonBuy }
