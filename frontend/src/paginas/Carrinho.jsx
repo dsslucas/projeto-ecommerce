@@ -1,12 +1,9 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-import { ButtonBuy, CommonBox, Cores, EstilosConteudo, InformacoesCarrinho, WrapperCarrinho } from '../styles';
-import Container from '@mui/material/Container';
+import { ButtonBuy, CommonBox, Cores, EstilosConteudo, InformacoesCarrinho } from '../styles';
 import Grid from '@mui/material/Grid';
 import CardCarrinho from '../componentes/CardCarrinho';
 import Typography from '@mui/material/Typography';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -17,12 +14,12 @@ import Button from '@mui/material/Button';
 // Imagens
 import Image1 from '../assets/IMG-1310.jpg'
 import Image2 from '../assets/IMG-1311.jpg'
-import Image3 from '../assets/IMG-1313.jpg'
-import Image4 from '../assets/IMG-1326.jpg'
-import Image5 from '../assets/IMG-1327.jpg'
-import Image6 from '../assets/IMG-1330.jpg'
-import Image7 from '../assets/IMG-1334.jpg'
-import Image8 from '../assets/IMG-1335.jpg'
+// import Image3 from '../assets/IMG-1313.jpg'
+// import Image4 from '../assets/IMG-1326.jpg'
+// import Image5 from '../assets/IMG-1327.jpg'
+// import Image6 from '../assets/IMG-1330.jpg'
+// import Image7 from '../assets/IMG-1334.jpg'
+// import Image8 from '../assets/IMG-1335.jpg'
 import Span from '../componentes/Span';
 
 

@@ -5,12 +5,8 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import Imagem1 from '../assets/IMG-1310.jpg'
 import { ButtonBuy, Cores } from '../styles';
 import Box from '@mui/material/Box';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
 
 import Span from './Span'
 

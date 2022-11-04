@@ -1,7 +1,6 @@
-import { makeStyles } from "@material-ui/core/styles";
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
-import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 // Largura do Menu
 const drawerWidth = 240;
@@ -92,10 +91,11 @@ const GridWrapperItems = theme => ({
     },
 
     [theme.breakpoints.up('md')]: {
-        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 2fr)',
+    },
+
+    [theme.breakpoints.up('lg')]: {
         gridTemplateColumns: 'repeat(4, 2fr)',
-        gridTemplateRows: '420px',
-        flexWrap: 'wrap'
     },
 })
 

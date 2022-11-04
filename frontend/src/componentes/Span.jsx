@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 
-export default props => {
+export default function Span(props){
     return (
         <Box
             component="span"

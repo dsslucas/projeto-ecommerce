@@ -1,16 +1,11 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import Imagem1 from '../assets/IMG-1310.jpg'
-import { ButtonBuy, Cores, WrapperCarrinho, ConteudoCard, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho } from '../styles';
+import { ButtonBuy, Cores, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho } from '../styles';
 import Box from '@mui/material/Box';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
 import Span from './Span';
 
 export default function CardCarrinho(props) {
@@ -38,7 +33,6 @@ export default function CardCarrinho(props) {
                     component="div"
                     sx={QtdPrecoCardCarrinho}
                 >
-
                     <Box
                         component="div"
                         sx={{
