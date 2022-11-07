@@ -13,7 +13,13 @@ const Cores = {
     textoOpcoes: "#ab906d",
 
     fundoBotao: "#543851",
-    fundoBotaoHover: "#382436"
+    fundoBotaoHover: "#382436",
+
+    fundoAlerta: "#000",
+    fundoAlertaHover: "#000",
+
+    fundoDeletar: "red",
+    fundoDeletarHover: "red"
 }
 
 // Estilização do menu
@@ -106,6 +112,7 @@ const ButtonBuy = {
     color: Cores.textoCabecalho,
     '&:hover': {
         background: Cores.fundoBotaoHover,
+        color: Cores.textoTitulo
     },
 }
 
@@ -235,6 +242,9 @@ const CardListaComprasButtons = theme => ({
         // width: '50%'
     },
 })
+
+// Botões de ações da tabela
+
 
 
 export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn }
