@@ -155,7 +155,7 @@ const Usuario = () => {
                     variant="contained"
                     sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
                 >
-                    Cadastrar
+                    Atualizar
                 </Button>
             </Box>
 

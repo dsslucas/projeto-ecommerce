@@ -1,12 +1,12 @@
 import React from 'react'
 import Box from '@mui/material/Box';
-import { ButtonBuy, Cores, EstilosConteudo } from '../styles';
+import { ButtonBuy, Cores, EstilosConteudo, StyledTableCell, StyledTableRow } from '../styles';
 import Titulo from '../componentes/Titulo';
 
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -18,26 +18,6 @@ import moment from 'moment'
 // Icones
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: Cores.fundoCabecalho,
-        color: Cores.textoCabecalho,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
-
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: Cores.fundoAbaixoConteudo,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
 
 function createData(id, nome, descricao, qtd, valor, dataAquisicao) {
     return { id, nome, descricao, qtd, valor, dataAquisicao };

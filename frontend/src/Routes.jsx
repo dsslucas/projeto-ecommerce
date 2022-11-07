@@ -6,6 +6,7 @@ import ListaCompras from './paginas/ListaCompras';
 import Produtos from './paginas/Produtos';
 import Relatorio from './paginas/Relatorio';
 import Usuario from './paginas/Usuario';
+import GerenciaUsuario from './paginas/GerenciaUsuario'
 
 export default function Router() {
     return (
@@ -16,7 +17,7 @@ export default function Router() {
             <Route path="/usuario" element={<Usuario />} />
             <Route path="/admin">
                 <Route path='/admin/relatorio' element={<Relatorio />} />
-                <Route path='/admin/usuarios' element={<Usuario />} />
+                <Route path='/admin/usuarios' element={<GerenciaUsuario />} />
                 <Route path='/admin/estoque' element={<Estoque />} />
             </Route>
             <Route path="*" element={<Navigate to="/produtos" replace />} />

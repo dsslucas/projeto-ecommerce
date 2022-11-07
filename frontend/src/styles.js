@@ -1,6 +1,8 @@
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar from '@mui/material/AppBar';
 import { styled } from '@mui/material/styles';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableRow from '@mui/material/TableRow';
 
 // Largura do Menu
 const drawerWidth = 240;
@@ -13,13 +15,7 @@ const Cores = {
     textoOpcoes: "#ab906d",
 
     fundoBotao: "#543851",
-    fundoBotaoHover: "#382436",
-
-    fundoAlerta: "#000",
-    fundoAlertaHover: "#000",
-
-    fundoDeletar: "red",
-    fundoDeletarHover: "red"
+    fundoBotaoHover: "#382436"
 }
 
 // Estilização do menu
@@ -73,6 +69,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }));
 
+// Parte onde é exibida os conteúdos
 const EstilosConteudo = {
     background: '#ffffff',
     minHeight: 'calc(100vh - 128px)',
@@ -243,8 +240,27 @@ const CardListaComprasButtons = theme => ({
     },
 })
 
-// Botões de ações da tabela
+// Estilos das tabelas, que é compartilhada
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+        backgroundColor: Cores.fundoCabecalho,
+        color: Cores.textoCabecalho,
+    },
+    [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+    },
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+        backgroundColor: Cores.fundoAbaixoConteudo,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+        border: 0,
+    },
+}));
 
 
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn }
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow }
