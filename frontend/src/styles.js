@@ -182,4 +182,59 @@ const CommonBox = {
     paddingRight: '5px'
 }
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox }
+// Card da Lista de Compras
+const CardListaComprasWrapper = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    height: 'auto',
+    background: Cores.fundoAbaixoConteudo,
+    borderRadius: '8px',
+    marginBottom: '8px',
+    
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        maxWidth: '350'
+    },    
+})
+
+const CardListaComprasContent = theme => ({
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+})
+
+const CardListaComprasImage = theme => ({
+    [theme.breakpoints.down('sm')]: {
+        width: '50%',
+        height: '50%'
+    },
+    width: '130px',
+    height: '130px'
+})
+
+const CardListaComprasContentColumn = theme => ({
+    display: 'flex',
+    width: '85%',
+    justifyContent: 'space-around',
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'column',
+        textAlign: 'center'
+    },
+})
+
+const CardListaComprasButtons = theme => ({
+    display: 'flex',
+    textAlign: 'center',
+    width: '100%',
+
+    flexDirection: 'row',
+    justifyContent: 'right',
+
+    [theme.breakpoints.down('sm')]: {
+        // width: '50%'
+    },
+})
+
+
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn }

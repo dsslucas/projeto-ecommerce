@@ -18,6 +18,6 @@ consign()
 // Permite fazer inserções junto ao Knex
 app.db = db
 
-app.listen(3000, () => {
+app.listen(3003, () => {
     console.log("Backend executando!")
 })
