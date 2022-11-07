@@ -12,11 +12,12 @@ import Image5 from '../assets/IMG-1327.jpg'
 import Image6 from '../assets/IMG-1330.jpg'
 import Image7 from '../assets/IMG-1334.jpg'
 import Image8 from '../assets/IMG-1335.jpg'
+import Titulo from '../componentes/Titulo';
 
 const ListaCompras = () => {
     return (
         <Box sx={EstilosConteudo}>
-            <h1>Lista de compras</h1>
+            <Titulo titulo="Lista de Compras" />
 
             <CardListaCompras
                 titulo="Conjunto X"

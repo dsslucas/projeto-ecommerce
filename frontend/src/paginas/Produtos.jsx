@@ -14,11 +14,12 @@ import Image5 from '../assets/IMG-1327.jpg'
 import Image6 from '../assets/IMG-1330.jpg'
 import Image7 from '../assets/IMG-1334.jpg'
 import Image8 from '../assets/IMG-1335.jpg'
+import Titulo from '../componentes/Titulo';
 
 const Produtos = () => {
     return (
         <Box sx={EstilosConteudo}>
-            <h1>Produtos</h1>
+            <Titulo titulo="Catálogo" />
 
             <Container
                 sx={GridWrapperItems}

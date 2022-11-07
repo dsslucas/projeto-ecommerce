@@ -21,6 +21,7 @@ import Image2 from '../assets/IMG-1311.jpg'
 // import Image7 from '../assets/IMG-1334.jpg'
 // import Image8 from '../assets/IMG-1335.jpg'
 import Span from '../componentes/Span';
+import Titulo from '../componentes/Titulo';
 
 
 const Carrinho = () => {
@@ -30,7 +31,7 @@ const Carrinho = () => {
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
-            <h1>Carrinho</h1>
+            <Titulo titulo="Carrinho" />
 
             <Grid container spacing={0}>
                 <Grid item

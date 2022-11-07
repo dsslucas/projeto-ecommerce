@@ -1,11 +1,12 @@
 import React from 'react'
 import Box from '@mui/material/Box';
 import { EstilosConteudo } from '../styles';
+import Titulo from '../componentes/Titulo';
 
 const Estoque = () => {
     return (
         <Box sx={EstilosConteudo}>
-            <h1>Estoque</h1>
+            <Titulo titulo="Estoque" />
         </Box>
     )
 }
