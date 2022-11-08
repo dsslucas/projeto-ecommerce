@@ -57,7 +57,7 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1, textAlign: 'center' }}
             >
-              Marama Lingeries
+              Marama Lingerie
             </Typography>
           </Toolbar>
         </AppBar>

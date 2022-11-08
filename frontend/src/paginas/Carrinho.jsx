@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import { ButtonBuy, CommonBox, EstilosConteudo, InformacoesCarrinho } from '../styles';
 import Grid from '@mui/material/Grid';
 import CardCarrinho from '../componentes/CardCarrinho';
 import Typography from '@mui/material/Typography';
+
+// Para o login/signup
+import Modal from '@mui/material/Modal';
+import Input from '../componentes/Input'
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -29,8 +33,16 @@ const Carrinho = () => {
     // Necessário para o Select
     //const [selectValue, setSelectValue] = useState('')
 
+    const [modal, setModal] = useState(false)
+
     return (
         <Box sx={{ ...EstilosConteudo }}>
+            {modal && (
+                <Modal>
+
+                </Modal>
+            )}
+
             <Titulo titulo="Carrinho" />
 
             <Grid container spacing={0}>

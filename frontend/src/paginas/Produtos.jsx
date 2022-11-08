@@ -33,7 +33,6 @@ const Produtos = () => {
         respApi()
     }, [])
 
-
     return (
         <Box sx={EstilosConteudo}>
             <Titulo titulo="Catálogo" />
@@ -52,78 +51,7 @@ const Produtos = () => {
                         />
                     )
                 }))}
-
-                {/* <CardProdutos
-                    image={Image3}
-                    titulo="Conjunto Y"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-                <CardProdutos
-                    image={Image2}
-                    titulo="Conjunto Z"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-                <CardProdutos
-                    image={Image4}
-                    titulo="Conjunto W"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-                <CardProdutos
-                    image={Image5}
-                    titulo="Conjunto W"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-                <CardProdutos
-                    image={Image6}
-                    titulo="Conjunto Y"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-                <CardProdutos
-                    image={Image7}
-                    titulo="Conjunto X"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                />
-
-                <CardProdutos
-                    image={Image8}
-                    titulo="Conjunto X"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
-                    preco={149.99}
-                /> */}
-
             </Container>
-
-            {/* <GridWrapper>
-
-            </GridWrapper> */}
-
-
-            {/* <ThemeProvider
-                theme={createTheme({
-                    breakpoints: {
-                        values: {
-                            laptop: 1024,
-                            tablet: 640,
-                            mobile: 0,
-                            desktop: 1280,
-                        },
-                    },
-                })}
-            >
-                <Grid container spacing={{ mobile: 1, tablet: 2, laptop: 3 }}>
-                    {Array.from(Array(4)).map((_, index) => (
-                        <Grid mobile={6} tablet={4} laptop={3} key={index}>
-                            <div>{index + 1}</div>
-                        </Grid>
-                    ))}
-                </Grid>
-            </ThemeProvider> */}
         </Box>
     )
 }
