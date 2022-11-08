@@ -20,6 +20,9 @@ const input = (props) => {
             type={props.type}
             required
             defaultValue={props.defaultValue}
+            error={props.error}
+            helperText={props.helperText}
+            inputProps={props.inputProps}
         />
     )
 }

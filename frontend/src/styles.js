@@ -261,6 +261,24 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
     },
 }));
 
+// Estilização do modal, válido para cadastro e edição de produtos e usuários
+const EstiloModal = theme => ({
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '1px solid #000',
+    boxShadow: 25,
+    pt: 2,
+    px: 4,
+    pb: 3,
+    borderRadius: '8px',
 
+    [theme.breakpoints.down('sm')]: {
+        width: '90%',
+    },
+});
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow }
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal }

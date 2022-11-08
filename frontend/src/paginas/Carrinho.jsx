@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Box from '@mui/material/Box';
-import { ButtonBuy, CommonBox, Cores, EstilosConteudo, InformacoesCarrinho } from '../styles';
+import { ButtonBuy, CommonBox, EstilosConteudo, InformacoesCarrinho } from '../styles';
 import Grid from '@mui/material/Grid';
 import CardCarrinho from '../componentes/CardCarrinho';
 import Typography from '@mui/material/Typography';
@@ -27,7 +27,7 @@ import Titulo from '../componentes/Titulo';
 const Carrinho = () => {
 
     // Necessário para o Select
-    const [selectValue, setSelectValue] = useState('')
+    //const [selectValue, setSelectValue] = useState('')
 
     return (
         <Box sx={{ ...EstilosConteudo }}>

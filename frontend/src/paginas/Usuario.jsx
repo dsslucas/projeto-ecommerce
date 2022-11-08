@@ -9,7 +9,7 @@ import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
 
 const Usuario = () => {
-    const [cadastroUsuario, setCadastroUsuario] = useState({
+    const [atualizaCadastro, setAtualizaUsuario] = useState({
         nome: '',
         email: '',
         senha: '',
@@ -27,8 +27,8 @@ const Usuario = () => {
             <Input
                 id="nome-usuario"
                 label="Nome do usuário"
-                defaultValue={cadastroUsuario.nome}
-                returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, nome: e })}
+                defaultValue={atualizaCadastro.nome}
+                returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, nome: e })}
                 disabled
             />
 
@@ -37,8 +37,8 @@ const Usuario = () => {
                     <Input
                         id="email-usuario"
                         label="E-mail"
-                        defaultValue={cadastroUsuario.email}
-                        returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, email: e })}
+                        defaultValue={atualizaCadastro.email}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, email: e })}
                     />
                 </Box>
                 <Box component="div" sx={{ width: '48%' }}>
@@ -46,8 +46,8 @@ const Usuario = () => {
                         id="senha-usuario"
                         label="Senha"
                         type="password"
-                        defaultValue={cadastroUsuario.senha}
-                        returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, senha: e })}
+                        defaultValue={atualizaCadastro.senha}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, senha: e })}
                     />
                 </Box>
             </Box>
@@ -55,8 +55,8 @@ const Usuario = () => {
             <Input
                 id="endereco-usuario"
                 label="Endereço"
-                defaultValue={cadastroUsuario.endereco}
-                returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, endereco: e })}
+                defaultValue={atualizaCadastro.endereco}
+                returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, endereco: e })}
             />
 
             <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -71,8 +71,8 @@ const Usuario = () => {
                     <Input
                         id="cidade-usuario"
                         label="Cidade"
-                        defaultValue={cadastroUsuario.cidade}
-                        returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, cidade: e })}
+                        defaultValue={atualizaCadastro.cidade}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, cidade: e })}
                     />
                 </Box>
 
@@ -88,9 +88,9 @@ const Usuario = () => {
                     <Select
                         labelId="uf-usuario-label"
                         id="uf_usuario"
-                        value={cadastroUsuario.uf}
+                        value={atualizaCadastro.uf}
                         label="Estado"
-                        onChange={(e) => setCadastroUsuario({ ...cadastroUsuario, uf: e.target.value })}
+                        onChange={(e) => setAtualizaUsuario({ ...atualizaCadastro, uf: e.target.value })}
                         sx={{ color: 'black', width: '100%' }}
                         required
                     >
@@ -134,8 +134,12 @@ const Usuario = () => {
                     <Input
                         id="cep-usuario"
                         label="CEP"
-                        defaultValue={cadastroUsuario.cidade}
-                        returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, cep: e })}
+                        defaultValue={atualizaCadastro.cep}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, cep: e })}
+                        type='number'
+                        inputProps={{ maxLength: 8 }}
+                        error={atualizaCadastro.cep.length > 8 ? true : false}
+                        helperText={atualizaCadastro.cep.length > 8 ? "Excesso de números para o CEP. Informe o seu CEP sem o traço (-)." : null}
                     />
                 </Box>
             </Box>

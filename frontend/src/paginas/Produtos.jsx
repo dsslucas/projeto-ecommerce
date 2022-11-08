@@ -27,7 +27,7 @@ const Produtos = () => {
                 <CardProdutos
                     image={Image1}
                     titulo="Conjunto X"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas. Analise"
+                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas. Analiseaa"
                     preco={149.99}
                 />
                 <CardProdutos
@@ -62,6 +62,13 @@ const Produtos = () => {
                 />
                 <CardProdutos
                     image={Image7}
+                    titulo="Conjunto X"
+                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
+                    preco={149.99}
+                />
+
+                <CardProdutos
+                    image={Image8}
                     titulo="Conjunto X"
                     descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
                     preco={149.99}

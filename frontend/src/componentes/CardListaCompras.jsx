@@ -1,14 +1,11 @@
 import * as React from 'react';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ButtonBuy, CardListaComprasButtons, CardListaComprasContent, CardListaComprasContentColumn, CardListaComprasImage, CardListaComprasWrapper, Cores } from '../styles';
+import { ButtonBuy, CardListaComprasButtons, CardListaComprasContent, CardListaComprasContentColumn, CardListaComprasImage, CardListaComprasWrapper} from '../styles';
 import Box from '@mui/material/Box';
-
-import Span from './Span'
 import CardHeader from '@mui/material/CardHeader';
 
 export default function CardListaCompras(props) {
@@ -93,14 +90,14 @@ export default function CardListaCompras(props) {
                 <Button
                     size="small"
                     variant="contained"
-                    sx={{ ...ButtonBuy, width: '30%', marginRight: '5px' }}
+                    sx={{ ...ButtonBuy, width: 'auto', marginRight: '5px' }}
                 >
                     Trocar
                 </Button>
                 <Button
                     size="small"
                     variant="contained"
-                    sx={{ ...ButtonBuy, width: '30%', marginLeft: '5px' }}
+                    sx={{ ...ButtonBuy, width: 'auto', marginLeft: '5px' }}
                 >
                     Devolver
                 </Button>
