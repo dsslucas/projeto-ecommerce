@@ -100,6 +100,18 @@ const Estoque = () => {
                             </Box>
                         </Box>
 
+                        <Button
+                            variant="contained"
+                            component="label"
+                            sx={{...ButtonBuy, marginBottom: '10px'}}
+                        >
+                            Imagem
+                            <input
+                                type="file"
+                                hidden
+                                required
+                            />
+                        </Button>
 
                         <Box
                             component="div"
