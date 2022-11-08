@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import { EstilosConteudo, GridWrapperItems } from '../styles';
 // Card (do componente)
@@ -16,7 +16,24 @@ import Image7 from '../assets/IMG-1334.jpg'
 import Image8 from '../assets/IMG-1335.jpg'
 import Titulo from '../componentes/Titulo';
 
+//API onde está localizado o endereço.
+import api from '../servicos/api';
+
 const Produtos = () => {
+    // Salva o que vem da API de Produtos
+    const [conteudoApi, setConteudoApi] = useState([])
+
+    useEffect(() => {
+        // Consulta a API
+        async function respApi() {
+            const { data } = await api.get('/produto')
+            // setApiContent(data.products)
+            setConteudoApi(data)
+        }
+        respApi()
+    }, [])
+
+
     return (
         <Box sx={EstilosConteudo}>
             <Titulo titulo="Catálogo" />
@@ -24,13 +41,19 @@ const Produtos = () => {
             <Container
                 sx={GridWrapperItems}
             >
-                <CardProdutos
-                    image={Image1}
-                    titulo="Conjunto X"
-                    descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas. Analiseaa"
-                    preco={149.99}
-                />
-                <CardProdutos
+                {conteudoApi.map((item => {
+                    return (
+                        <CardProdutos
+                            key={item.idProduto}
+                            image={Image1}
+                            titulo={item.nomeProduto}
+                            descricao={item.descProduto}
+                            preco={item.valorProduto}
+                        />
+                    )
+                }))}
+
+                {/* <CardProdutos
                     image={Image3}
                     titulo="Conjunto Y"
                     descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
@@ -72,7 +95,7 @@ const Produtos = () => {
                     titulo="Conjunto X"
                     descricao="Entendo tão bem do assunto quanto tocar uma viola 10 cordas."
                     preco={149.99}
-                />
+                /> */}
 
             </Container>
 

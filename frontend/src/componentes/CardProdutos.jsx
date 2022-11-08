@@ -44,7 +44,7 @@ export default function CardProduto(props) {
           justifyContent: 'center'
         }}
       >
-        <Span number={`R$ ${props.preco}`} />
+        <Span number={`R$ ${(Math.round(props.preco * 100) / 100).toLocaleString('pt-br')}`} />
       </Box>
 
       <CardActions sx={{ width: '100%', padding: 0 }}>

@@ -14,8 +14,8 @@ module.exports = app => {
         .put(app.api.usuarios.editarUsuario)
 
     app.route('/produto')
-        .all(app.config.passaporte.authenticate())
         .get(app.api.produtos.getProdutos)
+        .all(app.config.passaporte.authenticate())
         .post(app.api.produtos.cadastroProdutos)
 
     app.route('/produto/:id')

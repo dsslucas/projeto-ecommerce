@@ -7,6 +7,9 @@ const db = require('./config/db')
 // Consign, que carrega todos os módulos
 const consign = require('consign')
 
+// Porta
+const port = 3003
+
 // Inicia o sistema
 consign()
     .include('./config/passaporte.js')
@@ -18,6 +21,6 @@ consign()
 // Permite fazer inserções junto ao Knex
 app.db = db
 
-app.listen(3003, () => {
-    console.log("Backend executando!")
+app.listen(port, () => {
+    console.log(`Backend executando na porta ${port}.`)
 })
