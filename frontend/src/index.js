@@ -6,14 +6,18 @@ import Routes from './Routes'
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit';
-import loginReducer from './redux/reducers/LoginReducer';
+import carrinhoReducer from './redux/reducers/CarrinhoReducer';
+import signInReducer from './redux/reducers/SignInReducer';
+import signUpReducer from './redux/reducers/SignUpReducer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 const store = configureStore({
   reducer: {
-    login: loginReducer
+    signin: signInReducer,
+    signUp: signUpReducer,
+    carrinho: carrinhoReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware({
     immutableCheck: false,
