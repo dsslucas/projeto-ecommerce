@@ -17,6 +17,13 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
+    const getUnicoUsuario = (req, res) => {
+        app.db('usuarios')
+            .where({ idUsuario: req.user.idUsuario })
+            .then((resultado) => res.json(resultado))
+            .catch((erro) => res.status(204).json(erro))
+    }
+
     const salvarSenha = (req, res) => {
         obterHash(req.body.senhaUsuario, hash => {
             // Aqui, não é armazenado a senha limpa, mas sim um hash calculado
@@ -66,5 +73,5 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
-    return { getUsuarios, salvarSenha, editarUsuario, deletarUsuario }
+    return { getUsuarios, salvarSenha, editarUsuario, deletarUsuario, getUnicoUsuario }
 }

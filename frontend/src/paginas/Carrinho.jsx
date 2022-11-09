@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 // Para o login/signup
 import Modal, { modalClasses } from '@mui/material/Modal';
 import Input from '../componentes/Input'
+import Snackbar from '@mui/material/Snackbar';
 
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -31,16 +32,21 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import ModalLogin from '../componentes/ModalLogin';
+import MuiAlert from '@mui/material/Alert';
 
 // Redux
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
 const Carrinho = () => {
     // Redux
     const { signin, carrinho } = useSelector(estado => estado)
 
-    //console.log(signin)
+    console.log("Dados do login: ", signin)
 
     // Necessário para o Select
     //const [selectValue, setSelectValue] = useState('')
@@ -49,6 +55,8 @@ const Carrinho = () => {
     const [modalLogin, setModalLogin] = useState(true)
     const [modalCadastro, setModalCadastro] = useState(false)
 
+    const [abrirSnackbar, setAbrirSnackbar] = useState(false)
+
     // // Registro de usuário logado
     // const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState({})
 
@@ -56,6 +64,8 @@ const Carrinho = () => {
     //     // Salva os dados do usuário logado
     //     setDadosUsuarioLogado(signin)
     // }, [])
+
+
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
@@ -224,7 +234,7 @@ const Carrinho = () => {
                             <Button variant="contained" color="error">Cancelar</Button>
                             <Button
                                 sx={{ ...ButtonBuy, marginLeft: '5px', width: '35%' }}
-                                onClick={() => signin ? setModal(!modal) : null}
+                                onClick={() => signin.email === null ? setModal(!modal) : setAbrirSnackbar(!abrirSnackbar)}
                             >
                                 Comprar
                             </Button>
@@ -233,6 +243,12 @@ const Carrinho = () => {
                 </Grid>
 
             </Grid>
+
+            <Snackbar open={abrirSnackbar} onClose={() => setAbrirSnackbar(!abrirSnackbar)} autoHideDuration={6000}>
+                <Alert onClose={() => setAbrirSnackbar(!abrirSnackbar)} severity="success" sx={{ width: '50%' }}>
+                    Compra realizada com sucesso! Agradecemos pela preferência.
+                </Alert>
+            </Snackbar>
         </Box >
     )
 }

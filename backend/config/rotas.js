@@ -12,6 +12,7 @@ module.exports = app => {
         .all(app.config.passaporte.authenticate())
         .delete(app.api.usuarios.deletarUsuario)
         .put(app.api.usuarios.editarUsuario)
+        .get(app.api.usuarios.getUnicoUsuario)
 
     app.route('/produto')
         .get(app.api.produtos.getProdutos)

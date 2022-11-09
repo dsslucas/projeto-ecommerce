@@ -1,24 +1,57 @@
 import React, { useState } from 'react'
-import Modal from '@mui/material/Modal';
 import Input from './Input'
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 import Box from '@mui/material/Box';
-import { ButtonBuy, EstiloModal } from '../styles';
+import { ButtonBuy} from '../styles';
 import Titulo from './Titulo';
 import Button from '@mui/material/Button';
+import api from '../servicos/api';
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { SignIn } from '../redux/actions/SignIn';
 
 export default function ModalLogin(props) {
+    // Conexão com o Redux
+    const dispatch = useDispatch()
+
     const [loginUsuario, setLoginUsuario] = useState({
         email: '',
         senha: '',
+        token: ''
     })
 
-    const [modal, setModal] = useState(false)
-
+    // Retorna para o Carrinho fechando o modal
     function returnBotaoCancelar() {
         props.respostaBotaoCancelar()
+    }
+
+    // Login de usuário
+    const signIn = async () => {
+        try {
+            const res = await api.post('/login', {
+                emailUsuario: loginUsuario.email,
+                senhaUsuario: loginUsuario.senha
+            })
+
+            // Token vindo do backend, para segurança
+            axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
+
+            console.log("TOKEN: ", res.data.token)
+            setLoginUsuario({ ...loginUsuario, token: 'analise' })
+
+            alert("Seja bem vindo(a)!")
+            returnBotaoCancelar()
+
+            // Envia para o Redux, por ser importante para as etapas seguintes
+            dispatch(SignIn({
+                email: loginUsuario.email,
+                senha: loginUsuario.senha,
+                token: `bearer ${res.data.token}`
+            }))
+
+        } catch (e) {
+            alert("Os dados informados não estão presentes em nosso banco de dados.", e)
+            console.error(e)
+        }
     }
 
     return (
@@ -62,9 +95,18 @@ export default function ModalLogin(props) {
                         size="small"
                         variant="contained"
                         sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                        onClick={() => setModal(!modal)}
+                        onClick={() => signIn()}
                     >
                         Login
+                    </Button>
+
+                    <Button
+                        size="small"
+                        variant="contained"
+                        sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
+                        onClick={() => dispatch(SignIn(loginUsuario))}
+                    >
+                        TESTE
                     </Button>
                 </Box>
             </Box>

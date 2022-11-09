@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import { ButtonBuy, EstiloModal } from '../styles';
 import Titulo from './Titulo';
 import Button from '@mui/material/Button';
+import api from '../servicos/api';
 
 export default function ModalCadastro(props) {
     const [cadastroUsuario, setCadastroUsuario] = useState({
@@ -21,8 +22,45 @@ export default function ModalCadastro(props) {
         isAdmin: false
     })
 
+    // Retorna para o Carrinho, fechando o modal
     function returnBotaoCancelar() {
         props.respostaBotaoCancelar()
+    }
+
+    // Cadastro do usuário no sistema
+    const signUp = async () => {
+        try {
+            await api.post('/usuario', {
+                emailUsuario: cadastroUsuario.email,
+                nomeUsuario: cadastroUsuario.nome,
+                senhaUsuario: cadastroUsuario.senha,
+                enderecoUsuario: cadastroUsuario.endereco,
+                cidadeUsuario: cadastroUsuario.cidade,
+                estadoUsuario: cadastroUsuario.uf,
+                cepUsuario: cadastroUsuario.cep,
+                isAdmin: cadastroUsuario.isAdmin
+            })
+            alert("Usuário cadastrado!")
+
+            // Zera o estado
+            setCadastroUsuario({
+                ...cadastroUsuario,
+                nome: '',
+                email: '',
+                senha: '',
+                endereco: '',
+                cidade: '',
+                uf: '',
+                cep: '',
+                isAdmin: false
+            })
+
+            // Chama para fechar o modal
+            returnBotaoCancelar()
+
+        } catch (e) {
+            alert("Usuário não cadastrado.")
+        }
     }
 
     return (
@@ -162,7 +200,7 @@ export default function ModalCadastro(props) {
                         size="small"
                         variant="contained"
                         sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                        //onClick={() => setModal(!modal)}
+                        onClick={() => signUp()}
                     >
                         Cadastrar
                     </Button>

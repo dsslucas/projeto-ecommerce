@@ -1,14 +1,15 @@
 // Estado Inicial
 const ESTADO_INICIAL = {
-    email: undefined,
-    senha: undefined,
-    token: undefined
+    email: null,
+    senha: null,
+    token: null
 }
 
 const signInReducer = (state = ESTADO_INICIAL, action) => {
     switch (action.type) {
         case 'SIGN_IN_USER':
-            return console.log("Entrei no Sign In")
+            console.log(action)
+            return action.payload
         default:
             return state
     }
