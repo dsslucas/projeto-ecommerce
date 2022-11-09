@@ -33,14 +33,18 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import ModalLogin from '../componentes/ModalLogin';
 import MuiAlert from '@mui/material/Alert';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import Collapse from '@mui/material/Collapse';
+import Fade from '@mui/material/Fade';
 
 // Redux
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
 
-const Alert = React.forwardRef(function Alert(props, ref) {
+const Alerta = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
+});
 
 const Carrinho = () => {
     // Redux
@@ -57,22 +61,55 @@ const Carrinho = () => {
 
     const [abrirSnackbar, setAbrirSnackbar] = useState(false)
 
-    // // Registro de usuário logado
-    // const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState({})
-
-    // useEffect(() => {
-    //     // Salva os dados do usuário logado
-    //     setDadosUsuarioLogado(signin)
-    // }, [])
-
-
+    const [respostaConexao, setRespostaConexao] = useState({ resultado: undefined, texto: undefined })
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Carrinho" />
 
-            {modal && (
+            {respostaConexao.resultado !== undefined &&
+                <Box component="div"
+                    sx={{
+                        width: '50%',
+                        zIndex: 2000,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        position: 'absolute',
+                        top: 5,
+                        left: '25%',
+                        right: '25%',
+                    }}
+                >
+                    <Fade in={respostaConexao.resultado !== undefined} timeout={1000}>
+                        <Stack
+                            sx={{
+                                width: 'auto',
+                                //transitionTimingFunction: 'linear'
+                            }}
+                            spacing={2}
+                        >
+                            {respostaConexao.resultado && (
+                                <Alert variant="filled" severity="success">
+                                    {respostaConexao.texto}
+                                </Alert>
+                            )}
+                            {respostaConexao.resultado !== undefined && !respostaConexao.resultado && (
+                                <Alert variant="filled" severity="error">
+                                    {respostaConexao.texto}
+                                </Alert>
+                            )}
 
+                            {setTimeout(() => {
+                                setRespostaConexao({ ...respostaConexao, resultado: undefined, texto: undefined })
+                            }, 4000)}
+                        </Stack>
+
+                    </Fade>
+
+                </Box>
+            }
+
+            {modal && (
                 <Modal
                     open={modal}
                     aria-labelledby="modal-modal-title"
@@ -81,6 +118,18 @@ const Carrinho = () => {
                     <Box sx={EstiloModal}>
                         {modalLogin && (
                             <ModalLogin
+                                respostaPositiva={(e) => {
+                                    setRespostaConexao({
+                                        resultado: true,
+                                        texto: e
+                                    })
+                                }}
+                                respostaNegativa={(e) => {
+                                    setRespostaConexao({
+                                        resultado: false,
+                                        texto: e
+                                    })
+                                }}
                                 respostaBotaoCancelar={() => {
                                     setModal(!modal)
                                 }}
@@ -88,6 +137,18 @@ const Carrinho = () => {
                         )}
                         {modalCadastro && (
                             <ModalCadastro
+                                respostaPositiva={(e) => {
+                                    setRespostaConexao({
+                                        resultado: true,
+                                        texto: e
+                                    })
+                                }}
+                                respostaNegativa={(e) => {
+                                    setRespostaConexao({
+                                        resultado: false,
+                                        texto: e
+                                    })
+                                }}
                                 respostaBotaoCancelar={() => {
                                     setModal(!modal)
                                     setModalLogin(!modalLogin)
@@ -245,9 +306,9 @@ const Carrinho = () => {
             </Grid>
 
             <Snackbar open={abrirSnackbar} onClose={() => setAbrirSnackbar(!abrirSnackbar)} autoHideDuration={6000}>
-                <Alert onClose={() => setAbrirSnackbar(!abrirSnackbar)} severity="success" sx={{ width: '50%' }}>
+                <Alerta onClose={() => setAbrirSnackbar(!abrirSnackbar)} severity="success" sx={{ width: '50%' }}>
                     Compra realizada com sucesso! Agradecemos pela preferência.
-                </Alert>
+                </Alerta>
             </Snackbar>
         </Box >
     )

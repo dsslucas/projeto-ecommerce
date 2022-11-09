@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import Input from './Input'
 import Box from '@mui/material/Box';
-import { ButtonBuy} from '../styles';
+import { ButtonBuy } from '../styles';
 import Titulo from './Titulo';
 import Button from '@mui/material/Button';
 import api from '../servicos/api';
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SignIn } from '../redux/actions/SignIn';
+
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function ModalLogin(props) {
     // Conexão com o Redux
@@ -38,8 +41,7 @@ export default function ModalLogin(props) {
             console.log("TOKEN: ", res.data.token)
             setLoginUsuario({ ...loginUsuario, token: 'analise' })
 
-            alert("Seja bem vindo(a)!")
-            returnBotaoCancelar()
+            //alert("Seja bem vindo(a)!")
 
             // Envia para o Redux, por ser importante para as etapas seguintes
             dispatch(SignIn({
@@ -48,15 +50,21 @@ export default function ModalLogin(props) {
                 token: `bearer ${res.data.token}`
             }))
 
+            props.respostaPositiva(`É um prazer lhe receber, ${res.data.nomeUsuario}.`)
+            returnBotaoCancelar()
+
         } catch (e) {
-            alert("Os dados informados não estão presentes em nosso banco de dados.", e)
+            //alert("Os dados informados não estão presentes em nosso banco de dados.", e)
             console.error(e)
+            props.respostaNegativa("Os dados informados não foram encontrados em nosso banco de dados.")
+            returnBotaoCancelar()
         }
     }
 
     return (
         <>
             <Box>
+                
                 <Titulo titulo="Login" />
 
                 <Input
@@ -98,15 +106,6 @@ export default function ModalLogin(props) {
                         onClick={() => signIn()}
                     >
                         Login
-                    </Button>
-
-                    <Button
-                        size="small"
-                        variant="contained"
-                        sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                        onClick={() => dispatch(SignIn(loginUsuario))}
-                    >
-                        TESTE
                     </Button>
                 </Box>
             </Box>
