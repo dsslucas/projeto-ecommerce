@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import Box from '@mui/material/Box';
-import { ButtonBuy, CommonBox, EstilosConteudo, InformacoesCarrinho } from '../styles';
+import { ButtonBuy, CommonBox, EstiloModal, EstilosConteudo, InformacoesCarrinho } from '../styles';
 import Grid from '@mui/material/Grid';
 import CardCarrinho from '../componentes/CardCarrinho';
 import Typography from '@mui/material/Typography';
 
 // Para o login/signup
-import Modal from '@mui/material/Modal';
+import Modal, { modalClasses } from '@mui/material/Modal';
 import Input from '../componentes/Input'
 
 import Radio from '@mui/material/Radio';
@@ -26,24 +26,79 @@ import Image2 from '../assets/IMG-1311.jpg'
 // import Image8 from '../assets/IMG-1335.jpg'
 import Span from '../componentes/Span';
 import Titulo from '../componentes/Titulo';
+import ModalCadastro from '../componentes/ModalCadastro';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import ModalLogin from '../componentes/ModalLogin';
 
+// Redux
+import { useSelector } from 'react-redux'
+import { useEffect } from 'react';
 
 const Carrinho = () => {
+    // Redux
+    const { signin, carrinho } = useSelector(estado => estado)
+
+    //console.log(signin)
 
     // Necessário para o Select
     //const [selectValue, setSelectValue] = useState('')
 
     const [modal, setModal] = useState(false)
+    const [modalLogin, setModalLogin] = useState(true)
+    const [modalCadastro, setModalCadastro] = useState(false)
+
+    // // Registro de usuário logado
+    // const [dadosUsuarioLogado, setDadosUsuarioLogado] = useState({})
+
+    // useEffect(() => {
+    //     // Salva os dados do usuário logado
+    //     setDadosUsuarioLogado(signin)
+    // }, [])
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
-            {modal && (
-                <Modal>
-
-                </Modal>
-            )}
-
             <Titulo titulo="Carrinho" />
+
+            {modal && (
+
+                <Modal
+                    open={modal}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={EstiloModal}>
+                        {modalLogin && (
+                            <ModalLogin
+                                respostaBotaoCancelar={() => {
+                                    setModal(!modal)
+                                }}
+                            />
+                        )}
+                        {modalCadastro && (
+                            <ModalCadastro
+                                respostaBotaoCancelar={() => {
+                                    setModal(!modal)
+                                    setModalLogin(!modalLogin)
+                                    setModalCadastro(!modalCadastro)
+                                }}
+                            />
+                        )}
+
+                        <Button
+                            variant="text" sx={{ width: '100%', marginTop: '10px' }}
+                            onClick={() => {
+                                setModalLogin(!modalLogin)
+                                setModalCadastro(!modalCadastro)
+                            }}
+                        >
+                            {!modalCadastro ? "Ainda não tenho cadastro" : "Voltar para o Login"}
+                        </Button>
+                    </Box>
+                </Modal>
+            )
+            }
 
             <Grid container spacing={0}>
                 <Grid item
@@ -64,16 +119,6 @@ const Carrinho = () => {
                         titulo="Conjunto Y"
                         preco={10.99}
                     />
-                    {/* <CardCarrinho
-                        image={Image3}
-                        titulo="Conjunto Z"
-                        preco={54.99}
-                    />
-                    <CardCarrinho
-                        image={Image4}
-                        titulo="Conjunto Y"
-                        preco={10.99}
-                    /> */}
                 </Grid>
 
                 <Grid item
@@ -174,16 +219,21 @@ const Carrinho = () => {
 
                         <Box
                             component="div"
-                            sx={{...CommonBox, justifyContent: 'right'}}
+                            sx={{ ...CommonBox, justifyContent: 'right' }}
                         >
                             <Button variant="contained" color="error">Cancelar</Button>
-                            <Button sx={{ ...ButtonBuy, marginLeft: '5px', width: '35%' }}>Comprar</Button>
+                            <Button
+                                sx={{ ...ButtonBuy, marginLeft: '5px', width: '35%' }}
+                                onClick={() => signin ? setModal(!modal) : null}
+                            >
+                                Comprar
+                            </Button>
                         </Box>
                     </FormControl>
                 </Grid>
 
             </Grid>
-        </Box>
+        </Box >
     )
 }
 

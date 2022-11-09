@@ -11,7 +11,7 @@ const input = (props) => {
         <TextField
             id={props.id}
             label={props.label}
-            style={{ paddingBottom: '20px', paddingTop: '20px' }}
+            style={{ paddingBottom: '10px', paddingTop: '10px' }}
             fullWidth
             variant={props.styleInput ? props.styleInput : "standard"}
             multiline={props.multiline}
