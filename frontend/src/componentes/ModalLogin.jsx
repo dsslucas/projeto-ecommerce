@@ -56,8 +56,8 @@ export default function ModalLogin(props) {
         } catch (e) {
             //alert("Os dados informados não estão presentes em nosso banco de dados.", e)
             console.error(e)
-            props.respostaNegativa("Os dados informados não foram encontrados em nosso banco de dados.")
-            returnBotaoCancelar()
+            props.respostaNegativa("Os dados informados não foram encontrados em nosso sistema.")
+            //returnBotaoCancelar()
         }
     }
 
@@ -72,6 +72,8 @@ export default function ModalLogin(props) {
                     label="E-mail"
                     defaultValue={loginUsuario.email}
                     returnValue={(e) => setLoginUsuario({ ...loginUsuario, email: e })}
+                    error={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? true : false}
+                    helperText={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
                 />
 
                 <Input

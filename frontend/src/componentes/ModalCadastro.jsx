@@ -86,6 +86,8 @@ export default function ModalCadastro(props) {
                             label="E-mail"
                             defaultValue={cadastroUsuario.email}
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, email: e })}
+                            error={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? true : false}
+                            helperText={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
                         />
                     </Box>
                     <Box component="div" sx={{ width: '48%' }}>
@@ -180,7 +182,7 @@ export default function ModalCadastro(props) {
                     type='number'
                     inputProps={{ maxLength: 8 }}
                     error={cadastroUsuario.cep.length > 8 ? true : false}
-                    helperText={cadastroUsuario.cep.length > 8 ? "Excesso de números para o CEP. Informe o CEP sem o traço (-)." : null}
+                    helperText={cadastroUsuario.cep.length > 8 ? "Informe o CEP com oito dígitos e sem o traço (-)." : null}
                 />
 
                 <Box

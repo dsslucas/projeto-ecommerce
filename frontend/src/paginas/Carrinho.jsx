@@ -219,7 +219,7 @@ const Carrinho = () => {
                                 variant="h6" component="div"
                                 sx={{ marginLeft: '10px', marginRight: '10px', width: '50%' }}
                             >
-                                Selecione um método de pagamento:
+                                Método de pagamento:
                             </Typography>
 
                             <RadioGroup
