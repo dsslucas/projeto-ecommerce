@@ -15,7 +15,7 @@ module.exports = app => {
         // Recebe o que vem da API de usuários, consultando o email (que é chave única)
         const usuario = await app.db('usuarios').where({ emailUsuario: req.body.emailUsuario }).first()
 
-        console.log(usuario)
+        //console.log(usuario)
 
         // Se for válido...
         if (usuario) {
@@ -32,7 +32,8 @@ module.exports = app => {
                 res.json({
                     nomeUsuario: usuario.nomeUsuario,
                     emailUsuario: usuario.emailUsuario,
-                    token: jwt.encode(payload, segredoAutenticacao)
+                    token: jwt.encode(payload, segredoAutenticacao),
+                    estadoUsuario: usuario.estadoUsuario
                 })
             })
         }

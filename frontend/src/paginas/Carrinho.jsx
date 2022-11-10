@@ -55,7 +55,7 @@ const Carrinho = () => {
     // Navegação do React Router
     const navigate = useNavigate()
 
-    console.log("Dados do login: ", signin)
+    //console.log("Dados do login: ", signin)
     console.log("Carrinho:", carrinho)
 
     // Abertura e fechamento dos modais
@@ -71,6 +71,49 @@ const Carrinho = () => {
 
     // Resposta do Radio
     const [dadosCompra, setDadosCompra] = useState({})
+
+    // Cálculo dos produtos
+    const [valorProduto, setValorProduto] = useState(0.0)
+
+    // Valor do frete por região
+    const valoresFrete = (estado) => {
+        // Norte
+        if (estado === 'AC') return 38.50
+        if (estado === "AP") return 38.50
+        if (estado === "AM") return 34.20
+        if (estado === "PA") return 33.50
+        if (estado === 'RO') return 32.20
+        if (estado === "RR") return 40.50
+        if (estado === "TO") return 28.00
+
+        // Nordeste
+        if (estado === 'AL') return 40.50
+        if (estado === "BA") return 32.40
+        if (estado === "CE") return 38.50
+        if (estado === "MA") return 38.50
+        if (estado === "PB") return 39.10
+        if (estado === 'PE') return 36.20
+        if (estado === "PI") return 37.40
+        if (estado === "RN") return 38.10
+        if (estado === 'SE') return 36.60
+
+        // Centro-Oeste
+        if (estado === 'DF') return 12.00
+        if (estado === "GO") return 16.50
+        if (estado === "MT") return 20.40
+        if (estado === "MS") return 21.50
+
+        // Sudeste
+        if (estado === 'SP') return 21.50
+        if (estado === "RJ") return 25.00
+        if (estado === "MG") return 20.40
+        if (estado === "ES") return 25.00
+
+        // Sul
+        if (estado === 'PR') return 40.00
+        if (estado === "SC") return 41.00
+        if (estado === "RS") return 42.00
+    }
 
     // Concretiza a compra dos itens no carrinho
     async function realizacaoCompra() {
@@ -105,14 +148,28 @@ const Carrinho = () => {
         }
     }
 
+    // Chama a função do cálculo de frete
+    //if (signin.uf !== null) valoresFrete()
+
     // Atualiza o componente
     useEffect(() => {
+        console.log("Entrei no Use Effect")
         // Necessário para iterar o estado quando há alteração
         const compras = carrinho.map((item) => {
             return { idProduto: item.id, quantidade: item.qtd }
         })
         setDadosCompra({ ...dadosCompra, compras })
-    }, [carrinho])
+
+        // Cálculo dos valores
+        const valorInicial = 0
+        const valorTotal = carrinho.reduce((valorInicial, item) => {
+            return valorInicial + (item.qtd * item.preco)
+        }, valorInicial)
+
+        console.log(valorTotal)
+
+        setValorProduto(valorTotal)
+    }, [carrinho, signin])
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
@@ -231,6 +288,7 @@ const Carrinho = () => {
                         {carrinho.map((item) => {
                             return (
                                 <CardCarrinho
+                                    key={item.id}
                                     image={Image1}
                                     titulo={item.titulo}
                                     preco={item.preco}
@@ -295,7 +353,7 @@ const Carrinho = () => {
                                     Valor dos produtos
                                 </Typography>
 
-                                <Span number={`R$ ${450.20}`} />
+                                <Span number={`R$ ${valorProduto}`} />
                             </Box>
 
                             <Box
@@ -309,8 +367,11 @@ const Carrinho = () => {
                                 >
                                     Frete
                                 </Typography>
+                                {signin.email === null
+                                    ? (<Span number={`Disponível após login`} />)
+                                    : (<Span number={`R$ ${valoresFrete(signin.uf)}`} />)
+                                }
 
-                                <Span number={`R$ ${25.28}`} />
                             </Box>
 
                             <Box
@@ -325,7 +386,7 @@ const Carrinho = () => {
                                     Valor total:
                                 </Typography>
 
-                                <Span number={`R$ ${25.28}`} />
+                                <Span number={`R$ ${valorProduto + valoresFrete(signin.uf)}`} />
                             </Box>
 
                             <Typography
@@ -367,7 +428,7 @@ const Carrinho = () => {
                         display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'
                     }}
                 >
-                    <ProductionQuantityLimitsIcon sx={{color: Cores.fundoCabecalho, width: "50%", height: "50%"}}/>
+                    <ProductionQuantityLimitsIcon sx={{ color: Cores.fundoCabecalho, width: "50%", height: "50%" }} />
 
                     <Typography
                         component="h6"

@@ -47,7 +47,8 @@ export default function ModalLogin(props) {
             dispatch(SignIn({
                 email: loginUsuario.email,
                 senha: loginUsuario.senha,
-                token: `bearer ${res.data.token}`
+                token: `bearer ${res.data.token}`,
+                uf: res.data.estadoUsuario
             }))
 
             props.respostaPositiva(`É um prazer lhe receber, ${res.data.nomeUsuario}.`)

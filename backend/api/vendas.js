@@ -8,7 +8,7 @@ module.exports = app => {
         // Frete
         var valorFrete
 
-        console.log(req.user)
+        //console.log(req.user)
 
         // Validação sobre o valor do frete
         // Norte
