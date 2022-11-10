@@ -41,6 +41,8 @@ import Fade from '@mui/material/Fade';
 // Redux
 import { useSelector } from 'react-redux'
 import { useEffect } from 'react';
+import api from '../servicos/api';
+import axios from 'axios';
 
 const Alerta = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -51,17 +53,58 @@ const Carrinho = () => {
     const { signin, carrinho } = useSelector(estado => estado)
 
     console.log("Dados do login: ", signin)
+    console.log("Carrinho:", carrinho)
 
-    // Necessário para o Select
-    //const [selectValue, setSelectValue] = useState('')
-
+    // Abertura e fechamento dos modais
     const [modal, setModal] = useState(false)
     const [modalLogin, setModalLogin] = useState(true)
     const [modalCadastro, setModalCadastro] = useState(false)
 
+    // Aviso de compra efetuada
     const [abrirSnackbar, setAbrirSnackbar] = useState(false)
 
+    // Pega os dados que vem dos Modais e renderiza na tela por função
     const [respostaConexao, setRespostaConexao] = useState({ resultado: undefined, texto: undefined })
+
+    // Resposta do Radio
+    const [dadosCompra, setDadosCompra] = useState({})
+
+    // Concretiza a compra dos itens no carrinho
+    async function realizacaoCompra() {
+        console.log("Tô aqui meu rei")
+        //onClick={() => signin.email === null ? setModal(!modal) : setAbrirSnackbar(!abrirSnackbar)}
+
+        // Checa se o usuário está logado
+        if (signin.email === null) {
+            // Abre o modal para realização de login/cadastro
+            setModal(!modal)
+        }
+
+        // O usuário está logado
+        else {
+            // Envia para o backend/BD
+            await api.post('/venda', {
+                compras: dadosCompra.compras,
+                metodoPagamento: dadosCompra.metodoPagamento
+            }, {
+                headers: {
+                    "Authorization": signin.token
+                }
+            })
+
+            // Abrir o aviso que a compra foi realizada
+            setAbrirSnackbar(!abrirSnackbar)
+        }
+    }
+
+    // Atualiza o componente
+    useEffect(() => {
+        // Necessário para iterar o estado quando há alteração
+        const compras = carrinho.map((item) => {
+            return { idProduto: item.id, quantidade: item.qtd }
+        })
+        setDadosCompra({ ...dadosCompra, compras })
+    }, [carrinho])
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
@@ -180,16 +223,16 @@ const Carrinho = () => {
                         alignItems: 'center'
                     }}
                 >
-                    <CardCarrinho
-                        image={Image1}
-                        titulo="Conjunto X"
-                        preco={149.99}
-                    />
-                    <CardCarrinho
-                        image={Image2}
-                        titulo="Conjunto Y"
-                        preco={10.99}
-                    />
+                    {carrinho.map((item) => {
+                        return (
+                            <CardCarrinho
+                                image={Image1}
+                                titulo={item.titulo}
+                                preco={item.preco}
+                                qtd={item.qtd}
+                            />
+                        )
+                    })}
                 </Grid>
 
                 <Grid item
@@ -227,6 +270,7 @@ const Carrinho = () => {
                                 defaultValue=""
                                 name="radio-buttons-group"
                                 aria-required
+                                onChange={(e) => setDadosCompra({ ...dadosCompra, metodoPagamento: e.target.value })}
                             >
                                 <FormControlLabel value="PIX" control={<Radio color="secondary" />} label="PIX" />
                                 <FormControlLabel value="BOLETO" control={<Radio color="secondary" />} label="Boleto bancário" />
@@ -292,17 +336,20 @@ const Carrinho = () => {
                             component="div"
                             sx={{ ...CommonBox, justifyContent: 'right' }}
                         >
+                            <Button variant="contained" color="info"
+                                onClick={() => console.log(dadosCompra)}
+                            >TESTE</Button>
                             <Button variant="contained" color="error">Cancelar</Button>
                             <Button
                                 sx={{ ...ButtonBuy, marginLeft: '5px', width: '35%' }}
-                                onClick={() => signin.email === null ? setModal(!modal) : setAbrirSnackbar(!abrirSnackbar)}
+                                onClick={() => realizacaoCompra()}
+                                disabled={!dadosCompra.metodoPagamento ? true : false}
                             >
                                 Comprar
                             </Button>
                         </Box>
                     </FormControl>
                 </Grid>
-
             </Grid>
 
             <Snackbar open={abrirSnackbar} onClose={() => setAbrirSnackbar(!abrirSnackbar)} autoHideDuration={6000}>

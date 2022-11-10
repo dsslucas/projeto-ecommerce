@@ -44,6 +44,7 @@ const Produtos = () => {
                     return (
                         <CardProdutos
                             key={item.idProduto}
+                            id={item.idProduto}
                             image={Image1}
                             titulo={item.nomeProduto}
                             descricao={item.descProduto}

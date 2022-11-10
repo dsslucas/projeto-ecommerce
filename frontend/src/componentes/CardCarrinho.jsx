@@ -61,7 +61,7 @@ export default function CardCarrinho(props) {
                             >
                                 -
                             </Button>
-                            <Span number={1} />
+                            <Span number={props.qtd} />
                             <Button
                                 sx={{
                                     ...ButtonBuy,

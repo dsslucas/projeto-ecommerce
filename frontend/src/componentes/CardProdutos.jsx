@@ -9,8 +9,13 @@ import { ButtonBuy, Cores } from '../styles';
 import Box from '@mui/material/Box';
 
 import Span from './Span'
+import { useDispatch } from 'react-redux';
+import { AdicionaItemCarrinho } from '../redux/actions/Carrinho';
 
 export default function CardProduto(props) {
+  // Envia os dados para o Redux
+  const dispatch = useDispatch()
+
   return (
     <Card
       sx={{
@@ -52,6 +57,13 @@ export default function CardProduto(props) {
           size="small"
           variant="contained"
           sx={ButtonBuy}
+          onClick={() => dispatch(AdicionaItemCarrinho({
+            id: props.id,
+            titulo: props.titulo,
+            descricao: props.descricao,
+            preco: props.preco,
+            qtd: 1
+          }))}
         >
           Comprar
         </Button>
