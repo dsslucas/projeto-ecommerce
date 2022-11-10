@@ -17,3 +17,8 @@ export const RetiraQtdItemCarrinho = (event) => ({
     type: "RETIRA_QTD_ITEM_CARRINHO",
     payload: event
 })
+
+export const LimpaCarrinho = (event) => ({
+    type: "LIMPA_CARRINHO",
+    payload: event
+})

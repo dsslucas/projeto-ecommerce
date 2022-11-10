@@ -34,6 +34,8 @@ const carrinhoReducer = (state = ESTADO_INICIAL, action) => {
                 return item
             })
             return novaLista
+        case "LIMPA_CARRINHO":
+            return []
         default:
             return state
     }
