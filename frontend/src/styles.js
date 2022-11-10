@@ -102,6 +102,21 @@ const GridWrapperItems = theme => ({
     },
 })
 
+// Exibição do login
+const LoginCadastroWrapper = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    background: '#fff',
+    padding: '10px',
+    borderRadius: '8px',
+    width: '100%',
+
+    [theme.breakpoints.up('sm')]: {
+        width: '50%',
+    },
+})
+
 // Botão de compras
 const ButtonBuy = {
     width: '100%',
@@ -297,4 +312,4 @@ const EstiloModal = theme => ({
     },
 });
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho }
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho, LoginCadastroWrapper }

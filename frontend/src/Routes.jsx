@@ -7,10 +7,12 @@ import Produtos from './paginas/Produtos';
 import Relatorio from './paginas/Relatorio';
 import Usuario from './paginas/Usuario';
 import GerenciaUsuario from './paginas/GerenciaUsuario'
+import Login from './paginas/Login';
 
 export default function Router() {
     return (
         <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/produtos" element={<Produtos />} />
             <Route path="/carrinho" element={<Carrinho />} />
             <Route path="/compras" element={<ListaCompras />} />

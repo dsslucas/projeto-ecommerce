@@ -39,7 +39,7 @@ export default function ModalLogin(props) {
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
 
             //console.log("TOKEN: ", res.data.token)
-            setLoginUsuario({ ...loginUsuario, token: 'analise' })
+            //setLoginUsuario({ ...loginUsuario, token: 'analise' })
 
             //alert("Seja bem vindo(a)!")
 

@@ -16,11 +16,21 @@ import WarehouseIcon from '@mui/icons-material/Warehouse';
 import { Link } from 'react-router-dom';
 import { Cores } from '../styles';
 import { listaOpcoesGerais } from './Lista';
+import LoginIcon from '@mui/icons-material/Login';
 // import { useSelector } from 'react-redux';
 
 const ListaOpcoesGerais = () => {
     return (
         <React.Fragment>
+            <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/login">
+                <ListItemButton>
+                    <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
+                        <LoginIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Login" />
+                </ListItemButton>
+            </Link>
+
             <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/produtos">
                 <ListItemButton>
                     <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
@@ -39,7 +49,7 @@ const ListaOpcoesGerais = () => {
                 </ListItemButton>
             </Link>
 
-            <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none' }} to="/compras">
+            <Link style={{ color: Cores.textoOpcoes, textDecoration: 'none', cursor: 'not-allowed' }} to="/compras">
                 <ListItemButton>
                     <ListItemIcon sx={{ color: Cores.textoOpcoes }}>
                         <InventoryIcon />

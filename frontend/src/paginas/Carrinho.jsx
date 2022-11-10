@@ -145,9 +145,6 @@ const Carrinho = () => {
         }
     }
 
-    // Chama a função do cálculo de frete
-    //if (signin.uf !== null) valoresFrete()
-
     // Atualiza o componente
     useEffect(() => {
         // Necessário para iterar o estado quando há alteração
