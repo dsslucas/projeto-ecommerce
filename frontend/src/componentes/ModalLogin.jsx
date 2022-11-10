@@ -49,7 +49,8 @@ export default function ModalLogin(props) {
                 email: loginUsuario.email,
                 senha: loginUsuario.senha,
                 token: `bearer ${res.data.token}`,
-                uf: res.data.estadoUsuario
+                uf: res.data.estadoUsuario,
+                isAdmin: res.data.isAdmin
             }))
 
             props.respostaPositiva(`É um prazer lhe receber, ${res.data.nomeUsuario}.`)

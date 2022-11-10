@@ -16,7 +16,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Rotas from './Routes'
 
 // Estilização
-import {Drawer, AppBar, Cores} from './styles'
+import { Drawer, AppBar, Cores } from './styles'
+import ListaOpcoesGerais from './componentes/ListaOpcoesGerais';
+import ListaOpcaoAdmin from './componentes/ListaOpcaoAdmin';
 
 const mdTheme = createTheme();
 
@@ -25,6 +27,7 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+
 
   return (
     <ThemeProvider theme={mdTheme}>
@@ -62,7 +65,7 @@ function DashboardContent() {
           </Toolbar>
         </AppBar>
 
-        <Drawer variant="permanent" open={open} 
+        <Drawer variant="permanent" open={open}
           onMouseOver={!open ? toggleDrawer : null}
           onMouseLeave={open ? toggleDrawer : null}
         >
@@ -74,16 +77,16 @@ function DashboardContent() {
               px: [1]
             }}
           >
-            <IconButton onClick={toggleDrawer} sx={{color: Cores.textoOpcoes}}>
+            <IconButton onClick={toggleDrawer} sx={{ color: Cores.textoOpcoes }}>
               <ChevronLeftIcon />
             </IconButton>
           </Toolbar>
 
           <Divider />
           <List component="nav">
-            {listaOpcoesGerais}
+            <ListaOpcoesGerais />
             <Divider sx={{ my: 1 }} />
-            {listaOpcoesAdmin}
+            <ListaOpcaoAdmin />
           </List>
         </Drawer>
 

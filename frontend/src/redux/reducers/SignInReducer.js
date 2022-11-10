@@ -2,7 +2,8 @@
 const ESTADO_INICIAL = {
     email: null,
     senha: null,
-    token: null
+    token: null,
+    isAdmin: false
 }
 
 const signInReducer = (state = ESTADO_INICIAL, action) => {

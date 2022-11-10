@@ -34,7 +34,8 @@ module.exports = app => {
                     nomeUsuario: usuario.nomeUsuario,
                     emailUsuario: usuario.emailUsuario,
                     token: jwt.encode(payload, segredoAutenticacao),
-                    estadoUsuario: usuario.estadoUsuario
+                    estadoUsuario: usuario.estadoUsuario,
+                    isAdmin: usuario.isAdmin
                 })
             })
         }
