@@ -55,9 +55,6 @@ const Carrinho = () => {
     // Navegação do React Router
     const navigate = useNavigate()
 
-    //console.log("Dados do login: ", signin)
-    console.log("Carrinho:", carrinho)
-
     // Abertura e fechamento dos modais
     const [modal, setModal] = useState(false)
     const [modalLogin, setModalLogin] = useState(true)
@@ -153,7 +150,6 @@ const Carrinho = () => {
 
     // Atualiza o componente
     useEffect(() => {
-        console.log("Entrei no Use Effect")
         // Necessário para iterar o estado quando há alteração
         const compras = carrinho.map((item) => {
             return { idProduto: item.id, quantidade: item.qtd }
@@ -165,8 +161,6 @@ const Carrinho = () => {
         const valorTotal = carrinho.reduce((valorInicial, item) => {
             return valorInicial + (item.qtd * item.preco)
         }, valorInicial)
-
-        console.log(valorTotal)
 
         setValorProduto(valorTotal)
     }, [carrinho, signin])

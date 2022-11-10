@@ -13,7 +13,7 @@ export default function CardListaCompras(props) {
         <Card
             sx={CardListaComprasWrapper}
         >
-            <CardHeader subheader="32 de Fevereiro de 3048" />
+            <CardHeader subheader={props.dataVenda} />
 
             <CardContent
                 sx={CardListaComprasContent}

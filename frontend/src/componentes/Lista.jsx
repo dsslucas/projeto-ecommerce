@@ -15,6 +15,11 @@ import PeopleIcon from '@mui/icons-material/People';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import { Link } from 'react-router-dom';
 import { Cores } from '../styles';
+// import { useSelector } from 'react-redux';
+
+// Redux
+// const {signin} = useSelector(state => state)
+// console.log("Na lista: ", signin)
 
 export const listaOpcoesGerais = (
     <React.Fragment>

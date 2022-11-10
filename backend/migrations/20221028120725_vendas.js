@@ -10,7 +10,7 @@ exports.up = function(knex) {
         table.datetime('dataEnvio')
         table.datetime('dataEntrega')
         table.double('valorFrete').notNull()
-        table.string('statusEntrega').default('EM_PROCESSAMENTO').notNull()
+        table.string('statusEntrega').default('Em processamento').notNull()
 
         //flags
         table.boolean('troca').default(false).notNull()
