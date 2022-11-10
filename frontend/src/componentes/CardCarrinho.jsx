@@ -1,21 +1,25 @@
-import * as React from 'react';
+import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ButtonBuy, Cores, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho } from '../styles';
+import { ButtonBuy, Cores, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, DeletarProdutoCarrinho } from '../styles';
 import Box from '@mui/material/Box';
 import Span from './Span';
 import { useDispatch, useSelector } from 'react-redux';
-import { AdicionaQtdItemCarrinho, RetiraQtdItemCarrinho } from '../redux/actions/Carrinho';
+import { AdicionaQtdItemCarrinho, RetiraQtdItemCarrinho, RetiraItemCarrinho } from '../redux/actions/Carrinho';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 export default function CardCarrinho(props) {
     // Dados vindo do Redux
-    const {carrinho} = useSelector(state => state)
-    
+    const { carrinho } = useSelector(state => state)
+
     // Dispara pro Redux
     const dispatch = useDispatch()
+
+    // Dimensões, que é importante para a responsividade
+    const width = window.innerWidth
 
     return (
         <Card sx={WrapperCarrinho}>
@@ -68,7 +72,7 @@ export default function CardCarrinho(props) {
                                     disabled: props.qtd <= 1 ? true : false,
                                     cursor: props.qtd <= 1 ? 'not-allowed' : 'pointer'
                                 }}
-                                onClick={props.qtd <= 1 ? () => null : () => dispatch(RetiraQtdItemCarrinho({carrinho, id: props.id}))}
+                                onClick={props.qtd <= 1 ? () => null : () => dispatch(RetiraQtdItemCarrinho({ carrinho, id: props.id }))}
                             >
                                 -
                             </Button>
@@ -79,7 +83,7 @@ export default function CardCarrinho(props) {
                                     maxWidth: '30px', maxHeight: '30px',
                                     minWidth: '30px', minHeight: '30px'
                                 }}
-                                onClick={() => dispatch(AdicionaQtdItemCarrinho({ carrinho, id: props.id}))}
+                                onClick={() => dispatch(AdicionaQtdItemCarrinho({ carrinho, id: props.id }))}
                             >
                                 +
                             </Button>
@@ -102,15 +106,30 @@ export default function CardCarrinho(props) {
                     </Box>
 
 
-
                 </Box>
-
-
-
             </CardContent>
 
+            <Box
+                component="div"
+                sx={DeletarProdutoCarrinho}
+            >
+                <Button
+                    sx={{
+                        ...ButtonBuy,
+                        color: Cores.textoCabecalho,
+                        height: '100%',
+                        // width: '50px',
+                        display: 'flex',
+                        justifyContent: 'space-evenly',
+                        minWidth: 'auto'
+                    }}
+                    onClick={() => dispatch(RetiraItemCarrinho({carrinho, id: props.id}))}
+                >
+                    <HighlightOffIcon size={'0.875rem'} sx={{ color: Cores.textoCabecalho }} />
+                    {width < 600 ? "Remover item" : null}
+                </Button>
 
-
+            </Box>
         </Card >
     );
 }

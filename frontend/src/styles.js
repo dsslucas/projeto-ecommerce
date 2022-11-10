@@ -116,14 +116,15 @@ const ButtonBuy = {
 // Display para o Carrinho
 const WrapperCarrinho = theme => ({
     display: 'flex',
-    height: 330,
+    height: 'auto',
     marginBottom: '8px',
     borderRadius: '8px',
     paddingTop: 0,
     width: '100%',
 
-    [theme.breakpoints.up('sm')]: {
-        height: 130,
+    [theme.breakpoints.down('sm')]: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
 
     [theme.breakpoints.up('lg')]: {
@@ -178,6 +179,21 @@ const InformacoesCarrinho = theme => ({
     }
 })
 
+// Botão de excluir item do carrinho
+const DeletarProdutoCarrinho = theme => ({
+    //background: Cores.fundoCabecalho,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '50px',
+    top: 0,
+    left: 0,
+
+    [theme.breakpoints.down('sm')]: {
+        width: '100%'
+    },
+})
+
 const CommonBox = {
     display: 'flex',
     justifyContent: 'space-between',
@@ -194,11 +210,11 @@ const CardListaComprasWrapper = theme => ({
     background: Cores.fundoAbaixoConteudo,
     borderRadius: '8px',
     marginBottom: '8px',
-    
+
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         maxWidth: '350'
-    },    
+    },
 })
 
 const CardListaComprasContent = theme => ({
@@ -281,4 +297,4 @@ const EstiloModal = theme => ({
     },
 });
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal }
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho }
