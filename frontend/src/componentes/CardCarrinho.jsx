@@ -7,8 +7,16 @@ import Typography from '@mui/material/Typography';
 import { ButtonBuy, Cores, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho } from '../styles';
 import Box from '@mui/material/Box';
 import Span from './Span';
+import { useDispatch, useSelector } from 'react-redux';
+import { AdicionaQtdItemCarrinho, RetiraQtdItemCarrinho } from '../redux/actions/Carrinho';
 
 export default function CardCarrinho(props) {
+    // Dados vindo do Redux
+    const {carrinho} = useSelector(state => state)
+    
+    // Dispara pro Redux
+    const dispatch = useDispatch()
+
     return (
         <Card sx={WrapperCarrinho}>
             <CardContent
@@ -56,8 +64,11 @@ export default function CardCarrinho(props) {
                                 sx={{
                                     ...ButtonBuy,
                                     maxWidth: '30px', maxHeight: '30px',
-                                    minWidth: '30px', minHeight: '30px'
+                                    minWidth: '30px', minHeight: '30px',
+                                    disabled: props.qtd <= 1 ? true : false,
+                                    cursor: props.qtd <= 1 ? 'not-allowed' : 'pointer'
                                 }}
+                                onClick={props.qtd <= 1 ? () => null : () => dispatch(RetiraQtdItemCarrinho({carrinho, id: props.id}))}
                             >
                                 -
                             </Button>
@@ -68,6 +79,7 @@ export default function CardCarrinho(props) {
                                     maxWidth: '30px', maxHeight: '30px',
                                     minWidth: '30px', minHeight: '30px'
                                 }}
+                                onClick={() => dispatch(AdicionaQtdItemCarrinho({ carrinho, id: props.id}))}
                             >
                                 +
                             </Button>

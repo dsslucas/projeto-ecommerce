@@ -71,9 +71,6 @@ const Carrinho = () => {
 
     // Concretiza a compra dos itens no carrinho
     async function realizacaoCompra() {
-        console.log("Tô aqui meu rei")
-        //onClick={() => signin.email === null ? setModal(!modal) : setAbrirSnackbar(!abrirSnackbar)}
-
         // Checa se o usuário está logado
         if (signin.email === null) {
             // Abre o modal para realização de login/cadastro
@@ -230,6 +227,7 @@ const Carrinho = () => {
                                 titulo={item.titulo}
                                 preco={item.preco}
                                 qtd={item.qtd}
+                                id={item.id}
                             />
                         )
                     })}
