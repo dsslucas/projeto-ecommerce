@@ -28,12 +28,20 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
+    const getProdutoId = (req, res) => {
+        app.db('produtos')
+            .where({idProduto: req.params.id})
+            .orderBy("idProduto")
+            .then((resultado) => res.json(resultado))
+            .catch((erro) => res.status(400).json(erro))
+    }
+
     const editarProduto = (req, res) => {
         app.db('produtos')
             .where({idProduto: req.params.id})
             .update(req.body)
             .then(() => res.status(204).send("Alteração realizada!"))
-            .catch((erro) => res.status(204).json(erro))
+            .catch((erro) => res.status(400).json(erro))
     }
 
     const deletarProduto = (req, res) => {
@@ -51,5 +59,5 @@ module.exports = app => {
         .catch((erro) => res.status(400).json(erro))
     }
 
-    return { cadastroProdutos, getProduto, getProdutos, editarProduto, deletarProduto }
+    return { cadastroProdutos, getProduto, getProdutoId, getProdutos, editarProduto, deletarProduto }
 }

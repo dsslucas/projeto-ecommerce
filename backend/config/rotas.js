@@ -21,7 +21,7 @@ module.exports = app => {
 
     app.route('/produto/:id')
         .all(app.config.passaporte.authenticate())
-        .get(app.api.produtos.getProduto)
+        .get(app.api.produtos.getProdutoId)
         .put(app.api.produtos.editarProduto)
         .delete(app.api.produtos.deletarProduto)
 

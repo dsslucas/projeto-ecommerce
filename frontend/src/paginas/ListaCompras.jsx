@@ -21,6 +21,9 @@ import Typography from '@mui/material/Typography';
 import InventoryIcon from '@mui/icons-material/Inventory';
 
 const ListaCompras = () => {
+    const { signin } = useSelector(state => state)
+
+    const [dadosApiVenda, setDadosApiVenda] = useState([])
 
     const consultaApi = async () => {
         // Consulta das compras realizadas pelo usuário
@@ -30,17 +33,11 @@ const ListaCompras = () => {
             }
         })
         // setApiContent(data.products)
-        console.log(data)
+        //console.log(data)
         setDadosApiVenda(data)
     }
 
-    const { signin } = useSelector(state => state)
-
-    const [dadosApiVenda, setDadosApiVenda] = useState([])
-
     useEffect(() => {
-        console.log("Carreguei a página")
-
         if (signin.email !== null) consultaApi()
     }, [])
 

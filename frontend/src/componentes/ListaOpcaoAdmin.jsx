@@ -21,11 +21,8 @@ const ListaOpcaoAdmin = () => {
     // O que vem do Redux
     const { signin } = useSelector(state => state)
 
-    console.log(signin)
-
     if (signin.isAdmin) {
         return (
-
             <React.Fragment>
                 <ListSubheader
                     component="div" inset

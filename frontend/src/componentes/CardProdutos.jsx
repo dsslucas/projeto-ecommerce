@@ -56,8 +56,9 @@ export default function CardProduto(props) {
         <Button
           size="small"
           variant="contained"
-          sx={ButtonBuy}
-          onClick={() => dispatch(AdicionaItemCarrinho({
+          sx={{...ButtonBuy, cursor: props.qtd < 1 ? 'not-allowed' : 'pointer'}}
+          disabled={props.qtd < 1 ? true : false}
+          onClick={props.qtd < 1 ? () => false : () => dispatch(AdicionaItemCarrinho({
             id: props.id,
             titulo: props.titulo,
             descricao: props.descricao,
@@ -65,7 +66,7 @@ export default function CardProduto(props) {
             qtd: 1
           }))}
         >
-          Comprar
+          {props.qtd < 1 ? 'Indisponível' : 'Comprar'}
         </Button>
       </CardActions>
     </Card>

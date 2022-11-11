@@ -166,11 +166,7 @@ const Carrinho = () => {
     }, [carrinho, signin])
 
     useEffect(() => {
-        console.log("Tive alteração")
-        console.log(respostaConexao)
-        console.log("MENSAGEM DE ALERTA:", msgAlerta)
         if (respostaConexao.resultado !== undefined) {
-            console.log("Aqui o alerta é emitido")
             setTimeout(() => {
                 setMsgAlerta(!msgAlerta)
                 setRespostaConexao({
@@ -256,7 +252,6 @@ const Carrinho = () => {
                         {modalCadastro && (
                             <ModalCadastro
                                 respostaPositiva={(e) => {
-                                    console.log("Tive resposta positiva")
                                     setRespostaConexao({
                                         ...respostaConexao,
                                         resultado: true,
@@ -268,7 +263,6 @@ const Carrinho = () => {
                                     setMsgAlerta(!msgAlerta)
                                 }}
                                 respostaNegativa={(e) => {
-                                    console.log("Tive resposta negativa")
                                     setRespostaConexao({
                                         ...respostaConexao,
                                         resultado: false,

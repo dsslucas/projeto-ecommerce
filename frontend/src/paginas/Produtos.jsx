@@ -49,6 +49,7 @@ const Produtos = () => {
                             titulo={item.nomeProduto}
                             descricao={item.descProduto}
                             preco={item.valorProduto}
+                            qtd={item.qtdProduto}
                         />
                     )
                 }))}
