@@ -242,31 +242,39 @@ const CardListaComprasContent = theme => ({
     // alignItems: 'flex-start',
 
     [theme.breakpoints.up('sm')]: {
+        flexDirection: 'column',
+    },
+    [theme.breakpoints.up('lg')]: {
         flexDirection: 'row',
-        background: 'pink',
-        minHeight: '130px',
+        //minHeight: '130px',
     }
 })
 
 const CardListaDivider = theme => ({
     display: 'flex',
     flexDirection: 'column',
-    background: 'yellow',
     [theme.breakpoints.up('sm')]: {
+        width: '100%',
+        //flexDirection: 'column',
+    },
+    [theme.breakpoints.up('lg')]: {
         width: '80%',
-        flexDirection: 'row',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
     }
 })
 
 const CardGridLista = theme => ({
-    
-    background: 'dodgerblue',
     [theme.breakpoints.up('sm')]: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/2, max(64px, 100%/3)), 1fr))',
         //gridTemplateRows: '220px',
     },
+
+    [theme.breakpoints.up('lg')]: {
+        width: '100%',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+    }
 })
 
 const CardListaInformacao = theme => ({
@@ -274,18 +282,21 @@ const CardListaInformacao = theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'blue',
-    width: '20%'
+    [theme.breakpoints.up('sm')]: {
+        width: '100%',
+        marginTop: '16px'
+    },
+    [theme.breakpoints.up('lg')]: {
+        width: '20%'
+    }
 })
 
 const CardListaComprasImage = theme => ({
     display: 'flex',
-    background: 'blue',
     width: '100%',
-
     [theme.breakpoints.up('sm')]: {
-        width: '130px',
-        height: '130px'
+        width: '80%',
+        // height: '50%'
     },
 })
 

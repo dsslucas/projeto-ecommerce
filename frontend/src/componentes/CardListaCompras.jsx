@@ -205,6 +205,34 @@ export default function CardListaCompras(props) {
                                 R$ {props.preco}
                             </Typography>
                         </Box>
+
+                        {/* <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box> */}
                     </Box>
 
                 </Box>
