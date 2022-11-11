@@ -42,7 +42,7 @@ export default function ModalCadastro(props) {
             })
 
             // Manda o resultado
-            //props.respostaPositiva(`${cadastroUsuario.nome}, seu usuário foi cadastrado em nosso sistema!`)
+            props.respostaPositiva(`${cadastroUsuario.nome}, seu usuário foi cadastrado em nosso sistema!`)
 
             // Zera o estado
             setCadastroUsuario({
@@ -62,7 +62,8 @@ export default function ModalCadastro(props) {
 
         } catch (e) {
             //alert("Usuário não cadastrado.")
-            // props.respostaNegativa("Os dados informados estão incorretos.")
+            //console.log(e)
+            props.respostaNegativa("Os dados informados estão incorretos.")
         }
     }
 

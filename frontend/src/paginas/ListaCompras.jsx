@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
-import { EstilosConteudo } from '../styles';
+import { Cores, EstilosConteudo } from '../styles';
 import CardListaCompras from '../componentes/CardListaCompras';
 
 // Imagens (temporárias)
@@ -16,6 +16,9 @@ import Titulo from '../componentes/Titulo';
 
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
+
+import Typography from '@mui/material/Typography';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 const ListaCompras = () => {
 
@@ -33,20 +36,19 @@ const ListaCompras = () => {
 
     const { signin } = useSelector(state => state)
 
-    const [dadosApiVenda, setDadosApiVenda] = useState()
+    const [dadosApiVenda, setDadosApiVenda] = useState([])
 
     useEffect(() => {
         console.log("Carreguei a página")
-        consultaApi()
+
+        if (signin.email !== null) consultaApi()
     }, [])
-
-
 
     return (
         <Box sx={EstilosConteudo}>
             <Titulo titulo="Lista de Compras" />
 
-            {/* {dadosApiVenda.map((item) => {
+            {dadosApiVenda.map((item) => {
                 return (
                     <CardListaCompras
                         key={item.id}
@@ -59,7 +61,7 @@ const ListaCompras = () => {
                         status={item.statusEntrega}
                     />
                 )
-            })} */}
+            })}
 
 
             {/* <CardListaCompras
@@ -75,6 +77,26 @@ const ListaCompras = () => {
                 image={Image1}
                 status="Em trânsito"
             /> */}
+
+            {dadosApiVenda.length === 0 && (
+                <Box
+                    component="div"
+                    sx={{
+                        height: 'calc(100vh - 222px)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'
+                    }}
+                >
+                    <InventoryIcon sx={{ color: Cores.fundoCabecalho, width: "50%", height: "50%" }} />
+
+                    <Typography
+                        component="h6"
+                        variant="h6"
+                        sx={{ textAlign: 'center', color: Cores.fundoCabecalho }}
+                    >
+                        Nenhuma compra foi localizada. Faça o login e realize uma compra conosco!
+                    </Typography>
+                </Box>
+            )}
 
         </Box>
     )

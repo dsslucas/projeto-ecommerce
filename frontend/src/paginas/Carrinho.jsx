@@ -46,7 +46,7 @@ const Alerta = React.forwardRef(function Alert(props, ref) {
 });
 
 const Carrinho = () => {
-    // Redux
+    // Dados que vem do Redux
     const { signin, carrinho } = useSelector(estado => estado)
 
     // Manda para as Actions
@@ -71,6 +71,9 @@ const Carrinho = () => {
 
     // Cálculo dos produtos
     const [valorProduto, setValorProduto] = useState(0.0)
+
+    // Efeito de alerta
+    const [msgAlerta, setMsgAlerta] = useState(false)
 
     // Valor do frete por região
     const valoresFrete = (estado) => {
@@ -113,7 +116,7 @@ const Carrinho = () => {
     }
 
     // Concretiza a compra dos itens no carrinho
-    async function realizacaoCompra() {
+    const realizacaoCompra = async () => {
         // Checa se o usuário está logado
         if (signin.email === null) {
             // Abre o modal para realização de login/cadastro
@@ -162,6 +165,23 @@ const Carrinho = () => {
         setValorProduto(valorTotal)
     }, [carrinho, signin])
 
+    useEffect(() => {
+        console.log("Tive alteração")
+        console.log(respostaConexao)
+        console.log("MENSAGEM DE ALERTA:", msgAlerta)
+        if (respostaConexao.resultado !== undefined) {
+            console.log("Aqui o alerta é emitido")
+            setTimeout(() => {
+                setMsgAlerta(!msgAlerta)
+                setRespostaConexao({
+                    ...respostaConexao,
+                    resultado: undefined,
+                    texto: undefined
+                })
+            }, 5000)
+        }
+    }, [respostaConexao])
+
     return (
         <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Carrinho" />
@@ -179,7 +199,7 @@ const Carrinho = () => {
                         right: '25%',
                     }}
                 >
-                    <Fade in={respostaConexao.resultado !== undefined} timeout={1000}>
+                    <Fade in={msgAlerta} exit={!msgAlerta} timeout={1000}>
                         <Stack
                             sx={{
                                 width: 'auto',
@@ -196,10 +216,6 @@ const Carrinho = () => {
                                     {respostaConexao.texto}
                                 </Alert>
                             )}
-
-                            {setTimeout(() => {
-                                setRespostaConexao({ ...respostaConexao, resultado: undefined, texto: undefined })
-                            }, 4000)}
                         </Stack>
                     </Fade>
                 </Box>
@@ -216,15 +232,21 @@ const Carrinho = () => {
                             <ModalLogin
                                 respostaPositiva={(e) => {
                                     setRespostaConexao({
+                                        ...respostaConexao,
                                         resultado: true,
                                         texto: e
                                     })
+                                    // Chama o alerta
+                                    setMsgAlerta(!msgAlerta)
                                 }}
                                 respostaNegativa={(e) => {
                                     setRespostaConexao({
+                                        ...respostaConexao,
                                         resultado: false,
                                         texto: e
                                     })
+                                    // Chama o alerta
+                                    setMsgAlerta(!msgAlerta)
                                 }}
                                 respostaBotaoCancelar={() => {
                                     setModal(!modal)
@@ -234,16 +256,26 @@ const Carrinho = () => {
                         {modalCadastro && (
                             <ModalCadastro
                                 respostaPositiva={(e) => {
+                                    console.log("Tive resposta positiva")
                                     setRespostaConexao({
+                                        ...respostaConexao,
                                         resultado: true,
                                         texto: e
                                     })
+                                    setModalCadastro(!modalCadastro)
+                                    setModalLogin(!modalLogin)
+                                    // Chama o alerta
+                                    setMsgAlerta(!msgAlerta)
                                 }}
                                 respostaNegativa={(e) => {
+                                    console.log("Tive resposta negativa")
                                     setRespostaConexao({
+                                        ...respostaConexao,
                                         resultado: false,
                                         texto: e
                                     })
+                                    // Chama o alerta
+                                    setMsgAlerta(!msgAlerta)
                                 }}
                                 respostaBotaoCancelar={() => {
                                     setModal(!modal)

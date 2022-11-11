@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Titulo from '../componentes/Titulo';
-import { ButtonBuy, Cores, EstilosConteudo, LoginCadastroWrapper } from '../styles';
+import { ButtonBuy, EstilosConteudo, LoginCadastroWrapper } from '../styles';
 import Input from '../componentes/Input'
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
@@ -9,13 +10,11 @@ import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import api from '../servicos/api';
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { SignIn } from '../redux/actions/SignIn';
-import MuiAlert from '@mui/material/Alert';
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
 import Fade from '@mui/material/Fade';
-import Snackbar from '@mui/material/Snackbar';
 
 const Login = () => {
     // Importante para enviar ao Redux
@@ -42,8 +41,17 @@ const Login = () => {
     // Pega as respostas e renderiza na tela por função
     const [respostaConexao, setRespostaConexao] = useState({ resultado: undefined, texto: undefined })
 
+    // Efeito de alerta
+    const [msgAlerta, setMsgAlerta] = useState(false)
+
     // Chamada pro Redux
     const dispatch = useDispatch()
+
+    // Dados que vem do Redux
+    const {signin} = useSelector(estado => estado)
+
+    // Navegação para outras rotas
+    const navigate = useNavigate()
 
     // Cadastro do usuário no sistema
     const signUp = async () => {
@@ -61,10 +69,13 @@ const Login = () => {
 
             // Manda o resultado
             setRespostaConexao({
-                ...respostaConexao, 
-                resultado: true, 
+                ...respostaConexao,
+                resultado: true,
                 texto: `${cadastroUsuario.nome}, seu usuário foi cadastrado em nosso sistema!`
             })
+
+            // Chama o alerta
+            setMsgAlerta(!msgAlerta)
 
             // Zera o estado
             setCadastroUsuario({
@@ -79,13 +90,19 @@ const Login = () => {
                 isAdmin: false
             })
 
+            // Volta para o Login
+            setCadastro(!cadastro)
+            setLogin(!login)
         } catch (e) {
             //alert("Usuário não cadastrado.")
             setRespostaConexao({
-                ...respostaConexao, 
-                resultado: false, 
+                ...respostaConexao,
+                resultado: false,
                 texto: 'Os dados informados estão incorretos.'
             })
+
+            // Chama o alerta
+            setMsgAlerta(!msgAlerta)
         }
     }
 
@@ -100,11 +117,6 @@ const Login = () => {
             // Token vindo do backend, para segurança
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
 
-            //console.log("TOKEN: ", res.data.token)
-            //setLoginUsuario({ ...loginUsuario, token: 'analise' })
-
-            //alert("Seja bem vindo(a)!")
-
             // Envia para o Redux, por ser importante para as etapas seguintes
             dispatch(SignIn({
                 id: res.data.idUsuario,
@@ -116,22 +128,45 @@ const Login = () => {
             }))
 
             setRespostaConexao({
-                ...respostaConexao, 
-                resultado: true, 
+                ...respostaConexao,
+                resultado: true,
                 texto: `É um prazer lhe receber, ${res.data.nomeUsuario}.`
             })
+
+            // Chama o alerta
+            setMsgAlerta(!msgAlerta)
+
+            // Navega para Produtos se o Fade tiver fechado e tiver registro do usuário no Redux
+            if(!msgAlerta && signin.email !== undefined) {
+                setTimeout(() => {
+                    navigate('/produtos')
+                }, 6000)
+            }
         } catch (e) {
-            //alert("Os dados informados não estão presentes em nosso banco de dados.", e)
-            //console.error(e)
-            //props.respostaNegativa("Os dados informados não foram encontrados em nosso sistema.")
-            //returnBotaoCancelar()
             setRespostaConexao({
-                ...respostaConexao, 
-                resultado: false, 
+                ...respostaConexao,
+                resultado: false,
                 texto: `Os dados informados não foram encontrados em nosso sistema.`
             })
+
+            // Chama o alerta
+            setMsgAlerta(!msgAlerta)
         }
     }
+
+    // Necessário para o Fade exibir ou não.
+    useEffect(() => {
+        if (respostaConexao.resultado !== undefined) {
+            setTimeout(() => {
+                setMsgAlerta(!msgAlerta)
+                setRespostaConexao({
+                    ...respostaConexao,
+                    resultado: undefined,
+                    texto: undefined
+                })
+            }, 5000)
+        }
+    }, [])
 
     return (
         <Box
@@ -156,7 +191,7 @@ const Login = () => {
                         right: '25%',
                     }}
                 >
-                    <Fade in={respostaConexao.resultado !== undefined} timeout={1000}>
+                    <Fade in={msgAlerta} exit={!msgAlerta} timeout={1000}>
                         <Stack
                             sx={{
                                 width: 'auto',
@@ -173,10 +208,6 @@ const Login = () => {
                                     {respostaConexao.texto}
                                 </Alert>
                             )}
-
-                            {setTimeout(() => {
-                                setRespostaConexao({ ...respostaConexao, resultado: undefined, texto: undefined })
-                            }, 6000)}
                         </Stack>
                     </Fade>
                 </Box>
@@ -337,7 +368,6 @@ const Login = () => {
                 >
                     {login ? "Ainda não tenho cadastro" : "Voltar para o Login"}
                 </Button>
-
             </Box>
 
         </Box>
