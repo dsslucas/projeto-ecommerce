@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { ButtonBuy, CardListaComprasButtons, CardListaComprasContent, CardListaComprasContentColumn, CardListaComprasImage, CardListaComprasWrapper } from '../styles';
+import { ButtonBuy, CardGridLista, CardListaComprasButtons, CardListaComprasContent, CardListaComprasContentColumn, CardListaComprasImage, CardListaComprasWrapper, CardListaDivider, CardListaInformacao } from '../styles';
 import Box from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';
 import { useSelector } from 'react-redux';
@@ -64,69 +64,215 @@ export default function CardListaCompras(props) {
             <CardContent
                 sx={CardListaComprasContent}
             >
-                <Box
-                    component="div"
-                    sx={CardListaComprasImage}
-                >
-                    <CardMedia
-                        component="img"
-                        alt="green iguana"
-                        image={props.image}
-                        sx={{ borderRadius: '8px' }}
-                    />
+                <Box sx={CardListaDivider}>
+                    <Box sx={CardGridLista}>
+                        <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            component="div"
+                            sx={CardListaComprasContentColumn}
+                        >
+                            <Box
+                                component="div"
+                                sx={CardListaComprasImage}
+                            >
+                                <CardMedia
+                                    component="img"
+                                    alt="green iguana"
+                                    image={props.image}
+                                    sx={{ borderRadius: '8px' }}
+                                />
+                            </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                {props.titulo}
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                3 unidades
+                            </Typography>
+
+                            <Typography gutterBottom variant="p" component="div" >
+                                R$ {props.preco}
+                            </Typography>
+                        </Box>
+                    </Box>
+
                 </Box>
 
-                <Box
-                    component="div"
-                    sx={CardListaComprasContentColumn}
-                >
+                <Box component="div" sx={CardListaInformacao}>
                     <Typography gutterBottom variant="p" component="div" >
-                        {props.titulo}
+                        Valor dos produtos: R$ {250.00}
                     </Typography>
 
                     <Typography gutterBottom variant="p" component="div" >
-                        R$ {props.preco}
+                        Valor do frete: R$ {250.00}
                     </Typography>
 
                     <Typography gutterBottom variant="p" component="div" >
-                        {props.status}
+                        Valor total: R$ {250.00}
                     </Typography>
                 </Box>
             </CardContent>
 
-            <CardContent
+            {/* <CardContent
                 sx={CardListaComprasContent}
             >
-                <Box
-                    component="div"
-                    sx={CardListaComprasImage}
-                >
-                    <CardMedia
-                        component="img"
-                        alt="green iguana"
-                        image={props.image}
-                        sx={{ borderRadius: '8px' }}
-                    />
+                <Box sx={CardListaDivider}>
+                    <Box
+                        component="div"
+                        sx={CardListaComprasImage}
+                    >
+                        <CardMedia
+                            component="img"
+                            alt="green iguana"
+                            image={props.image}
+                            sx={{ borderRadius: '8px' }}
+                        />
+                    </Box>
+
+                    <Box
+                        component="div"
+                        sx={CardListaComprasContentColumn}
+                    >
+                        <Typography gutterBottom variant="p" component="div" >
+                            {props.titulo}
+                        </Typography>
+
+                        <Typography gutterBottom variant="p" component="div" >
+                            3 unidades
+                        </Typography>
+
+                        <Typography gutterBottom variant="p" component="div" >
+                            R$ {props.preco}
+                        </Typography>
+                    </Box>
                 </Box>
 
-                <Box
-                    component="div"
-                    sx={CardListaComprasContentColumn}
-                >
+                <Box component="div" sx={CardListaInformacao}>
                     <Typography gutterBottom variant="p" component="div" >
-                        {props.titulo}
+                        Valor dos produtos: R$ {250.00}
                     </Typography>
 
                     <Typography gutterBottom variant="p" component="div" >
-                        R$ {props.preco}
+                        Valor do frete: R$ {250.00}
                     </Typography>
-
+                    
                     <Typography gutterBottom variant="p" component="div" >
-                        {props.status}
+                        Valor total: R$ {250.00}
                     </Typography>
-
                 </Box>
-            </CardContent>
+            </CardContent> */}
+
 
             <Box
                 component="div"

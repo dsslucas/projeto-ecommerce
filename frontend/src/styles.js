@@ -227,34 +227,77 @@ const CardListaComprasWrapper = theme => ({
     marginBottom: '8px',
 
     [theme.breakpoints.down('sm')]: {
-        flexDirection: 'column',
-        maxWidth: '350'
+        flexDirection: 'row',
+        maxWidth: '350',
+        flexWrap: 'wrap'
     },
 })
 
 const CardListaComprasContent = theme => ({
     display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center'
+    flexDirection: 'column',
+    alignItems: 'center',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+    // alignItems: 'flex-start',
+
+    [theme.breakpoints.up('sm')]: {
+        flexDirection: 'row',
+        background: 'pink',
+        minHeight: '130px',
+    }
+})
+
+const CardListaDivider = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    background: 'yellow',
+    [theme.breakpoints.up('sm')]: {
+        width: '80%',
+        flexDirection: 'row',
+    }
+})
+
+const CardGridLista = theme => ({
+    
+    background: 'dodgerblue',
+    [theme.breakpoints.up('sm')]: {
+        width: '100%',
+        display: 'grid',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/3, max(64px, 100%/5)), 1fr))',
+        //gridTemplateRows: '220px',
+    },
+})
+
+const CardListaInformacao = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    background: 'blue',
+    width: '20%'
 })
 
 const CardListaComprasImage = theme => ({
-    [theme.breakpoints.down('sm')]: {
-        width: '50%',
-        height: '50%'
+    display: 'flex',
+    background: 'blue',
+    width: '100%',
+
+    [theme.breakpoints.up('sm')]: {
+        width: '130px',
+        height: '130px'
     },
-    width: '130px',
-    height: '130px'
 })
 
 const CardListaComprasContentColumn = theme => ({
     display: 'flex',
-    width: '85%',
-    justifyContent: 'space-around',
+    flexDirection: 'column',
+    alignItems: 'center',
+    // background: 'gray',
+
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
-        textAlign: 'center'
+        textAlign: 'center',
     },
 })
 
@@ -312,4 +355,4 @@ const EstiloModal = theme => ({
     },
 });
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaComprasContent, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho, LoginCadastroWrapper }
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaInformacao, CardListaDivider, CardListaComprasContent, CardGridLista, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho, LoginCadastroWrapper }
