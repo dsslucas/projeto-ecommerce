@@ -46,10 +46,7 @@ export default function CardListaCompras(props) {
                 valorProduto: item.valorProduto,
             }
         })
-
         const produtosDetalhados = await Promise.all(produtosPromise);
-        console.log(produtosDetalhados)
-
         setDadosApiVenda([{
             produtos: produtosDetalhados,
             subtotal: dadosVenda.subtotal,
@@ -82,7 +79,6 @@ export default function CardListaCompras(props) {
                 <Box sx={CardListaDivider}>
                     <Box sx={CardGridLista}>
                         {dadosApiVenda.map((item) => {
-                            console.log("NO MAP: ", item)
                             return item.produtos.map((produto) => {
                                 return (
                                     <Box
@@ -118,7 +114,6 @@ export default function CardListaCompras(props) {
                 </Box>
 
                 {dadosApiVenda.map((info) => {
-                    //console.log("NO MAP: ", info)
                     return (
                         <Box component="div" sx={CardListaInformacao}>
                             <Typography gutterBottom variant="p" component="div" >

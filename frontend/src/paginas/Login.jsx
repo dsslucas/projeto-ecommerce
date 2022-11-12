@@ -308,6 +308,7 @@ const Login = () => {
                                     labelId="uf-usuario-label"
                                     id="uf_usuario"
                                     value={cadastroUsuario.uf}
+                                    defaultValue={cadastroUsuario.uf}
                                     label="Estado"
                                     onChange={(e) => setCadastroUsuario({ ...cadastroUsuario, uf: e.target.value })}
                                     sx={{ color: 'black', width: '100%' }}
