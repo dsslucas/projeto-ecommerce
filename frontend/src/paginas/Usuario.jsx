@@ -14,8 +14,31 @@ import Typography from '@mui/material/Typography';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import api from '../servicos/api';
 
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import Fade from '@mui/material/Fade';
+
 const Usuario = () => {
-    const [atualizaUsuario, setAtualizaUsuario] = useState({})
+    // Salva os dados do usuário
+    const [atualizaUsuario, setAtualizaUsuario] = useState({
+        nome: undefined,
+        email: undefined,
+        senha: undefined,
+        endereco: undefined,
+        cidade: undefined,
+        uf: undefined,
+        cep: undefined
+    })
+
+    // Efeito de alerta
+    const [msgAlerta, setMsgAlerta] = useState({
+        status: false,
+        resposta: undefined,
+        texto: undefined
+    })
+
+    // Botão pressionado
+    const [botaoPressionado, setBotaoPressionado] = useState(false)
 
     // Dados que vem do Redux
     const { signin } = useSelector(estado => estado)
@@ -44,11 +67,10 @@ const Usuario = () => {
 
     // Atualiza o cadastro junto ao Banco de Dados
     const atualizaCadastro = async () => {
-
+        setBotaoPressionado(true)
         try {
-            console.log("ESTADO AQUI: ", atualizaUsuario)
             // Manda para a API
-            const res = await api.put(`/usuario/${signin.id}`, {
+            await api.put(`/usuario/${signin.id}`, {
                 emailUsuario: atualizaUsuario.email,
                 nomeUsuario: atualizaUsuario.nome,
                 senhaUsuario: atualizaUsuario.senha,
@@ -62,17 +84,38 @@ const Usuario = () => {
                 }
             })
 
-            console.log("Deu bão!", res)
+            setMsgAlerta({
+                status: true,
+                resposta: true,
+                texto: "Atualização cadastral realizada."
+            })
         }
         catch (e) {
-            console.log("Deu ruim")
+            setMsgAlerta({
+                status: true,
+                resposta: false,
+                texto: "A atualização cadastral não foi realizada por falta de dados."
+            })
         }
-        
     }
 
     useEffect(() => {
-        if (signin.email !== null) consultaApi()
+        if (signin.email !== null) {
+            consultaApi()
+        }
     }, [])
+
+    useEffect(() => {
+        console.log("Devo fechar")
+        setTimeout(() => {
+            setMsgAlerta({
+                status: false,
+                resposta: undefined,
+                texto: undefined
+            })
+            console.log("Fechei")
+        }, 5000)
+    }, [botaoPressionado])
 
     return (
         <Box
@@ -82,6 +125,41 @@ const Usuario = () => {
             }}
         >
             <Titulo titulo="Dados do usuário" />
+
+            {msgAlerta.status && (
+                <Box component="div"
+                    sx={{
+                        width: '50%',
+                        zIndex: 2000,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        position: 'absolute',
+                        top: 5,
+                        left: '25%',
+                        right: '25%',
+                    }}
+                >
+                    <Fade in={msgAlerta.status} exit={!msgAlerta.status} timeout={1000}>
+                        <Stack
+                            sx={{
+                                width: 'auto',
+                            }}
+                            spacing={2}
+                        >
+                            {msgAlerta.resposta && (
+                                <Alert variant="filled" severity="success">
+                                    {msgAlerta.texto}
+                                </Alert>
+                            )}
+                            {!msgAlerta.resposta && (
+                                <Alert variant="filled" severity="error">
+                                    {msgAlerta.texto}
+                                </Alert>
+                            )}
+                        </Stack>
+                    </Fade>
+                </Box>
+            )}
 
             {signin.email === null && (
                 <Box
@@ -132,6 +210,8 @@ const Usuario = () => {
                                 label="E-mail"
                                 value={atualizaUsuario.email}
                                 returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, email: e })}
+                                error={atualizaUsuario.email !== undefined && (!atualizaUsuario.email.includes('@') || !atualizaUsuario.email.includes('.')) ? true : false}
+                                helperText={atualizaUsuario.email !== undefined && (!atualizaUsuario.email.includes('@') || !atualizaUsuario.email.includes('.')) ? "É necessário conter arroba e ponto." : false}
                             />
                         </Box>
                         <Box component="div" sx={{ width: '48%' }}>

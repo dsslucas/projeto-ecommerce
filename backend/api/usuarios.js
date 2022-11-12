@@ -29,7 +29,7 @@ module.exports = app => {
             // Aqui, não é armazenado a senha limpa, mas sim um hash calculado
             const password = hash
 
-            if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".")) {
+            if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
                 // Armazena no Banco
                 app.db('usuarios').insert({
                     emailUsuario: req.body.emailUsuario.toLowerCase(),
@@ -51,11 +51,18 @@ module.exports = app => {
     }
 
     const editarUsuario = (req, res) => {
-        app.db('usuarios')
-            .where({ idUsuario: req.user.idUsuario })
-            .update(req.body)
-            .then(() => res.status(204).send("Alteração realizada!"))
-            .catch((erro) => res.status(204).json(erro))
+        console.log("LENGTH DO CEP: ", req.body.cepUsuario.length === 8)
+        if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
+            app.db('usuarios')
+                .where({ idUsuario: req.user.idUsuario })
+                .update(req.body)
+                .then(() => res.status(204).send("Alteração realizada"))
+                .catch((erro) => res.status(400).json(erro))
+        }
+        else {
+            res.status(400).send("Os dados informados estão incorretos.")
+        }
+
     }
 
     const deletarUsuario = (req, res) => {
