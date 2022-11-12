@@ -45,7 +45,7 @@ const ListaCompras = () => {
         <Box sx={EstilosConteudo}>
             <Titulo titulo="Lista de Compras" />
 
-            {dadosApiVenda.map((item) => {
+            {dadosApiVenda.map((item, key) => {
                 return (
                     <CardListaCompras
                         key={item.id}

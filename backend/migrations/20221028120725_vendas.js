@@ -9,6 +9,7 @@ exports.up = function(knex) {
         //entrega
         table.datetime('dataEnvio')
         table.datetime('dataEntrega')
+        table.double('subtotal').notNull()
         table.double('valorFrete').notNull()
         table.string('statusEntrega').default('Em processamento').notNull()
 

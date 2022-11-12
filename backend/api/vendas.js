@@ -84,6 +84,7 @@ module.exports = app => {
             .insert({
                 idUsuario: req.user.idUsuario,
                 dataVenda: new Date(),
+                subtotal: total,
                 valorFrete: valorFrete,
                 valorTotal: total + valorFrete,
                 metodoPagamento: req.body.metodoPagamento
@@ -101,7 +102,8 @@ module.exports = app => {
                     idVenda: vendas[0],
                     idProduto: compra.idProduto,
                     qtdProduto: compra.quantidade,
-                    valorProduto: produto.valorProduto
+                    valorProduto: produto.valorProduto,
+                    subtotalProduto: (compra.quantidade * produto.valorProduto)
                 })
         }))
         res.status(200).json('A venda foi realizada com sucesso!')
@@ -117,6 +119,8 @@ module.exports = app => {
             res.status(404).json('A venda não foi encontrada')
             return
         }
+
+        //console.log(venda)
 
         const produtos = await app.db('produto_carrinho')
             .where({ idVenda: req.params.id })

@@ -102,7 +102,7 @@ export default function CardCarrinho(props) {
                             borderRadius: '8px'
                         }}
                     >
-                        <Span number={`R$ ${props.preco}`} />
+                        <Span number={`R$ ${props.preco.toFixed(2)}`} />
                     </Box>
 
 

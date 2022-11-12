@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.integer('idProduto')
         table.integer('qtdProduto').notNull()
         table.double('valorProduto').notNull()
+        table.double('subtotalProduto').notNull()
       })
 };
 

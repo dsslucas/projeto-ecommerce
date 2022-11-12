@@ -370,7 +370,7 @@ const Carrinho = () => {
                                     Valor dos produtos
                                 </Typography>
 
-                                <Span number={`R$ ${valorProduto}`} />
+                                <Span number={`R$ ${valorProduto.toFixed(2)}`} />
                             </Box>
 
                             <Box
@@ -403,7 +403,7 @@ const Carrinho = () => {
                                     Valor total:
                                 </Typography>
 
-                                <Span number={`R$ ${valorProduto + valoresFrete(signin.uf)}`} />
+                                <Span number={`R$ ${(valorProduto + valoresFrete(signin.uf)).toFixed(2)}`} />
                             </Box>
 
                             <Typography

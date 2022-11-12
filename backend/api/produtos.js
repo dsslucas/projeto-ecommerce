@@ -32,6 +32,7 @@ module.exports = app => {
         app.db('produtos')
             .where({idProduto: req.params.id})
             .orderBy("idProduto")
+            .first()
             .then((resultado) => res.json(resultado))
             .catch((erro) => res.status(400).json(erro))
     }

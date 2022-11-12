@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,12 +9,15 @@ import Box from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
+import { ListItemIcon } from '@mui/material';
 
 export default function CardListaCompras(props) {
     // Pega os dados do Redux
     const { signin } = useSelector(state => state)
 
     const [dadosApiVenda, setDadosApiVenda] = React.useState([])
+
+    const [listaProdutosCompra, setListaProdutosCompra] = useState([])
 
     // Consulta de vendas específicas com base no ID da venda
     const consultaApiVenda = async () => {
@@ -24,27 +27,58 @@ export default function CardListaCompras(props) {
                 Authorization: signin.token
             }
         })
-        console.log("VENDA: ", data)
-        setDadosApiVenda(data.produtos)
+        //console.log("VENDA: ", data.produtos)
+        //setDadosApiVenda(data)
+
+        await consultaApiProduto(data)
     }
 
-    // Consulta de vendas específicas com base no ID da venda
-    const consultaApiProduto = async () => {
-        // Consulta das compras realizadas pelo usuário
-        const { data } = await api.get(`produto/`, {
-            headers: {
-                Authorization: signin.token
+    const consultaApiProduto = async (dadosVenda) => {
+        // Consulta de vendas específicas com base no ID da venda
+        const produtosPromise = dadosVenda.produtos.map(async (item) => {
+            const { data } = await api.get(`produto/${item.idProduto}`, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+            return {
+                id: item.idProduto,
+                nome: data.nomeProduto,
+                qtd: item.qtdProduto,
+                valorProduto: item.valorProduto,
             }
         })
-        //console.log("PRODUTO:", data)
-        //setDadosApiVenda({...dadosApiVenda, nomeProduto: data.nomeProduto})
-        //setDadosApiVenda({...dadosApiVenda, produtos: data.produtos})
+
+        const produtosDetalhados = await Promise.all(produtosPromise);
+        console.log(produtosDetalhados)
+
+        // const consultaFinal = [{
+        //     produtos: produtosDetalhados,
+        //     subtotal: dadosVenda.subtotal,
+        //     valorFrete: dadosVenda.valorFrete,
+        //     valorTotal: dadosVenda.valorTotal,
+        //     dataEnvio: dadosVenda.dataEnvio,
+        //     dataEntrega: dadosVenda.dataEntrega,
+        //     status: dadosVenda.statusEntrega,
+        //     troca: dadosVenda.troca,
+        //     devolucao: dadosVenda.devolucao
+        // }]
+        setDadosApiVenda([{
+            produtos: produtosDetalhados,
+            subtotal: dadosVenda.subtotal,
+            valorFrete: dadosVenda.valorFrete,
+            valorTotal: dadosVenda.valorTotal,
+            dataEnvio: dadosVenda.dataEnvio,
+            dataEntrega: dadosVenda.dataEntrega,
+            status: dadosVenda.statusEntrega,
+            troca: dadosVenda.troca,
+            devolucao: dadosVenda.devolucao
+        }])
     }
 
     React.useEffect(() => {
         if (signin.email !== null) {
             consultaApiVenda()
-            consultaApiProduto()
         }
     }, [])
 
@@ -55,264 +89,85 @@ export default function CardListaCompras(props) {
         >
             <CardHeader subheader={props.dataVenda} />
 
-            {/* {dadosApiVenda.map((item) => {
-                return (
-                    console.log(item)
-                )
-            })} */}
-
             <CardContent
                 sx={CardListaComprasContent}
             >
                 <Box sx={CardListaDivider}>
                     <Box sx={CardGridLista}>
-                        <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box>
-
-                        <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box>
-
-                        <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box>
-
-                        <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box>
-
-                        <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box>
-
-                        {/* <Box
-                            component="div"
-                            sx={CardListaComprasContentColumn}
-                        >
-                            <Box
-                                component="div"
-                                sx={CardListaComprasImage}
-                            >
-                                <CardMedia
-                                    component="img"
-                                    alt="green iguana"
-                                    image={props.image}
-                                    sx={{ borderRadius: '8px' }}
-                                />
-                            </Box>
-                            <Typography gutterBottom variant="p" component="div" >
-                                {props.titulo}
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                3 unidades
-                            </Typography>
-
-                            <Typography gutterBottom variant="p" component="div" >
-                                R$ {props.preco}
-                            </Typography>
-                        </Box> */}
+                        {dadosApiVenda.map((item) => {
+                            console.log("NO MAP: ", item)
+                            return item.produtos.map((produto) => {
+                                return (
+                                    <Box
+                                        component="div"
+                                        sx={CardListaComprasContentColumn}
+                                        key={item.id}
+                                    >
+                                        <Box
+                                            component="div"
+                                            sx={CardListaComprasImage}
+                                        >
+                                            <CardMedia
+                                                component="img"
+                                                alt="green iguana"
+                                                image={props.image}
+                                                sx={{ borderRadius: '8px' }}
+                                            />
+                                        </Box>
+                                        <Typography gutterBottom variant="p" component="div" >
+                                            {produto.nome}
+                                        </Typography>
+                                        <Typography gutterBottom variant="p" component="div" >
+                                            {produto.qtd} unidades
+                                        </Typography>
+                                        <Typography gutterBottom variant="p" component="div" >
+                                            R$ {produto.valorProduto}
+                                        </Typography>
+                                    </Box>
+                                )
+                            })
+                        })}
                     </Box>
-
                 </Box>
 
-                <Box component="div" sx={CardListaInformacao}>
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor dos produtos: R$ {250.00}
-                    </Typography>
+                {dadosApiVenda.map((info) => {
+                    //console.log("NO MAP: ", info)
+                    return (
+                        <Box component="div" sx={CardListaInformacao}>
+                            <Typography gutterBottom variant="p" component="div" >
+                                Status: {info.status}
+                            </Typography>
+                            {info.dataEnvio !== null && (
+                                <Typography gutterBottom variant="p" component="div" >
+                                    Enviado em: {info.dataEnvio}
+                                </Typography>
+                            )}
+                            {info.dataEntrega !== null && (
+                                <Typography gutterBottom variant="p" component="div" >
+                                    Enviado em: {info.dataEntrega}
+                                </Typography>
+                            )}
+                            <Typography gutterBottom variant="p" component="div" >
+                                Valor dos produtos: R$ {info.subtotal}
+                            </Typography>
 
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor do frete: R$ {250.00}
-                    </Typography>
+                            <Typography gutterBottom variant="p" component="div" >
+                                Valor do frete: R$ {info.valorFrete.toFixed(2)}
+                            </Typography>
 
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor total: R$ {250.00}
-                    </Typography>
-                </Box>
+                            <Typography gutterBottom variant="p" component="div" >
+                                Valor total: R$ {info.valorTotal.toFixed(2)}
+                            </Typography>
+                        </Box>
+                    )
+                })}
+
             </CardContent>
-
-            {/* <CardContent
-                sx={CardListaComprasContent}
-            >
-                <Box sx={CardListaDivider}>
-                    <Box
-                        component="div"
-                        sx={CardListaComprasImage}
-                    >
-                        <CardMedia
-                            component="img"
-                            alt="green iguana"
-                            image={props.image}
-                            sx={{ borderRadius: '8px' }}
-                        />
-                    </Box>
-
-                    <Box
-                        component="div"
-                        sx={CardListaComprasContentColumn}
-                    >
-                        <Typography gutterBottom variant="p" component="div" >
-                            {props.titulo}
-                        </Typography>
-
-                        <Typography gutterBottom variant="p" component="div" >
-                            3 unidades
-                        </Typography>
-
-                        <Typography gutterBottom variant="p" component="div" >
-                            R$ {props.preco}
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Box component="div" sx={CardListaInformacao}>
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor dos produtos: R$ {250.00}
-                    </Typography>
-
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor do frete: R$ {250.00}
-                    </Typography>
-                    
-                    <Typography gutterBottom variant="p" component="div" >
-                        Valor total: R$ {250.00}
-                    </Typography>
-                </Box>
-            </CardContent> */}
-
 
             <Box
                 component="div"
                 sx={CardListaComprasButtons}
             >
-                <Button
-                    size="small"
-                    variant="contained"
-                    onClick={() => console.log(dadosApiVenda)}
-                >
-                    TESTE
-                </Button>
                 <Button
                     size="small"
                     variant="contained"
