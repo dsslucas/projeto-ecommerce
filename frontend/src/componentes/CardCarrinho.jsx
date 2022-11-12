@@ -10,16 +10,39 @@ import Span from './Span';
 import { useDispatch, useSelector } from 'react-redux';
 import { AdicionaQtdItemCarrinho, RetiraQtdItemCarrinho, RetiraItemCarrinho } from '../redux/actions/Carrinho';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import api from '../servicos/api';
+import { useEffect } from 'react';
+import { useState } from 'react';
 
 export default function CardCarrinho(props) {
     // Dados vindo do Redux
-    const { carrinho } = useSelector(state => state)
+    const { carrinho, signin } = useSelector(state => state)
 
     // Dispara pro Redux
     const dispatch = useDispatch()
 
     // Dimensões, que é importante para a responsividade
     const width = window.innerWidth
+
+    // Armazena a quantidade do produto
+    const [qtdProduto, setQtdProduto] = useState()
+
+    console.log(props)
+
+    // Consulta a API de produtos a fim de verificar a quantidade
+    const consultaApiProduto = async () => {
+        const { data } = await api.get(`produto/${props.id}`, {
+            headers: {
+                Authorization: signin.token
+            }
+        })
+        //console.log(data.qtdProduto)
+        setQtdProduto(data.qtdProduto)
+    }
+
+    useEffect(() => {
+        consultaApiProduto()
+    }, [])
 
     return (
         <Card sx={WrapperCarrinho}>
@@ -81,9 +104,11 @@ export default function CardCarrinho(props) {
                                 sx={{
                                     ...ButtonBuy,
                                     maxWidth: '30px', maxHeight: '30px',
-                                    minWidth: '30px', minHeight: '30px'
+                                    minWidth: '30px', minHeight: '30px',
+                                    disabled: props.qtd === qtdProduto ? true : false,
+                                    cursor: props.qtd === qtdProduto ? 'not-allowed' : 'pointer'
                                 }}
-                                onClick={() => dispatch(AdicionaQtdItemCarrinho({ carrinho, id: props.id }))}
+                                onClick={props.qtd === qtdProduto ? () => null : () => dispatch(AdicionaQtdItemCarrinho({ carrinho, id: props.id }))}
                             >
                                 +
                             </Button>

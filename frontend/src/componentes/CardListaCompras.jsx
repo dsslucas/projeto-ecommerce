@@ -27,8 +27,6 @@ export default function CardListaCompras(props) {
                 Authorization: signin.token
             }
         })
-        //console.log("VENDA: ", data.produtos)
-        //setDadosApiVenda(data)
 
         await consultaApiProduto(data)
     }
@@ -52,17 +50,6 @@ export default function CardListaCompras(props) {
         const produtosDetalhados = await Promise.all(produtosPromise);
         console.log(produtosDetalhados)
 
-        // const consultaFinal = [{
-        //     produtos: produtosDetalhados,
-        //     subtotal: dadosVenda.subtotal,
-        //     valorFrete: dadosVenda.valorFrete,
-        //     valorTotal: dadosVenda.valorTotal,
-        //     dataEnvio: dadosVenda.dataEnvio,
-        //     dataEntrega: dadosVenda.dataEntrega,
-        //     status: dadosVenda.statusEntrega,
-        //     troca: dadosVenda.troca,
-        //     devolucao: dadosVenda.devolucao
-        // }]
         setDadosApiVenda([{
             produtos: produtosDetalhados,
             subtotal: dadosVenda.subtotal,
