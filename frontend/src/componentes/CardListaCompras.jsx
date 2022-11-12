@@ -108,7 +108,7 @@ export default function CardListaCompras(props) {
                                             {produto.qtd} unidades
                                         </Typography>
                                         <Typography gutterBottom variant="p" component="div" >
-                                            R$ {produto.valorProduto}
+                                            R$ {produto.valorProduto.toFixed(2)}
                                         </Typography>
                                     </Box>
                                 )
