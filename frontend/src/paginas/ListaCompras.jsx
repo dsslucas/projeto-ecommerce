@@ -60,21 +60,6 @@ const ListaCompras = () => {
                 )
             })}
 
-
-            {/* <CardListaCompras
-                titulo="Conjunto X"
-                preco={149.99}
-                image={Image1}
-                status="Em trânsito"
-            /> */}
-
-            {/* <CardListaCompras
-                titulo="Conjunto X"
-                preco={149.99}
-                image={Image1}
-                status="Em trânsito"
-            /> */}
-
             {dadosApiVenda.length === 0 && (
                 <Box
                     component="div"

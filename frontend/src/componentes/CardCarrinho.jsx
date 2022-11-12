@@ -27,8 +27,6 @@ export default function CardCarrinho(props) {
     // Armazena a quantidade do produto
     const [qtdProduto, setQtdProduto] = useState()
 
-    console.log(props)
-
     // Consulta a API de produtos a fim de verificar a quantidade
     const consultaApiProduto = async () => {
         const { data } = await api.get(`produto/${props.id}`, {

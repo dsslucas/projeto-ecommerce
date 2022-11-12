@@ -135,7 +135,7 @@ export default function CardListaCompras(props) {
                                 </Typography>
                             )}
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor dos produtos: R$ {info.subtotal}
+                                Valor dos produtos: R$ {info.subtotal.toFixed(2)}
                             </Typography>
 
                             <Typography gutterBottom variant="p" component="div" >

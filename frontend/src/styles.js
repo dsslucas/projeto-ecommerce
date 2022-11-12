@@ -282,6 +282,7 @@ const CardListaInformacao = theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
     [theme.breakpoints.up('sm')]: {
         width: '100%',
         marginTop: '16px'
@@ -295,7 +296,7 @@ const CardListaComprasImage = theme => ({
     display: 'flex',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        width: '80%',
+        width: '50%',
         // height: '50%'
     },
 })

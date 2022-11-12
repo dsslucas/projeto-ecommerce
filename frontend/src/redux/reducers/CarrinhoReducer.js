@@ -25,7 +25,6 @@ const carrinhoReducer = (state = ESTADO_INICIAL, action) => {
             })
             return novaLista
         case 'RETIRA_ITEM_CARRINHO':
-            console.log("Entrei para retirar o item do carrinho", action.payload)
             novaLista = carrinho.filter((item) => item.id !== id)
             return novaLista
         case "RETIRA_QTD_ITEM_CARRINHO":
