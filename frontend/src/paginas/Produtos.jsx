@@ -18,10 +18,20 @@ import Titulo from '../componentes/Titulo';
 
 //API onde está localizado o endereço.
 import api from '../servicos/api';
+import { useSelector } from 'react-redux';
+import { Button } from '@mui/material';
 
 const Produtos = () => {
+    // Dados vindo do Redux
+    const { carrinho } = useSelector(state => state)
+
+    //console.log(carrinho)
+
     // Salva o que vem da API de Produtos
     const [conteudoApi, setConteudoApi] = useState([])
+
+    // IDs que estão no Catálogo
+    const [idsProdutos, setIdsProdutos] = useState([])
 
     useEffect(() => {
         // Consulta a API
@@ -32,6 +42,12 @@ const Produtos = () => {
         }
         respApi()
     }, [])
+
+    useEffect(() => {
+        carrinho.forEach((item) => {
+            setIdsProdutos(idsProdutos => [...idsProdutos, item.id])
+        })
+    }, [carrinho])
 
     return (
         <Box sx={EstilosConteudo}>
@@ -50,6 +66,7 @@ const Produtos = () => {
                             descricao={item.descProduto}
                             preco={item.valorProduto}
                             qtd={item.qtdProduto}
+                            isDisabled={idsProdutos.includes(item.idProduto)}
                         />
                     )
                 }))}

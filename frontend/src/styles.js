@@ -89,7 +89,7 @@ const GridWrapperItems = theme => ({
     [theme.breakpoints.up('sm')]: {
         display: 'grid',
         gridTemplateColumns: 'repeat(2, 2fr)',
-        gridTemplateRows: '420px',
+        gridTemplateRows: '432px',
         flexWrap: 'wrap'
     },
 
@@ -296,7 +296,7 @@ const CardListaComprasImage = theme => ({
     display: 'flex',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        width: '50%',
+        width: '233px',
         // height: '50%'
     },
 })
@@ -305,7 +305,9 @@ const CardListaComprasContentColumn = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // background: 'gray',
+    background: 'gray',
+    minHeight: '320px',
+    
 
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',

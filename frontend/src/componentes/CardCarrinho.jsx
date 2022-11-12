@@ -144,7 +144,8 @@ export default function CardCarrinho(props) {
                         // width: '50px',
                         display: 'flex',
                         justifyContent: 'space-evenly',
-                        minWidth: 'auto'
+                        minWidth: 'auto',
+                        borderRadius: 0
                     }}
                     onClick={() => dispatch(RetiraItemCarrinho({carrinho, id: props.id}))}
                 >

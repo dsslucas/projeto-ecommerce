@@ -9,14 +9,11 @@ import { ButtonBuy, Cores } from '../styles';
 import Box from '@mui/material/Box';
 
 import Span from './Span'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { AdicionaItemCarrinho } from '../redux/actions/Carrinho';
 import api from '../servicos/api';
 
 export default function CardProduto(props) {
-  // Dados vindo do Redux
-  const { carrinho, signin } = useSelector(state => state)
-
   // Envia os dados para o Redux
   const dispatch = useDispatch()
 
@@ -25,11 +22,7 @@ export default function CardProduto(props) {
 
   // Consulta a API de produtos a fim de verificar a quantidade
   const consultaApiProduto = async () => {
-    const { data } = await api.get(`produto/${props.id}`, {
-      headers: {
-        Authorization: signin.token
-      }
-    })
+    const { data } = await api.get(`produto/${props.id}`)
     //console.log(data.qtdProduto)
     setQtdProduto(data.qtdProduto)
   }
@@ -96,9 +89,9 @@ export default function CardProduto(props) {
         <Button
           size="small"
           variant="contained"
-          sx={{ ...ButtonBuy, cursor: props.qtd < 1 ? 'not-allowed' : 'pointer' }}
-          disabled={props.qtd < 1 ? true : false}
-          onClick={props.qtd < 1 ? () => false : () => dispatch(AdicionaItemCarrinho({
+          sx={{ ...ButtonBuy, cursor: props.isDisabled || props.qtd < 1 ? 'not-allowed' : 'pointer' }}
+          disabled={props.isDisabled || props.qtd < 1}
+          onClick={props.isDisabled || props.qtd < 1 ? () => false : () => dispatch(AdicionaItemCarrinho({
             id: props.id,
             titulo: props.titulo,
             descricao: props.descricao,

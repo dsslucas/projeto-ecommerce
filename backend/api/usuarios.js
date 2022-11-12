@@ -51,7 +51,6 @@ module.exports = app => {
     }
 
     const editarUsuario = (req, res) => {
-        console.log("LENGTH DO CEP: ", req.body.cepUsuario.length === 8)
         if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
             app.db('usuarios')
                 .where({ idUsuario: req.user.idUsuario })

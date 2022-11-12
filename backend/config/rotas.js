@@ -20,8 +20,8 @@ module.exports = app => {
         .post(app.api.produtos.cadastroProdutos)
 
     app.route('/produto/:id')
-        .all(app.config.passaporte.authenticate())
         .get(app.api.produtos.getProdutoId)
+        .all(app.config.passaporte.authenticate())
         .put(app.api.produtos.editarProduto)
         .delete(app.api.produtos.deletarProduto)
 

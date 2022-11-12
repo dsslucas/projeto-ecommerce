@@ -388,7 +388,6 @@ const Carrinho = () => {
                                     ? (<Span number={`Disponível após login`} />)
                                     : (<Span number={`R$ ${valoresFrete(signin.uf)}`} />)
                                 }
-
                             </Box>
 
                             <Box
@@ -403,7 +402,10 @@ const Carrinho = () => {
                                     Valor total:
                                 </Typography>
 
-                                <Span number={`R$ ${(valorProduto + valoresFrete(signin.uf)).toFixed(2)}`} />
+                                {signin.email === null
+                                    ? (<Span number={`Disponível após login`} />)
+                                    : (<Span number={`R$ ${(valorProduto + valoresFrete(signin.uf)).toFixed(2)}`} />)
+                                }                                
                             </Box>
 
                             <Typography
