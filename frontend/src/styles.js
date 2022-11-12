@@ -305,9 +305,7 @@ const CardListaComprasContentColumn = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    background: 'gray',
-    minHeight: '320px',
-    
+    minHeight: '320px',   
 
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
