@@ -1,168 +1,247 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box';
-import { ButtonBuy, EstilosConteudo } from '../styles';
+import { ButtonBuy, Cores, EstilosConteudo } from '../styles';
 import Input from '../componentes/Input'
 import Titulo from '../componentes/Titulo';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+import PersonOffIcon from '@mui/icons-material/PersonOff';
+import api from '../servicos/api';
 
 const Usuario = () => {
-    const [atualizaCadastro, setAtualizaUsuario] = useState({
-        nome: '',
-        email: '',
-        senha: '',
-        endereco: '',
-        cidade: '',
-        uf: '',
-        cep: '',
-        isAdmin: false
-    })
+    const [atualizaUsuario, setAtualizaUsuario] = useState({})
+
+    // Dados que vem do Redux
+    const { signin } = useSelector(estado => estado)
+
+    // Navegação
+    const navigate = useNavigate()
+
+    // Consulta do usuário único
+    const consultaApi = async () => {
+        // Consulta das informações do usuário
+        const { data } = await api.get(`/usuario/${signin.id}`, {
+            headers: {
+                Authorization: signin.token
+            }
+        })
+        console.log(data[0])
+
+        setAtualizaUsuario({
+            nome: data[0].nomeUsuario,
+            email: data[0].emailUsuario,
+            senha: 'atualiza',
+            endereco: data[0].enderecoUsuario,
+            cidade: data[0].cidadeUsuario,
+            uf: data[0].estadoUsuario,
+            cep: data[0].cepUsuario,
+        })
+    }
+
+    useEffect(() => {
+        if (signin.email !== null) consultaApi()
+    }, [])
+
+    //console.log(signin)
 
     return (
-        <Box sx={{...EstilosConteudo, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+        <Box
+            sx={{
+                ...EstilosConteudo,
+                //display: 'flex', flexDirection: 'column', justifyContent: 'center'
+            }}
+        >
             <Titulo titulo="Dados do usuário" />
 
-            <Input
-                id="nome-usuario"
-                label="Nome do usuário"
-                defaultValue={atualizaCadastro.nome}
-                returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, nome: e })}
-                disabled
-            />
-
-            <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box component="div" sx={{ width: '48%' }}>
-                    <Input
-                        id="email-usuario"
-                        label="E-mail"
-                        defaultValue={atualizaCadastro.email}
-                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, email: e })}
-                    />
-                </Box>
-                <Box component="div" sx={{ width: '48%' }}>
-                    <Input
-                        id="senha-usuario"
-                        label="Senha"
-                        type="password"
-                        defaultValue={atualizaCadastro.senha}
-                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, senha: e })}
-                    />
-                </Box>
-            </Box>
-
-            <Input
-                id="endereco-usuario"
-                label="Endereço"
-                defaultValue={atualizaCadastro.endereco}
-                returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, endereco: e })}
-            />
-
-            <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <Box component="div"
-                    sx={theme => ({
-                        width: '30%',
-                        [theme.breakpoints.down('sm')]: {
-                            width: '100%'
-                        }
-                    })}
+            {signin.email === null && (
+                <Box
+                    component="div"
+                    sx={{
+                        height: 'calc(100vh - 222px)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column'
+                    }}
                 >
-                    <Input
-                        id="cidade-usuario"
-                        label="Cidade"
-                        defaultValue={atualizaCadastro.cidade}
-                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, cidade: e })}
-                    />
-                </Box>
+                    <PersonOffIcon sx={{ color: Cores.fundoCabecalho, width: "50%", height: "50%" }} />
 
-                <Box component="div"
-                    sx={theme => ({
-                        width: '30%',
-                        [theme.breakpoints.down('sm')]: {
-                            width: '48%'
-                        }
-                    })}
-                >
-                    <InputLabel id="uf-usuario-label" required>UF</InputLabel>
-                    <Select
-                        labelId="uf-usuario-label"
-                        id="uf_usuario"
-                        value={atualizaCadastro.uf}
-                        label="Estado"
-                        onChange={(e) => setAtualizaUsuario({ ...atualizaCadastro, uf: e.target.value })}
-                        sx={{ color: 'black', width: '100%' }}
-                        required
+                    <Typography
+                        component="h6"
+                        variant="h6"
+                        sx={{ textAlign: 'center', color: Cores.fundoCabecalho }}
                     >
-                        <MenuItem value="AC">Acre</MenuItem>
-                        <MenuItem value="AL">Alagoas</MenuItem>
-                        <MenuItem value="AP">Amapá</MenuItem>
-                        <MenuItem value="AM">Amazonas</MenuItem>
-                        <MenuItem value="BA">Bahia</MenuItem>
-                        <MenuItem value="CE">Ceará</MenuItem>
-                        <MenuItem value="DF">Distrito Federal</MenuItem>
-                        <MenuItem value="ES">Espírito Santo</MenuItem>
-                        <MenuItem value="GO">Goiás</MenuItem>
-                        <MenuItem value="MA">Maranhão</MenuItem>
-                        <MenuItem value="MT">Mato Grosso</MenuItem>
-                        <MenuItem value="MS">Mato Grosso do Sul</MenuItem>
-                        <MenuItem value="MG">Minas Gerais</MenuItem>
-                        <MenuItem value="PA">Pará</MenuItem>
-                        <MenuItem value="PB">Paraíba</MenuItem>
-                        <MenuItem value="PR">Paraná</MenuItem>
-                        <MenuItem value="PE">Pernambuco</MenuItem>
-                        <MenuItem value="PI">Piauí</MenuItem>
-                        <MenuItem value="RJ">Rio de Janeiro</MenuItem>
-                        <MenuItem value="RN">Rio Grande do Norte</MenuItem>
-                        <MenuItem value="RS">Rio Grande do Sul</MenuItem>
-                        <MenuItem value="RO">Rondônia</MenuItem>
-                        <MenuItem value="RR">Roraima</MenuItem>
-                        <MenuItem value="SC">Santa Catarina</MenuItem>
-                        <MenuItem value="SP">São Paulo</MenuItem>
-                        <MenuItem value="SE">Sergipe</MenuItem>
-                        <MenuItem value="TO">Tocantins</MenuItem>
-                    </Select>
+                        Você não está logado.
+                    </Typography>
+
+                    <Button
+                        sx={{ ...ButtonBuy, width: 'auto', marginTop: '5px' }}
+                        onClick={() => navigate('/login')}
+                    >
+                        Login
+                    </Button>
                 </Box>
-                <Box component="div"
-                    sx={theme => ({
-                        width: '30%',
-                        [theme.breakpoints.down('sm')]: {
-                            width: '48%'
-                        }
-                    })}
+            )}
+
+            {signin.email !== null && (
+                <Box
+                    component="div"
+                    sx={{
+                        height: 'calc(100vh - 222px)',
+                        display: 'flex', justifyContent: 'center', flexDirection: 'column'
+                    }}
                 >
                     <Input
-                        id="cep-usuario"
-                        label="CEP"
-                        defaultValue={atualizaCadastro.cep}
-                        returnValue={(e) => setAtualizaUsuario({ ...atualizaCadastro, cep: e })}
-                        type='number'
-                        inputProps={{ maxLength: 8 }}
-                        error={atualizaCadastro.cep.length > 8 ? true : false}
-                        helperText={atualizaCadastro.cep.length > 8 ? "Excesso de números para o CEP. Informe o seu CEP sem o traço (-)." : null}
+                        id="nome-usuario"
+                        label="Nome do usuário"
+                        value={atualizaUsuario.nome}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, nome: e })}
                     />
+
+                    <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <Box component="div" sx={{ width: '48%' }}>
+                            <Input
+                                id="email-usuario"
+                                label="E-mail"
+                                value={atualizaUsuario.email}
+                                returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, email: e })}
+                            />
+                        </Box>
+                        <Box component="div" sx={{ width: '48%' }}>
+                            <Input
+                                id="senha-usuario"
+                                label="Senha"
+                                type="password"
+                                value={atualizaUsuario.senha}
+                                returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, senha: e })}
+                            />
+                        </Box>
+                    </Box>
+
+                    <Input
+                        id="endereco-usuario"
+                        label="Endereço"
+                        value={atualizaUsuario.endereco}
+                        returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, endereco: e })}
+                    />
+
+                    <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                        <Box component="div"
+                            sx={theme => ({
+                                width: '30%',
+                                [theme.breakpoints.down('sm')]: {
+                                    width: '100%'
+                                }
+                            })}
+                        >
+                            <Input
+                                id="cidade-usuario"
+                                label="Cidade"
+                                value={atualizaUsuario.cidade}
+                                returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, cidade: e })}
+                            />
+                        </Box>
+
+                        {/* <Box component="div"
+                            sx={theme => ({
+                                width: '30%',
+                                [theme.breakpoints.down('sm')]: {
+                                    width: '48%'
+                                }
+                            })}
+                        >
+                            <InputLabel id="uf-usuario-label" required>UF</InputLabel>
+                            <Select
+                                labelId="uf-usuario-label"
+                                id="uf_usuario"
+                                value={atualizaUsuario.uf}
+                                label="Estado"
+                                onChange={(e) => setAtualizaUsuario({ ...atualizaUsuario, uf: e.target.value })}
+                                sx={{ color: 'black', width: '100%' }}
+                                required
+                            >
+                                <MenuItem value="AC">Acre</MenuItem>
+                                <MenuItem value="AL">Alagoas</MenuItem>
+                                <MenuItem value="AP">Amapá</MenuItem>
+                                <MenuItem value="AM">Amazonas</MenuItem>
+                                <MenuItem value="BA">Bahia</MenuItem>
+                                <MenuItem value="CE">Ceará</MenuItem>
+                                <MenuItem value="DF">Distrito Federal</MenuItem>
+                                <MenuItem value="ES">Espírito Santo</MenuItem>
+                                <MenuItem value="GO">Goiás</MenuItem>
+                                <MenuItem value="MA">Maranhão</MenuItem>
+                                <MenuItem value="MT">Mato Grosso</MenuItem>
+                                <MenuItem value="MS">Mato Grosso do Sul</MenuItem>
+                                <MenuItem value="MG">Minas Gerais</MenuItem>
+                                <MenuItem value="PA">Pará</MenuItem>
+                                <MenuItem value="PB">Paraíba</MenuItem>
+                                <MenuItem value="PR">Paraná</MenuItem>
+                                <MenuItem value="PE">Pernambuco</MenuItem>
+                                <MenuItem value="PI">Piauí</MenuItem>
+                                <MenuItem value="RJ">Rio de Janeiro</MenuItem>
+                                <MenuItem value="RN">Rio Grande do Norte</MenuItem>
+                                <MenuItem value="RS">Rio Grande do Sul</MenuItem>
+                                <MenuItem value="RO">Rondônia</MenuItem>
+                                <MenuItem value="RR">Roraima</MenuItem>
+                                <MenuItem value="SC">Santa Catarina</MenuItem>
+                                <MenuItem value="SP">São Paulo</MenuItem>
+                                <MenuItem value="SE">Sergipe</MenuItem>
+                                <MenuItem value="TO">Tocantins</MenuItem>
+                            </Select>
+                        </Box> */}
+
+                        <Box component="div"
+                            sx={theme => ({
+                                width: '30%',
+                                [theme.breakpoints.down('sm')]: {
+                                    width: '48%'
+                                }
+                            })}
+                        >
+                            <Input
+                                id="cep-usuario"
+                                label="CEP"
+                                value={atualizaUsuario.cep}
+                                returnValue={(e) => setAtualizaUsuario({ ...atualizaUsuario, cep: e })}
+                                type='number'
+                            //inputProps={{ maxLength: 8 }}
+                            //error={atualizaUsuario.cep.length > 8 ? true : false}
+                            //helperText={atualizaUsuario.cep.length > 8 ? "Excesso de números para o CEP. Informe o seu CEP sem o traço (-)." : null}
+                            />
+                        </Box>
+                    </Box>
+
+                    <Box
+                        component="div"
+                        sx={{
+                            width: '100%',
+                            display: 'flex',
+                            justifyContent: 'right',
+                            marginTop: '15px'
+                        }}
+                    >
+                        <Button
+                            size="small" variant="contained" color="info"
+                            onClick={() => console.log(atualizaUsuario)}
+                        >
+                            Teste
+                        </Button>
+
+                        <Button size="small" variant="contained" color="error">Cancelar</Button>
+
+                        <Button
+                            size="small"
+                            variant="contained"
+                            sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
+                        >
+                            Atualizar
+                        </Button>
+                    </Box>
                 </Box>
-            </Box>
-
-            <Box
-                component="div"
-                sx={{
-                    width: '100%',
-                    display: 'flex',
-                    justifyContent: 'right'
-                }}
-            >
-                <Button size="small" variant="contained" color="error">Cancelar</Button>
-
-                <Button
-                    size="small"
-                    variant="contained"
-                    sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                >
-                    Atualizar
-                </Button>
-            </Box>
-
+            )}
         </Box>
     )
 }
