@@ -12,7 +12,6 @@ module.exports = app => {
     }
 
     const getProduto = (req, res) => {
-        // console.log(req.user)
         app.db('produtos')
             .where({ idProduto: req.params.id })
             .first()
@@ -21,7 +20,6 @@ module.exports = app => {
     }
 
     const getProdutos = (req, res) => {
-        // console.log(req.user)
         app.db('produtos')
             .orderBy('idProduto')
             .then((resultado) => res.json(resultado))

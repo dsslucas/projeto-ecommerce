@@ -64,7 +64,6 @@ module.exports = app => {
     }
 
     const deletarUsuario = (req, res) => {
-        console.log(req.params)
         app.db('usuarios')
             .where({ idUsuario: req.params.id })
             .del()

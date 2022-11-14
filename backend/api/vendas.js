@@ -8,8 +8,6 @@ module.exports = app => {
         // Frete
         var valorFrete
 
-        //console.log(req.user)
-
         // Validação sobre o valor do frete
         // Norte
         if(req.user.estadoUsuario === 'AC') valorFrete = 38.50
@@ -119,8 +117,6 @@ module.exports = app => {
             res.status(404).json('A venda não foi encontrada')
             return
         }
-
-        //console.log(venda)
 
         const produtos = await app.db('produto_carrinho')
             .where({ idVenda: req.params.id })

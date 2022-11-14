@@ -48,7 +48,6 @@ export default function ModalCadastro(props) {
                 Authorization: signin.token
             }
         })
-        console.log(data)
 
         setCadastroUsuario({
             nome: data[0].nomeUsuario,
@@ -95,8 +94,6 @@ export default function ModalCadastro(props) {
             //returnBotaoCancelar()
 
         } catch (e) {
-            //alert("Usuário não cadastrado.")
-            //console.log(e)
             props.respostaNegativa("Os dados informados estão incorretos.")
         }
     }

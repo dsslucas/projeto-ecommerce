@@ -34,7 +34,6 @@ export default function CardCarrinho(props) {
                 Authorization: signin.token
             }
         })
-        //console.log(data.qtdProduto)
         setQtdProduto(data.qtdProduto)
     }
 

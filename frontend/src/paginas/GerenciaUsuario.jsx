@@ -41,8 +41,9 @@ const GerenciaUsuario = () => {
         //console.log(data)
         setInfoUsuario(data)
     }
-
+    // Armazena os dados do usuário
     const [infoUsuario, setInfoUsuario] = useState([])
+
     const [modalEdit, setModalEdit] = useState({
         exibir: false,
         id: undefined
@@ -65,7 +66,6 @@ const GerenciaUsuario = () => {
 
     useEffect(() => {
         ConsultaApi()
-
         setTimeout(() => {
             setMsgAlerta({
                 status: false,
@@ -73,9 +73,53 @@ const GerenciaUsuario = () => {
                 texto: undefined
             })
         }, 5000)
-    }, [modalEdit, modalDelete])
+    }, [modalEdit, modalDelete, infoUsuario])
 
-    console.log(modalDelete)
+
+    // Altera APENAS a permissão de admin
+    const alteraAdmin = async (dados) => {
+        // Consulta na API
+        // const { data } = await api.get(`/usuario/${dados.idUsuario}`, {
+        //     headers: {
+        //         Authorization: signin.token
+        //     }
+        // })
+        //console.log(data)
+
+        // setDadosUsuario({
+        //     nome: data[0].nomeUsuario,
+        //     email: data[0].emailUsuario,
+        //     senha: data[0].senhaUsuario,
+        //     endereco: data[0].enderecoUsuario,
+        //     cidade: data[0].cidadeUsuario,
+        //     uf: data[0].estadoUsuario,
+        //     cep: data[0].cepUsuario,
+        //     isAdmin: data[0].isAdmin
+        // })
+
+        console.log(dados)
+        try {
+            await api.put(`/usuario/${dados.idUsuario}`, {
+                idUsuario: dados.idUsuario,
+                emailUsuario: dados.emailUsuario,
+                nomeUsuario: dados.nomeUsuario,
+                senhaUsuario: dados.senhaUsuario,
+                enderecoUsuario: dados.enderecoUsuario,
+                cidadeUsuario: dados.cidadeUsuario,
+                estadoUsuario: dados.estadoUsuario,
+                cepUsuario: dados.cepUsuario,
+                isAdmin: !dados.isAdmin
+            }, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+            // Atualiza a lista
+            ConsultaApi()
+        } catch (e) {
+            console.log("Deu ruim: ", e)
+        }
+    }
 
     return (
         <Box sx={{ ...EstilosConteudo, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
@@ -165,7 +209,7 @@ const GerenciaUsuario = () => {
                 >
                     <Box sx={EstiloModal}>
                         <ModalDelete
-                            id={modalDelete.id} 
+                            id={modalDelete.id}
                             respostaBotaoCancelar={() => setModalDelete({
                                 ...modalDelete,
                                 exibir: !modalDelete.exibir,
@@ -215,7 +259,10 @@ const GerenciaUsuario = () => {
                                     <StyledTableCell align="center">{row.emailUsuario}</StyledTableCell>
                                     <StyledTableCell align="center">{row.estadoUsuario}</StyledTableCell>
                                     <StyledTableCell align="center">
-                                        <Button sx={{ ...ButtonBuy, background: 'none', color: 'none', minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>
+                                        <Button
+                                            onClick={() => alteraAdmin(row)}
+                                            sx={{ ...ButtonBuy, background: 'none', color: 'none', minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}
+                                        >
                                             {row.isAdmin
                                                 ? <CheckIcon sx={{ background: 'green', borderRadius: '3px', color: "#fff" }} />
                                                 : <ClearIcon sx={{ background: 'red', borderRadius: '3px', color: '#fff' }} />}
