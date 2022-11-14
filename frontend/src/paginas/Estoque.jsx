@@ -11,12 +11,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
-import Modal, { getModalUtilityClass } from '@mui/material/Modal';
+import Modal, { getModalUtilityClass, ModalManager } from '@mui/material/Modal';
 
-import Input from '../componentes/Input'
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import Fade from '@mui/material/Fade';
 
 // Icones
 import EditIcon from '@mui/icons-material/Edit';
@@ -45,6 +44,13 @@ const Estoque = () => {
 
     const [dadosProduto, setDadosProduto] = useState([])
 
+    // Mensagem de alerta
+    const [msgAlerta, setMsgAlerta] = useState({
+        status: false,
+        resposta: undefined,
+        texto: undefined
+    })
+
     // Lista de usuários vinda da API
     const ConsultaApi = async () => {
         // Consulta dos usuários cadastrados
@@ -61,6 +67,17 @@ const Estoque = () => {
         ConsultaApi()
     }, [])
 
+    useEffect(() => {
+        ConsultaApi()
+        setTimeout(() => {
+            setMsgAlerta({
+                status: false,
+                resposta: undefined,
+                texto: undefined
+            })
+        }, 5000)
+    }, [modal])
+
     return (
         <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Estoque" />
@@ -74,9 +91,61 @@ const Estoque = () => {
                     <Box sx={EstiloModal}>
                         <ModalProdutos
                             respostaBotaoCancelar={() => setModal(!modal)}
+                            respostaPositiva={(e) => {
+                                setModal(!modal)
+                                setMsgAlerta({
+                                    ...msgAlerta,
+                                    status: true,
+                                    resposta: true,
+                                    texto: e
+                                })
+                            }}
+                            respostaNegativa={(e) => {
+                                setMsgAlerta({
+                                    ...msgAlerta,
+                                    status: true,
+                                    resposta: false,
+                                    texto: e
+                                })
+                            }}
                         />
                     </Box>
                 </Modal>
+            )}
+
+            {msgAlerta.status && (
+                <Box component="div"
+                    sx={{
+                        width: '50%',
+                        zIndex: 2000,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        position: 'absolute',
+                        top: 5,
+                        left: '25%',
+                        right: '25%',
+                    }}
+                >
+                    <Fade in={msgAlerta.status} exit={!msgAlerta.status} timeout={1000}>
+                        <Stack
+                            sx={{
+                                width: 'auto',
+                            }}
+                            spacing={2}
+                        >
+                            {msgAlerta.resposta && (
+                                <Alert variant="filled" severity="success">
+                                    {msgAlerta.texto}
+                                </Alert>
+                            )}
+                            {!msgAlerta.resposta && (
+                                <Alert variant="filled" severity="error">
+                                    {msgAlerta.texto}
+                                </Alert>
+                            )}
+                        </Stack>
+                    </Fade>
+                </Box>
             )}
 
             <Box component="div" sx={{ display: 'flex', justifyContent: 'right', marginBottom: '8px' }}>
@@ -104,7 +173,7 @@ const Estoque = () => {
                     <TableBody>
                         {dadosProduto.map((row) => (
                             <StyledTableRow key={row.idProduto}>
-                                <StyledTableCell 
+                                <StyledTableCell
                                     component="th" scope="row" align="center"
                                 >
                                     {row.nomeProduto}
