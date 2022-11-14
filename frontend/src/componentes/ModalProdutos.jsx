@@ -15,6 +15,8 @@ const ModalProdutos = (props) => {
       // Dados vindo do Redux
       const { signin } = useSelector(state => state)
 
+      console.log("Abri o modal")
+
       const [cadastroProduto, setCadastroProduto] = useState({
             nome: undefined,
             descricao: undefined,

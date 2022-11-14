@@ -15,7 +15,6 @@ import PeopleIcon from '@mui/icons-material/People';
 import WarehouseIcon from '@mui/icons-material/Warehouse';
 import { Link } from 'react-router-dom';
 import { Cores } from '../styles';
-import { listaOpcoesGerais } from './Lista';
 import LoginIcon from '@mui/icons-material/Login';
 // import { useSelector } from 'react-redux';
 

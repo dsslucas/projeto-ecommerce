@@ -8,6 +8,7 @@ import Relatorio from './paginas/Relatorio';
 import Usuario from './paginas/Usuario';
 import GerenciaUsuario from './paginas/GerenciaUsuario'
 import Login from './paginas/Login';
+import Vendas from './paginas/Vendas';
 
 export default function Router() {
     return (
@@ -21,6 +22,7 @@ export default function Router() {
                 <Route path='/admin/relatorio' element={<Relatorio />} />
                 <Route path='/admin/usuarios' element={<GerenciaUsuario />} />
                 <Route path='/admin/estoque' element={<Estoque />} />
+                <Route path='/admin/vendas' element={<Vendas />} />
             </Route>
             <Route path="*" element={<Navigate to="/produtos" replace />} />
         </Routes>

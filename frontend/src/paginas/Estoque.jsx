@@ -66,7 +66,6 @@ const Estoque = () => {
                 Authorization: signin.token
             }
         })
-        //console.log(data)
         setDadosProduto(data)
     }
 
@@ -89,6 +88,8 @@ const Estoque = () => {
         <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Estoque" />
 
+            <h1>Modo post: {postModal.modoPost ? "Sim" : "Não" }</h1>
+
             {postModal.exibir && (
                 <Modal
                     open={postModal.exibir}
@@ -96,9 +97,10 @@ const Estoque = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={EstiloModal}>
-                        {postModal.modoPost || postModal.modoEdit && (
+                        {(postModal.modoPost || postModal.modoEdit) && (
                             <ModalProdutos
                                 modoEdit={postModal.modoEdit}
+                                dados={postModal.dados}
                                 respostaBotaoCancelar={() => setPostModal({
                                     ...postModal,
                                     exibir: !postModal.exibir,
@@ -217,6 +219,7 @@ const Estoque = () => {
                     onClick={() => setPostModal({
                         ...postModal,
                         exibir: !postModal.exibir,
+                        modoPost: true
                     })}
                 >
                     Cadastrar produto
