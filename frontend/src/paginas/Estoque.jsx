@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
-import Modal, { getModalUtilityClass, ModalManager } from '@mui/material/Modal';
+import Modal from '@mui/material/Modal';
 
 import Alert from '@mui/material/Alert';
 import Stack from '@mui/material/Stack';
@@ -24,18 +24,6 @@ import api from '../servicos/api';
 import { useSelector } from 'react-redux';
 import ModalProdutos from '../componentes/ModalProdutos';
 import ModalDelete from '../componentes/ModalDelete';
-
-function createData(id, nome, descricao, qtd, valor, dataAquisicao) {
-    return { id, nome, descricao, qtd, valor, dataAquisicao };
-}
-
-const rows = [
-    createData(1, 'Lingerie 1', "Eu não sei pra onde vou. Pode até não dar em nada... Minha vida segue o sol, no horizonte desta estrada...", 6.0, 24, "24-05-2022"),
-    createData(2, 'Lingerie 2', "Eu nem sei mesmo quem eu sou, nesta falta de carinho. Por não ter um grande amor, aprendi a ser sozinho...", 237, 9.0, "24-05-2022"),
-    createData(3, 'Lingerie 3', "E onde o vento me levar, vou abrir meu coração... Pode ser que no caminho, num atalho, num sorriso, aconteça uma paixão...", 16.0, 24, "24-05-2022"),
-    createData(4, 'Lingerie 4', "E vou a-achar, num toque do destino, um brilho de um olhar, sem medo de amar...", 305, 3.7, 67, "24-05-2022"),
-    createData(5, 'Lingerie 5', "Não vou dei-xar, de ser um sonhador, pois sei que vou encontrar, no fundo dos meus sonhos, o meu grande amor...", 356, 16.0, 49, "24-05-2022"),
-];
 
 const Estoque = () => {
     // Dados vindo do Redux
@@ -86,9 +74,7 @@ const Estoque = () => {
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
-            <Titulo titulo="Estoque" />
-
-            <h1>Modo post: {postModal.modoPost ? "Sim" : "Não" }</h1>
+            <Titulo titulo="Gerenciamento de Estoque" />
 
             {postModal.exibir && (
                 <Modal
