@@ -54,7 +54,6 @@ const ListaCompras = () => {
                         valorTotal={item.valorTotal}
                         titulo="Conjunto X"
                         preco={149.99}
-                        image={Image1}
                         status={item.statusEntrega}
                     />
                 )

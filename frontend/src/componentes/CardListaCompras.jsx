@@ -44,6 +44,7 @@ export default function CardListaCompras(props) {
                 nome: data.nomeProduto,
                 qtd: item.qtdProduto,
                 valorProduto: item.valorProduto,
+                imagem: data.imagemProduto
             }
         })
         const produtosDetalhados = await Promise.all(produtosPromise);
@@ -92,8 +93,7 @@ export default function CardListaCompras(props) {
                                         >
                                             <CardMedia
                                                 component="img"
-                                                alt="green iguana"
-                                                image={props.image}
+                                                image={produto.imagem}
                                                 sx={{ borderRadius: '8px' }}
                                             />
                                         </Box>
