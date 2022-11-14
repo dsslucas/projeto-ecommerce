@@ -28,6 +28,28 @@ const ModalProdutos = (props) => {
             props.respostaBotaoCancelar()
       }
 
+      const AddProduto = async () => {
+            try {
+                  await api.post('/produto', {
+                        nomeProduto: cadastroProduto.nome,
+                        descProduto: cadastroProduto.descricao,
+                        qtdProduto: cadastroProduto.qtd,
+                        valorProduto: cadastroProduto.valor,
+                        imagemProduto: cadastroProduto.imagem,
+                        dataAquisicaoProduto: new Date()
+                  }, {
+                        headers: {
+                              Authorization: signin.token
+                        }
+                  })
+
+                  props.respostaPositiva(`O produto foi cadastrado em nosso sistema.`)
+                  returnBotaoCancelar()
+            } catch (e) {
+                  props.respostaNegativa("Os dados do produto estão incompletos.")
+            }
+      }
+
       return (
             <>
                   <Titulo titulo="Cadastrar produto" barraLogin />
@@ -78,7 +100,7 @@ const ModalProdutos = (props) => {
                         id="imagem-produto"
                         label="Imagem (por URL)"
                         defaultValue={cadastroProduto.imagem}
-                        returnValue={(e) => setCadastroProduto({ ...cadastroProduto, imagem: e.target.value })}
+                        returnValue={(e) => setCadastroProduto({ ...cadastroProduto, imagem: e })}
                         type='text'
                   />
 
@@ -102,7 +124,7 @@ const ModalProdutos = (props) => {
                               size="small"
                               variant="contained"
                               sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                        //onClick={() => setModal(!modal)}
+                              onClick={() => AddProduto()}
                         >
                               Cadastrar
                         </Button>
