@@ -19,7 +19,7 @@ module.exports = app => {
 
     const getUnicoUsuario = (req, res) => {
         app.db('usuarios')
-            .where({ idUsuario: req.user.idUsuario })
+            .where({ idUsuario: req.params.id })
             .then((resultado) => res.json(resultado))
             .catch((erro) => res.status(204).json(erro))
     }
@@ -53,7 +53,7 @@ module.exports = app => {
     const editarUsuario = (req, res) => {
         if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
             app.db('usuarios')
-                .where({ idUsuario: req.user.idUsuario })
+                .where({ idUsuario: req.params.id })
                 .update(req.body)
                 .then(() => res.status(204).send("Alteração realizada"))
                 .catch((erro) => res.status(400).json(erro))
@@ -61,10 +61,10 @@ module.exports = app => {
         else {
             res.status(400).send("Os dados informados estão incorretos.")
         }
-
     }
 
     const deletarUsuario = (req, res) => {
+        console.log(req.params)
         app.db('usuarios')
             .where({ idUsuario: req.params.id })
             .del()
@@ -78,6 +78,28 @@ module.exports = app => {
             })
             .catch((erro) => res.status(400).json(erro))
     }
+
+    // PARTE DO ADMIN
+    const adminConsultaUsuario = (req, res) => {
+        app.db('usuarios')
+            .where({ idUsuario: req.params.id })
+            .first()
+            .then((resultado) => res.json(resultado))
+            .catch((erro) => res.status(204).json(erro))
+    }
+
+    // const adminEditaUsuario = (req, res) => {
+    //     if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
+    //         app.db('usuarios')
+    //             .where({ idUsuario: req.params.id })
+    //             .update(req.body)
+    //             .then(() => res.status(204).send("Alteração realizada"))
+    //             .catch((erro) => res.status(400).json(erro))
+    //     }
+    //     else {
+    //         res.status(400).send("Os dados informados estão incorretos.")
+    //     }
+    // }
 
     return { getUsuarios, salvarSenha, editarUsuario, deletarUsuario, getUnicoUsuario }
 }

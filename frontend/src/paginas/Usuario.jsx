@@ -106,14 +106,12 @@ const Usuario = () => {
     }, [])
 
     useEffect(() => {
-        console.log("Devo fechar")
         setTimeout(() => {
             setMsgAlerta({
                 status: false,
                 resposta: undefined,
                 texto: undefined
             })
-            console.log("Fechei")
         }, 5000)
     }, [botaoPressionado])
 
