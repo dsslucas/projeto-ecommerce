@@ -303,10 +303,11 @@ const Carrinho = () => {
                         }}
                     >
                         {carrinho.map((item) => {
+                            console.log(item)
                             return (
                                 <CardCarrinho
                                     key={item.id}
-                                    image={Image1}
+                                    image={item.imagem}
                                     titulo={item.titulo}
                                     preco={item.preco}
                                     qtd={item.qtd}

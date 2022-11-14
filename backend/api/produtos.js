@@ -5,6 +5,7 @@ module.exports = app => {
             descProduto: req.body.descProduto,
             qtdProduto: req.body.qtdProduto,
             valorProduto: req.body.valorProduto,
+            imagemProduto: req.body.imagemProduto,
             dataAquisicaoProduto: req.body.dataAquisicaoProduto
         })
             .then(() => res.status(204).send("Produto cadastrado"))

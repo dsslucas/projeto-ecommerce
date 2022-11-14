@@ -15,6 +15,7 @@ const carrinhoReducer = (state = ESTADO_INICIAL, action) => {
                 titulo: action.payload.titulo,
                 descricao: action.payload.descricao,
                 preco: action.payload.preco,
+                imagem: action.payload.imagem,
                 qtd: action.payload.qtd
             }]
         case "ADICIONA_QTD_ITEM_CARRINHO":

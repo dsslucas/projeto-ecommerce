@@ -61,9 +61,9 @@ const Produtos = () => {
                         <CardProdutos
                             key={item.idProduto}
                             id={item.idProduto}
-                            image={Image1}
                             titulo={item.nomeProduto}
                             descricao={item.descProduto}
+                            imagem={item.imagemProduto}
                             preco={item.valorProduto}
                             qtd={item.qtdProduto}
                             isDisabled={idsProdutos.includes(item.idProduto)}

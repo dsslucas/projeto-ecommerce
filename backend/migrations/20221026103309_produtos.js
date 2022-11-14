@@ -6,6 +6,7 @@ exports.up = function(knex) {
         table.string('descProduto').notNull()
         table.integer('qtdProduto').notNull()
         table.double('valorProduto').notNull()
+        table.string('imagemProduto').notNull()
         table.datetime('dataAquisicaoProduto').notNull()
       })
 };

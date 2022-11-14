@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import { ButtonBuy, Cores, EstiloModal, EstilosConteudo, StyledTableCell, StyledTableRow } from '../styles';
 import Titulo from '../componentes/Titulo';
@@ -11,7 +11,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 
-import Modal from '@mui/material/Modal';
+import Modal, { getModalUtilityClass } from '@mui/material/Modal';
 
 import Input from '../componentes/Input'
 import Select from '@mui/material/Select';
@@ -21,6 +21,9 @@ import InputLabel from '@mui/material/InputLabel';
 // Icones
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import api from '../servicos/api';
+import { useSelector } from 'react-redux';
+import ModalProdutos from '../componentes/ModalProdutos';
 
 function createData(id, nome, descricao, qtd, valor, dataAquisicao) {
     return { id, nome, descricao, qtd, valor, dataAquisicao };
@@ -35,18 +38,31 @@ const rows = [
 ];
 
 const Estoque = () => {
+    // Dados vindo do Redux
+    const { signin } = useSelector(state => state)
+
     const [modal, setModal] = useState(false)
 
-    const [cadastroProduto, setCadastroProduto] = useState({
-        nome: '',
-        descricao: '',
-        qtd: 0,
-        valor: 0.0,
-        dataAquisicao: null
-    })
+    const [dadosProduto, setDadosProduto] = useState([])
+
+    // Lista de usuários vinda da API
+    const ConsultaApi = async () => {
+        // Consulta dos usuários cadastrados
+        const { data } = await api.get(`/produto`, {
+            headers: {
+                Authorization: signin.token
+            }
+        })
+        //console.log(data)
+        setDadosProduto(data)
+    }
+
+    useEffect(() => {
+        ConsultaApi()
+    }, [])
 
     return (
-        <Box sx={{ ...EstilosConteudo, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Estoque" />
 
             {modal && (
@@ -56,88 +72,9 @@ const Estoque = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={EstiloModal}>
-                        <Titulo titulo="Cadastro de Produto" />
-
-                        <Input
-                            id="nome-produto"
-                            label="Nome do produto"
-                            defaultValue={cadastroProduto.nome}
-                            returnValue={(e) => setCadastroProduto({ ...cadastroProduto, nome: e })}
-                            disabled
+                        <ModalProdutos
+                            respostaBotaoCancelar={() => setModal(!modal)}
                         />
-
-                        <Input
-                            id="descricao-produto"
-                            label="Descrição"
-                            defaultValue={cadastroProduto.descricao}
-                            returnValue={(e) => setCadastroProduto({ ...cadastroProduto, descricao: e })}
-                            maxRows={2}
-                            multiline
-                            inputProps={{ maxLength: 70 }}
-                            error={cadastroProduto.descricao.length >= 70 ? true : false}
-                            helperText={cadastroProduto.descricao.length >= 70 ? "Você excedeu o limite de 70 caracteres na descrição do produto." : null}
-                        />
-
-                        <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Box component="div" sx={{ display: 'flex', width: '50%' }}>
-                                <Input
-                                    id="qtd-produto"
-                                    label="Quantidade"
-                                    defaultValue={cadastroProduto.qtd}
-                                    returnValue={(e) => setCadastroProduto({ ...cadastroProduto, qtd: e })}
-                                    type='number'
-                                />
-                            </Box>
-
-                            <Box component="div" sx={{ display: 'flex', width: '40%' }}>
-                                <Input
-                                    id="valor-produto"
-                                    label="Valor (R$)"
-                                    defaultValue={cadastroProduto.valor}
-                                    returnValue={(e) => setCadastroProduto({ ...cadastroProduto, valor: e })}
-                                    type='number'
-                                />
-                            </Box>
-                        </Box>
-
-                        <Button
-                            variant="contained"
-                            component="label"
-                            sx={{...ButtonBuy, marginBottom: '10px'}}
-                        >
-                            Imagem
-                            <input
-                                type="file"
-                                hidden
-                                required
-                            />
-                        </Button>
-
-                        <Box
-                            component="div"
-                            sx={{
-                                width: '100%',
-                                display: 'flex',
-                                justifyContent: 'right'
-                            }}
-                        >
-                            <Button
-                                size="small" variant="contained"
-                                color="error"
-                                onClick={() => setModal(!modal)}
-                            >
-                                Cancelar
-                            </Button>
-
-                            <Button
-                                size="small"
-                                variant="contained"
-                                sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                                onClick={() => setModal(!modal)}
-                            >
-                                Cadastrar
-                            </Button>
-                        </Box>
                     </Box>
                 </Modal>
             )}
@@ -156,7 +93,6 @@ const Estoque = () => {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>ID</StyledTableCell>
                             <StyledTableCell align="center">Nome</StyledTableCell>
                             <StyledTableCell align="center" sx={{ width: '400px' }}>Descrição</StyledTableCell>
                             <StyledTableCell align="center">Quantidade</StyledTableCell>
@@ -166,16 +102,17 @@ const Estoque = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
-                            <StyledTableRow key={row.nome}>
-                                <StyledTableCell component="th" scope="row">
-                                    {row.id}
+                        {dadosProduto.map((row) => (
+                            <StyledTableRow key={row.idProduto}>
+                                <StyledTableCell 
+                                    component="th" scope="row" align="center"
+                                >
+                                    {row.nomeProduto}
                                 </StyledTableCell>
-                                <StyledTableCell align="center">{row.nome}</StyledTableCell>
-                                <StyledTableCell align="center">{row.descricao}</StyledTableCell>
-                                <StyledTableCell align="center">{row.qtd}</StyledTableCell>
-                                <StyledTableCell align="center">R$ {row.valor}</StyledTableCell>
-                                <StyledTableCell align="center">{row.dataAquisicao}</StyledTableCell>
+                                <StyledTableCell align="center">{row.descProduto}</StyledTableCell>
+                                <StyledTableCell align="center">{row.qtdProduto}</StyledTableCell>
+                                <StyledTableCell align="center">R$ {row.valorProduto}</StyledTableCell>
+                                <StyledTableCell align="center">{row.dataAquisicaoProduto}</StyledTableCell>
                                 <StyledTableCell align="center" sx={{}}>
                                     <Button sx={{ ...ButtonBuy, background: 'yellow', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>
                                         <EditIcon />
@@ -183,7 +120,6 @@ const Estoque = () => {
                                     <Button sx={{ ...ButtonBuy, background: 'red', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>
                                         <DeleteForeverIcon />
                                     </Button>
-
                                 </StyledTableCell>
                             </StyledTableRow>
                         ))}

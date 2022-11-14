@@ -41,6 +41,7 @@ const GerenciaUsuario = () => {
         //console.log(data)
         setInfoUsuario(data)
     }
+    
     // Armazena os dados do usuário
     const [infoUsuario, setInfoUsuario] = useState([])
 
@@ -78,26 +79,6 @@ const GerenciaUsuario = () => {
 
     // Altera APENAS a permissão de admin
     const alteraAdmin = async (dados) => {
-        // Consulta na API
-        // const { data } = await api.get(`/usuario/${dados.idUsuario}`, {
-        //     headers: {
-        //         Authorization: signin.token
-        //     }
-        // })
-        //console.log(data)
-
-        // setDadosUsuario({
-        //     nome: data[0].nomeUsuario,
-        //     email: data[0].emailUsuario,
-        //     senha: data[0].senhaUsuario,
-        //     endereco: data[0].enderecoUsuario,
-        //     cidade: data[0].cidadeUsuario,
-        //     uf: data[0].estadoUsuario,
-        //     cep: data[0].cepUsuario,
-        //     isAdmin: data[0].isAdmin
-        // })
-
-        console.log(dados)
         try {
             await api.put(`/usuario/${dados.idUsuario}`, {
                 idUsuario: dados.idUsuario,
@@ -122,7 +103,7 @@ const GerenciaUsuario = () => {
     }
 
     return (
-        <Box sx={{ ...EstilosConteudo, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Box sx={{ ...EstilosConteudo,  }}>
             <Titulo titulo="Gerenciamento de usuários" />
 
             {modalEdit.exibir && (

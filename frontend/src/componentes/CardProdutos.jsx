@@ -42,9 +42,8 @@ export default function CardProduto(props) {
     >
       <CardMedia
         component="img"
-        alt="green iguana"
         height="240"
-        image={props.image}
+        image={props.imagem}
       />
 
       <CardContent sx={{ height: '115px' }}>
@@ -96,6 +95,7 @@ export default function CardProduto(props) {
             titulo: props.titulo,
             descricao: props.descricao,
             preco: props.preco,
+            imagem: props.imagem,
             qtd: 1
           }))}
         >
