@@ -16,11 +16,11 @@ const ModalProdutos = (props) => {
       const { signin } = useSelector(state => state)
 
       const [cadastroProduto, setCadastroProduto] = useState({
-            nome: '',
-            descricao: '',
+            nome: undefined,
+            descricao: undefined,
             qtd: 0,
             valor: 0.0,
-            imagem: '',
+            imagem: undefined,
             dataAquisicao: null
       })
 
@@ -85,12 +85,22 @@ const ModalProdutos = (props) => {
       }
 
       useEffect(() => {
-      
+            if (props.modoEdit) {
+                  // Altera o estado presente referente aos dados
+                  setCadastroProduto({
+                        ...cadastroProduto,
+                        nome: props.dados.nomeProduto,
+                        descricao: props.dados.descProduto,
+                        qtd: props.dados.qtdProduto,
+                        valor: props.dados.valorProduto,
+                        imagem: props.dados.imagemProduto
+                  })
+            }
       }, [])
 
       return (
             <>
-                  <Titulo titulo="Cadastrar produto" barraLogin />
+                  <Titulo titulo={props.modoEdit ? "Editar produto" : "Cadastrar produto"} barraLogin />
                   <Button onClick={() => console.log(cadastroProduto)} >Teste</Button>
 
                   <Input

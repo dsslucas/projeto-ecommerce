@@ -22,7 +22,6 @@ const ModalDelete = (props) => {
                               Authorization: signin.token
                         }
                   })
-                  console.log("Deu bão")
                   props.respostaPositiva("O usuário foi removido do sistema.")
                   returnBotaoCancelar()
             } catch (e) {
@@ -31,17 +30,32 @@ const ModalDelete = (props) => {
             }
       }
 
+      const deletaProduto = async () => {
+            try {
+                  await api.delete(`/produto/${props.dados.idProduto}`, {
+                        headers: {
+                              Authorization: signin.token
+                        }
+                  })
+                  props.respostaPositiva("O produto foi removido do sistema.")
+                  returnBotaoCancelar()
+            } catch (e) {
+                  props.respostaNegativa("O produto não pôde ser removido do sistema por problemas internos. Tente novamente mais tarde.")
+                  returnBotaoCancelar()
+            }
+      }
+
       return (
             <>
                   <Box component="div">
-                        <Titulo titulo="Deletar usuário" barraLogin />
+                        <Titulo titulo={props.modoDelete ? "Deletar produto" : "Deletar usuário"} barraLogin />
 
                         <Typography
                               component="h6"
                               variant="h6"
                               sx={{ textAlign: 'center', color: Cores.fundoCabecalho, marginTop: '20px', marginBottom: '20px' }}
                         >
-                              Você confirma a exclusão do usuário?
+                              {props.modoDelete ? "Você confirma a exclusão do produto?" : "Você confirma a exclusão do usuário?"}
                         </Typography>
 
                         <Box
@@ -64,7 +78,7 @@ const ModalDelete = (props) => {
                                     size="small"
                                     variant="contained"
                                     sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                                    onClick={() => deletaUsuario()}
+                                    onClick={props.modoDelete ? () => deletaProduto() : () => deletaUsuario()}
                               >
                                     Deletar
                               </Button>

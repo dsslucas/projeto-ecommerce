@@ -23,6 +23,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import api from '../servicos/api';
 import { useSelector } from 'react-redux';
 import ModalProdutos from '../componentes/ModalProdutos';
+import ModalDelete from '../componentes/ModalDelete';
 
 function createData(id, nome, descricao, qtd, valor, dataAquisicao) {
     return { id, nome, descricao, qtd, valor, dataAquisicao };
@@ -44,6 +45,7 @@ const Estoque = () => {
         exibir: false,
         modoPost: false,
         modoEdit: false,
+        modoDelete: false,
         dados: undefined
     })
 
@@ -94,40 +96,82 @@ const Estoque = () => {
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={EstiloModal}>
-                        <ModalProdutos
-                            modoEdit={postModal.modoEdit}
-                            dados={postModal.dados}
-                            respostaBotaoCancelar={() => setPostModal({
-                                ...postModal,
-                                exibir: !postModal.exibir,
-                                dados: undefined,
-                                modoPost: false,
-                                modoEdit: false
-                            })}
-                            respostaPositiva={(e) => {
-                                setPostModal({
+                        {postModal.modoPost || postModal.modoEdit && (
+                            <ModalProdutos
+                                modoEdit={postModal.modoEdit}
+                                respostaBotaoCancelar={() => setPostModal({
                                     ...postModal,
                                     exibir: !postModal.exibir,
                                     dados: undefined,
                                     modoPost: false,
-                                    modoEdit: false
-                                })
-                                setMsgAlerta({
-                                    ...msgAlerta,
-                                    status: true,
-                                    resposta: true,
-                                    texto: e
-                                })
-                            }}
-                            respostaNegativa={(e) => {
-                                setMsgAlerta({
-                                    ...msgAlerta,
-                                    status: true,
-                                    resposta: false,
-                                    texto: e
-                                })
-                            }}
-                        />
+                                    modoEdit: false,
+                                    modoDelete: false
+                                })}
+                                respostaPositiva={(e) => {
+                                    setPostModal({
+                                        ...postModal,
+                                        exibir: !postModal.exibir,
+                                        dados: undefined,
+                                        modoPost: false,
+                                        modoEdit: false,
+                                        modoDelete: false
+                                    })
+                                    setMsgAlerta({
+                                        ...msgAlerta,
+                                        status: true,
+                                        resposta: true,
+                                        texto: e
+                                    })
+                                }}
+                                respostaNegativa={(e) => {
+                                    setMsgAlerta({
+                                        ...msgAlerta,
+                                        status: true,
+                                        resposta: false,
+                                        texto: e
+                                    })
+                                }}
+                            />
+                        )}
+
+                        {postModal.modoDelete && (
+                            <ModalDelete
+                                modoDelete={postModal.modoDelete}
+                                dados={postModal.dados}
+                                respostaBotaoCancelar={() => setPostModal({
+                                    ...postModal,
+                                    exibir: !postModal.exibir,
+                                    dados: undefined,
+                                    modoPost: false,
+                                    modoEdit: false,
+                                    modoDelete: false
+                                })}
+                                respostaPositiva={(e) => {
+                                    setPostModal({
+                                        ...postModal,
+                                        exibir: !postModal.exibir,
+                                        dados: undefined,
+                                        modoPost: false,
+                                        modoEdit: false,
+                                        modoDelete: false
+                                    })
+                                    setMsgAlerta({
+                                        ...msgAlerta,
+                                        status: true,
+                                        resposta: true,
+                                        texto: e
+                                    })
+                                }}
+                                respostaNegativa={(e) => {
+                                    setMsgAlerta({
+                                        ...msgAlerta,
+                                        status: true,
+                                        resposta: false,
+                                        texto: e
+                                    })
+                                }}
+                            />
+                        )}
                     </Box>
                 </Modal>
             )}
@@ -173,7 +217,6 @@ const Estoque = () => {
                     onClick={() => setPostModal({
                         ...postModal,
                         exibir: !postModal.exibir,
-                        modoPost: !postModal.modoPost
                     })}
                 >
                     Cadastrar produto
@@ -219,7 +262,17 @@ const Estoque = () => {
                                     >
                                         <EditIcon />
                                     </Button>
-                                    <Button sx={{ ...ButtonBuy, background: 'red', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>
+                                    <Button
+                                        onClick={() => {
+                                            setPostModal({
+                                                ...postModal,
+                                                exibir: !postModal.exibir,
+                                                dados: row,
+                                                modoDelete: !postModal.modoEdit
+                                            })
+                                        }}
+                                        sx={{ ...ButtonBuy, background: 'red', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}
+                                    >
                                         <DeleteForeverIcon />
                                     </Button>
                                 </StyledTableCell>
