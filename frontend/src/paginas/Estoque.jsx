@@ -40,7 +40,12 @@ const Estoque = () => {
     // Dados vindo do Redux
     const { signin } = useSelector(state => state)
 
-    const [modal, setModal] = useState(false)
+    const [postModal, setPostModal] = useState({
+        exibir: false,
+        modoPost: false,
+        modoEdit: false,
+        dados: undefined
+    })
 
     const [dadosProduto, setDadosProduto] = useState([])
 
@@ -76,23 +81,37 @@ const Estoque = () => {
                 texto: undefined
             })
         }, 5000)
-    }, [modal])
+    }, [postModal])
 
     return (
         <Box sx={{ ...EstilosConteudo }}>
             <Titulo titulo="Estoque" />
 
-            {modal && (
+            {postModal.exibir && (
                 <Modal
-                    open={modal}
+                    open={postModal.exibir}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                 >
                     <Box sx={EstiloModal}>
                         <ModalProdutos
-                            respostaBotaoCancelar={() => setModal(!modal)}
+                            modoEdit={postModal.modoEdit}
+                            dados={postModal.dados}
+                            respostaBotaoCancelar={() => setPostModal({
+                                ...postModal,
+                                exibir: !postModal.exibir,
+                                dados: undefined,
+                                modoPost: false,
+                                modoEdit: false
+                            })}
                             respostaPositiva={(e) => {
-                                setModal(!modal)
+                                setPostModal({
+                                    ...postModal,
+                                    exibir: !postModal.exibir,
+                                    dados: undefined,
+                                    modoPost: false,
+                                    modoEdit: false
+                                })
                                 setMsgAlerta({
                                     ...msgAlerta,
                                     status: true,
@@ -151,7 +170,11 @@ const Estoque = () => {
             <Box component="div" sx={{ display: 'flex', justifyContent: 'right', marginBottom: '8px' }}>
                 <Button
                     sx={{ ...ButtonBuy, width: 'auto' }}
-                    onClick={() => setModal(!modal)}
+                    onClick={() => setPostModal({
+                        ...postModal,
+                        exibir: !postModal.exibir,
+                        modoPost: !postModal.modoPost
+                    })}
                 >
                     Cadastrar produto
                 </Button>
@@ -183,7 +206,17 @@ const Estoque = () => {
                                 <StyledTableCell align="center">R$ {row.valorProduto}</StyledTableCell>
                                 <StyledTableCell align="center">{row.dataAquisicaoProduto}</StyledTableCell>
                                 <StyledTableCell align="center" sx={{}}>
-                                    <Button sx={{ ...ButtonBuy, background: 'yellow', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>
+                                    <Button
+                                        onClick={() => {
+                                            setPostModal({
+                                                ...postModal,
+                                                exibir: !postModal.exibir,
+                                                dados: row,
+                                                modoEdit: !postModal.modoEdit
+                                            })
+                                        }}
+                                        sx={{ ...ButtonBuy, background: 'yellow', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}
+                                    >
                                         <EditIcon />
                                     </Button>
                                     <Button sx={{ ...ButtonBuy, background: 'red', color: Cores.fundoCabecalho, minWidth: '40px', maxWidth: '40px', minHeight: '40px', maxHeight: '40px' }}>

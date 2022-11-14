@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Titulo from './Titulo';
 import Button from '@mui/material/Button';
@@ -50,14 +50,53 @@ const ModalProdutos = (props) => {
             }
       }
 
+      // Específico para EDIT
+      const EditProduto = async () => {
+            // Altera o estado presente referente aos dados
+            setCadastroProduto({
+                  ...cadastroProduto,
+                  nome: props.dados.nomeProduto,
+                  descricao: props.dados.descProduto,
+                  qtd: props.dados.qtdProduto,
+                  valor: props.dados.valorProduto,
+                  imagem: props.dados.imagemProduto
+            })
+
+            //console.log(props.dados)
+
+            try {
+                  await api.put(`/produto/${props.dados.idProduto}`, {
+                        nomeProduto: cadastroProduto.nome,
+                        descProduto: cadastroProduto.descricao,
+                        qtdProduto: cadastroProduto.qtd,
+                        valorProduto: cadastroProduto.valor,
+                        imagemProduto: cadastroProduto.imagem,
+                  }, {
+                        headers: {
+                              Authorization: signin.token
+                        }
+                  })
+
+                  // Manda o resultado
+                  props.respostaPositiva(`As informações do produto foram atualizados em nosso sistema!`)
+            } catch (e) {
+                  props.respostaNegativa("Os dados informados estão incorretos.")
+            }
+      }
+
+      useEffect(() => {
+      
+      }, [])
+
       return (
             <>
                   <Titulo titulo="Cadastrar produto" barraLogin />
+                  <Button onClick={() => console.log(cadastroProduto)} >Teste</Button>
 
                   <Input
                         id="nome-produto"
                         label="Nome do produto"
-                        defaultValue={cadastroProduto.nome}
+                        value={cadastroProduto.nome}
                         returnValue={(e) => setCadastroProduto({ ...cadastroProduto, nome: e })}
                         disabled
                   />
@@ -65,13 +104,13 @@ const ModalProdutos = (props) => {
                   <Input
                         id="descricao-produto"
                         label="Descrição"
-                        defaultValue={cadastroProduto.descricao}
+                        value={cadastroProduto.descricao}
                         returnValue={(e) => setCadastroProduto({ ...cadastroProduto, descricao: e })}
                         maxRows={2}
                         multiline
                         inputProps={{ maxLength: 70 }}
-                        error={cadastroProduto.descricao.length >= 70 ? true : false}
-                        helperText={cadastroProduto.descricao.length >= 70 ? "Você excedeu o limite de 70 caracteres na descrição do produto." : null}
+                  //error={cadastroProduto.descricao.length >= 70 ? true : false}
+                  //helperText={cadastroProduto.descricao.length >= 70 ? "Você excedeu o limite de 70 caracteres na descrição do produto." : null}
                   />
 
                   <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -79,7 +118,7 @@ const ModalProdutos = (props) => {
                               <Input
                                     id="qtd-produto"
                                     label="Quantidade"
-                                    defaultValue={cadastroProduto.qtd}
+                                    value={cadastroProduto.qtd}
                                     returnValue={(e) => setCadastroProduto({ ...cadastroProduto, qtd: e })}
                                     type='number'
                               />
@@ -89,7 +128,7 @@ const ModalProdutos = (props) => {
                               <Input
                                     id="valor-produto"
                                     label="Valor (R$)"
-                                    defaultValue={cadastroProduto.valor}
+                                    value={cadastroProduto.valor}
                                     returnValue={(e) => setCadastroProduto({ ...cadastroProduto, valor: e })}
                                     type='number'
                               />
@@ -99,7 +138,7 @@ const ModalProdutos = (props) => {
                   <Input
                         id="imagem-produto"
                         label="Imagem (por URL)"
-                        defaultValue={cadastroProduto.imagem}
+                        value={cadastroProduto.imagem}
                         returnValue={(e) => setCadastroProduto({ ...cadastroProduto, imagem: e })}
                         type='text'
                   />
@@ -124,9 +163,9 @@ const ModalProdutos = (props) => {
                               size="small"
                               variant="contained"
                               sx={{ ...ButtonBuy, width: 'auto', marginLeft: '10px' }}
-                              onClick={() => AddProduto()}
+                              onClick={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                         >
-                              Cadastrar
+                              {props.modoEdit ? "Atualizar dados" : "Cadastrar"}
                         </Button>
                   </Box>
             </>
