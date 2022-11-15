@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
-import Box from '@mui/material/Box';
-
-import { ButtonBuy, Cores, EstiloModal, EstilosConteudo, StyledTableCell, StyledTableRow } from '../styles';
+import React, { useState, useEffect } from 'react'
 import Titulo from '../componentes/Titulo';
-
+import { EstilosConteudo, StyledTableCell, StyledTableRow } from '../styles';
+import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Table from '@mui/material/Table';
@@ -16,17 +14,82 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import api from '../servicos/api';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
+import api from '../servicos/api';
 
+function Row(props) {
+    const { row } = props;
+    const [open, setOpen] = React.useState(false);
 
-const Vendas = () => {
+    return (
+        <React.Fragment>
+            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+                <TableCell>
+                    <IconButton
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => setOpen(!open)}
+                    >
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                </TableCell>
+                <StyledTableCell align="center" component="th" scope="row">
+                    {row.idVenda}
+                </StyledTableCell>
+                <StyledTableCell align="center">{row.usuario.nomeUsuario}</StyledTableCell>
+                <StyledTableCell align="center">{row.dataVenda}</StyledTableCell>
+                <StyledTableCell align="center">{row.dataEnvio}</StyledTableCell>
+                <StyledTableCell align="center">{row.troca ? "SIM" : "NÃO"}</StyledTableCell>
+                <StyledTableCell align="center">{row.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
+                <StyledTableCell align="center">R$ {row.subtotal}</StyledTableCell>
+                <StyledTableCell align="center">R$ {row.valorFrete}</StyledTableCell>
+                <StyledTableCell align="center">R$ {row.valorTotal}</StyledTableCell>
+                <StyledTableCell align="center">{row.metodoPagamento}</StyledTableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box sx={{ margin: 1 }}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Produtos
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                                <TableHead>
+                                    <StyledTableRow>
+                                        <StyledTableCell align="center">#</StyledTableCell>
+                                        <StyledTableCell align="center">Nome do produto</StyledTableCell>
+                                        <StyledTableCell align="center">Descrição</StyledTableCell>
+                                        <StyledTableCell align="center">Quantidade</StyledTableCell>
+                                        <StyledTableCell align="center">Preço unitário</StyledTableCell>
+                                        <StyledTableCell align="center">Subtotal</StyledTableCell>
+                                    </StyledTableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {row.produtos.map((produto) => (
+                                        <StyledTableRow key={produto.idProduto}>
+                                            <StyledTableCell component="th" scope="row">
+                                                {produto.idProduto}
+                                            </StyledTableCell>
+                                            <StyledTableCell align="center">{produto.nomeProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.descProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.valorProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.subtotalProduto}</StyledTableCell>
+                                        </StyledTableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
+    );
+}
+
+export default function Relatorio() {
     // Dados vindo do Redux
     const { signin } = useSelector(state => state)
-
-    const [open, setOpen] = useState(false);
 
     // Armazena as vendas com os usuários
     const [infoVenda, setInfoVenda] = useState([])
@@ -86,11 +149,7 @@ const Vendas = () => {
                     }
                 })
                 //console.log(infoVenda.produtos)
-                return {                    
-                    idProduto: data.idProduto,
-                    qtdProduto: data.qtdProduto,
-                    subtotalProduto: (data.qtdProduto * data.valorProduto).toFixed(2),
-                    valorProduto: data.valorProduto,
+                return {
                     nomeProduto: data.nomeProduto,
                     descProduto: data.descProduto,
                 }
@@ -98,8 +157,10 @@ const Vendas = () => {
 
             // Armazena o que foi recebido
             const infoProduto = await Promise.all(temp)
+            console.log(infoProduto)
             return {
                 ...infoVenda,
+                produtos: { ...infoVenda.produtos, infoProduto }
             }
         })
         const apiProdutos = await Promise.all(apiProdutosPromise)
@@ -116,8 +177,6 @@ const Vendas = () => {
     return (
         <Box sx={EstilosConteudo}>
             <Titulo titulo="Gerenciamento de Vendas" />
-
-            <Button onClick={() => console.log(infoVenda)}>Teste</Button>
 
             <TableContainer component={Paper}>
                 <Table aria-label="collapsible table">
@@ -137,120 +196,13 @@ const Vendas = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {infoVenda.map((venda) => {
-                            return (
-                                <>
-                                    <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                                        <StyledTableCell align="center">
-                                            <IconButton
-                                                aria-label="expand row"
-                                                size="small"
-                                                onClick={() => setOpen(!open)}
-                                            >
-                                                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                                            </IconButton>
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center" component="th" scope="row">
-                                            {venda.idVenda}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="center">{venda.usuario.nomeUsuario}</StyledTableCell>
-                                        <StyledTableCell align="center">{venda.dataVenda}</StyledTableCell>
-                                        <StyledTableCell align="center">{venda.dataEnvio}</StyledTableCell>
-                                        <StyledTableCell align="center">{venda.troca ? "SIM" : "NÃO"}</StyledTableCell>
-                                        <StyledTableCell align="center">{venda.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
-                                        <StyledTableCell align="center">R$ {venda.subtotal}</StyledTableCell>
-                                        <StyledTableCell align="center">R$ {venda.valorFrete}</StyledTableCell>
-                                        <StyledTableCell align="center">R$ {venda.valorTotal}</StyledTableCell>
-                                        <StyledTableCell align="center">{venda.metodoPagamento}</StyledTableCell>
-                                    </StyledTableRow>
-
-                                    <TableRow>
-                                        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
-                                            <Collapse in={open} timeout="auto" unmountOnExit>
-                                                <Box sx={{ margin: 1 }}>
-                                                    <Typography variant="h6" gutterBottom component="div">
-                                                        Produtos
-                                                    </Typography>
-                                                    <Table size="small" aria-label="purchases">
-                                                        <TableHead>
-                                                            <StyledTableRow>
-                                                                <StyledTableCell align="center">#</StyledTableCell>
-                                                                <StyledTableCell align="center">Nome do produto</StyledTableCell>
-                                                                <StyledTableCell align="center">Descrição</StyledTableCell>
-                                                                <StyledTableCell align="center">Quantidade</StyledTableCell>
-                                                                <StyledTableCell align="center">Preço unitário</StyledTableCell>
-                                                                <StyledTableCell align="center">Subtotal</StyledTableCell>
-                                                            </StyledTableRow>
-                                                        </TableHead>
-
-                                                        <TableBody>
-                                                            {venda.produtos.map((produto) => {
-                                                                return (
-                                                                    <StyledTableRow>
-                                                                        <StyledTableCell component="th" scope="row">
-                                                                            {produto.idProduto}
-                                                                        </StyledTableCell>
-                                                                        <StyledTableCell align="center">{produto.nomeProduto}</StyledTableCell>
-                                                                        <StyledTableCell align="center">{produto.descProduto}</StyledTableCell>
-                                                                        <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
-                                                                        <StyledTableCell align="center">{produto.valorProduto}</StyledTableCell>
-                                                                        <StyledTableCell align="center">{produto.subtotalProduto}</StyledTableCell>
-                                                                    </StyledTableRow>
-                                                                )
-                                                            })}
-
-
-                                                            {/* <StyledTableRow>
-                                                                <StyledTableCell component="th" scope="row">
-                                                                    2
-                                                                </StyledTableCell>
-                                                                <StyledTableCell align="center">Lingerie 2</StyledTableCell>
-                                                                <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
-                                                                <StyledTableCell align="center">5</StyledTableCell>
-                                                                <StyledTableCell align="center">35.99</StyledTableCell>
-                                                                <StyledTableCell align="center">260.00</StyledTableCell>
-                                                            </StyledTableRow>
-
-                                                            <StyledTableRow>
-                                                                <StyledTableCell component="th" scope="row">
-                                                                    2
-                                                                </StyledTableCell>
-                                                                <StyledTableCell align="center">Lingerie 2</StyledTableCell>
-                                                                <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
-                                                                <StyledTableCell align="center">5</StyledTableCell>
-                                                                <StyledTableCell align="center">35.99</StyledTableCell>
-                                                                <StyledTableCell align="center">120.50</StyledTableCell>
-                                                            </StyledTableRow> */}
-                                                        </TableBody>
-                                                    </Table>
-                                                </Box>
-                                            </Collapse>
-                                        </TableCell>
-                                    </TableRow>
-                                </>
-                            )
-                        })}
-
-
-
+                        {infoVenda.map((row) => (
+                            <Row key={row.idVenda} row={row} />
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>
         </Box>
+
     );
 }
-
-export default Vendas
-//     return (
-//         <Box sx={EstilosConteudo}>
-//             <Titulo titulo="Gerenciamento de Vendas" />
-
-//             <TableContainer component={Paper}>
-//                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
-//
-//                 </Table>
-//             </TableContainer>
-//         </Box>
-//     )
-            // }
-
