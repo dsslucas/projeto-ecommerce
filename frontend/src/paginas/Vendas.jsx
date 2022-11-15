@@ -71,8 +71,8 @@ function Row(props) {
                                             <StyledTableCell component="th" scope="row">
                                                 {produto.idProduto}
                                             </StyledTableCell>
-                                            <StyledTableCell align="center">{produto.nomeProduto}</StyledTableCell>
-                                            <StyledTableCell align="center">{produto.descProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.nome}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.desc}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.subtotalProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
@@ -149,11 +149,11 @@ export default function Relatorio() {
                         Authorization: signin.token
                     }
                 })
-                //console.log(infoVenda.produtos)
-                return {
-                    nomeProduto: data.nomeProduto,
-                    descProduto: data.descProduto,
-                }
+                console.log("infovenda:", infoVenda, "data:", data);
+
+                produto.nome = data.nomeProduto;
+                produto.desc = data.descProduto;
+                return produto;
             })
 
             // Armazena o que foi recebido
