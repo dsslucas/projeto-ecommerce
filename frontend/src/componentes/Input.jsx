@@ -7,6 +7,10 @@ const input = (props) => {
         props.returnValue(e)
     }
 
+    function enterPressionado(){
+        props.enterPressionado()
+    }
+
     return (
         <TextField
             id={props.id}
@@ -24,6 +28,9 @@ const input = (props) => {
             error={props.error}
             helperText={props.helperText}
             inputProps={props.inputProps}
+            onKeyDown={(e) => {
+                if(e.key === 'Enter') enterPressionado()
+            }}
         />
     )
 }

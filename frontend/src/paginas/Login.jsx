@@ -141,7 +141,7 @@ const Login = () => {
             if(!msgAlerta && signin.email !== undefined) {
                 setTimeout(() => {
                     navigate('/produtos')
-                }, 6000)
+                }, 4000)
             }
         } catch (e) {
             setRespostaConexao({
@@ -165,7 +165,7 @@ const Login = () => {
                     resultado: undefined,
                     texto: undefined
                 })
-            }, 5000)
+            }, 3000)
         }
     }, [])
 
@@ -234,11 +234,12 @@ const Login = () => {
                             type="password"
                             defaultValue={loginUsuario.senha}
                             returnValue={(e) => setLoginUsuario({ ...loginUsuario, senha: e })}
+                            enterPressionado={() => signIn()}
                         />
 
                         <Button 
                             sx={{ ...ButtonBuy }} 
-                            onClick={() => signIn()} 
+                            onClick={() => signIn()}
                         >
                             Login
                         </Button>
@@ -360,6 +361,7 @@ const Login = () => {
                             inputProps={{ maxLength: 8 }}
                             error={cadastroUsuario.cep.length > 8 ? true : false}
                             helperText={cadastroUsuario.cep.length > 8 ? "Informe o CEP com oito dígitos e sem o traço (-)." : null}
+                            enterPressionado={() => signUp()}
                         />
 
                         <Button sx={{ ...ButtonBuy }} onClick={() => signUp()}>Cadastrar</Button>
