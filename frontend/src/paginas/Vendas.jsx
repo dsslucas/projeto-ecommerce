@@ -47,63 +47,66 @@ const Vendas = () => {
                     Authorization: signin.token
                 }
             })
-            //console.log(data.idVenda)
-            //console.log(data)
             return data
         })
 
         const apiVendaEspecifica = await Promise.all(apiVendaPromise);
 
-        //3a consulta: Usuário
-        const apiUsuarioPromise = apiVendaEspecifica.map(async (item) => {
-            const { data } = await api.get(`/usuario/${item.idUsuario}`, {
-                headers: {
-                    Authorization: signin.token
+        // //3a consulta: Usuário
+        // const apiUsuarioPromise = apiVendaEspecifica.map(async (item) => {
+        //     const { data } = await api.get(`/usuario/${item.idUsuario}`, {
+        //         headers: {
+        //             Authorization: signin.token
+        //         }
+        //     })
+        //     return {
+        //         idVenda: item.idVenda,
+        //         idUsuario: data.idUsuario,
+        //         nomeUsuario: data.nomeUsuario,
+        //         emailUsuario: data.emailUsuario,
+        //         dataVenda: item.dataVenda,
+        //         dataEnvio: item.dataEnvio,
+        //         troca: item.troca,
+        //         devolucao: item.devolucao,
+        //         valorCompra: item.subtotal,
+        //         valorFrete: item.valorFrete,
+        //         valorTotal: item.valorTotal,
+        //         metodoPagamento: item.metodoPagamento,
+        //         produtos: item.produtos
+        //     }
+        // })
+        // const apiUsuario = await Promise.all(apiUsuarioPromise)
+
+        // 4a consulta: Produtos
+        const apiProdutosPromise = apiVendaEspecifica.map(async (infoVenda) => {
+            const temp = infoVenda.produtos.map(async (produto) => {
+                const { data } = await api.get(`/produto/${produto.idProduto}`, {
+                    headers: {
+                        Authorization: signin.token
+                    }
+                })
+                //console.log(infoVenda.produtos)
+                return {                    
+                    idProduto: data.idProduto,
+                    qtdProduto: data.qtdProduto,
+                    subtotalProduto: (data.qtdProduto * data.valorProduto).toFixed(2),
+                    valorProduto: data.valorProduto,
+                    nomeProduto: data.nomeProduto,
+                    descProduto: data.descProduto,
                 }
             })
+
+            // Armazena o que foi recebido
+            const infoProduto = await Promise.all(temp)
             return {
-                idUsuario: data.idUsuario,
-                nomeUsuario: data.nomeUsuario,
-                emailUsuario: data.emailUsuario
+                ...infoVenda,
             }
         })
-        const apiUsuario = await Promise.all(apiUsuarioPromise)
+        const apiProdutos = await Promise.all(apiProdutosPromise)
 
-        // //console.log("VENDA GERAL: ", apiVenda.data)
-        console.log("VENDA ESPECÍFICA: ", apiVendaEspecifica)
-        console.log("API de usuários: ", apiUsuario)
-
+        console.log(apiProdutos)
+        // Armazena tudo no Estado
         setInfoVenda(apiVendaEspecifica)
-
-        const teste = infoVenda.map((venda) => {
-            
-        })
-
-        console.log(teste)
-
-        // const venda = {
-        //     idVenda: 1,
-        //     idUsuario: 1,
-        //     nomeUsuario: 'Larissa Reis',
-        //     dataVenda: '20-01-2022',
-        //     dataEnvio: '22-01-2022',
-        //     troca: false,
-        //     devolucao: false,
-        //     valorCompra: 35.99,
-        //     valorFrete: 12.50,
-        //     valorTotal: 124.50,
-        //     metodoPagamento: 'PIX',
-        //     produtos: [{
-        //         idProduto: 1,
-        //         nomeProduto: 'Lingerie 1',
-        //         descProduto: 'Seu moço eu já fui roceiro no triângulo mineiro',
-        //         qtdProduto: 5,
-        //         valorProduto: 35.99,
-        //         subtotal: 143.50
-        //     }]
-        // }
-
-        // console.log(venda)
     }
 
     useEffect(() => {
@@ -122,100 +125,113 @@ const Vendas = () => {
                         <TableRow>
                             <StyledTableCell />
                             <StyledTableCell align="center">#</StyledTableCell>
-                            <StyledTableCell align="center">Nome do cliente</StyledTableCell>
+                            <StyledTableCell align="center">Cliente</StyledTableCell>
                             <StyledTableCell align="center">Data da venda</StyledTableCell>
                             <StyledTableCell align="center">Data de envio</StyledTableCell>
                             <StyledTableCell align="center">Troca</StyledTableCell>
                             <StyledTableCell align="center">Devolução</StyledTableCell>
                             <StyledTableCell align="center">Valor da Compra</StyledTableCell>
                             <StyledTableCell align="center">Valor do Frete</StyledTableCell>
-                            <StyledTableCell align="center">Valor total</StyledTableCell>
+                            <StyledTableCell align="center">Valor Total</StyledTableCell>
                             <StyledTableCell align="center">Modalidade</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                            <StyledTableCell align="center">
-                                <IconButton
-                                    aria-label="expand row"
-                                    size="small"
-                                    onClick={() => setOpen(!open)}
-                                >
-                                    {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                                </IconButton>
-                            </StyledTableCell>
-                            <StyledTableCell align="center" component="th" scope="row">
-                                1
-                            </StyledTableCell>
-                            <StyledTableCell align="center">Larissa Reis</StyledTableCell>
-                            <StyledTableCell align="center">30/04/2022</StyledTableCell>
-                            <StyledTableCell align="center">31/04/2022</StyledTableCell>
-                            <StyledTableCell align="center">X</StyledTableCell>
-                            <StyledTableCell align="center">X</StyledTableCell>
-                            <StyledTableCell align="center">R$ 35.99</StyledTableCell>
-                            <StyledTableCell align="center">R$ 12.50</StyledTableCell>
-                            <StyledTableCell align="center">R$ 124,50</StyledTableCell>
-                            <StyledTableCell align="center">PIX</StyledTableCell>
-                        </StyledTableRow>
+                        {infoVenda.map((venda) => {
+                            return (
+                                <>
+                                    <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
+                                        <StyledTableCell align="center">
+                                            <IconButton
+                                                aria-label="expand row"
+                                                size="small"
+                                                onClick={() => setOpen(!open)}
+                                            >
+                                                {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                                            </IconButton>
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center" component="th" scope="row">
+                                            {venda.idVenda}
+                                        </StyledTableCell>
+                                        <StyledTableCell align="center">{venda.usuario.nomeUsuario}</StyledTableCell>
+                                        <StyledTableCell align="center">{venda.dataVenda}</StyledTableCell>
+                                        <StyledTableCell align="center">{venda.dataEnvio}</StyledTableCell>
+                                        <StyledTableCell align="center">{venda.troca ? "SIM" : "NÃO"}</StyledTableCell>
+                                        <StyledTableCell align="center">{venda.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
+                                        <StyledTableCell align="center">R$ {venda.subtotal}</StyledTableCell>
+                                        <StyledTableCell align="center">R$ {venda.valorFrete}</StyledTableCell>
+                                        <StyledTableCell align="center">R$ {venda.valorTotal}</StyledTableCell>
+                                        <StyledTableCell align="center">{venda.metodoPagamento}</StyledTableCell>
+                                    </StyledTableRow>
 
-                        <TableRow>
-                            <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
-                                <Collapse in={open} timeout="auto" unmountOnExit>
-                                    <Box sx={{ margin: 1 }}>
-                                        <Typography variant="h6" gutterBottom component="div">
-                                            Produtos
-                                        </Typography>
-                                        <Table size="small" aria-label="purchases">
-                                            <TableHead>
-                                                <StyledTableRow>
-                                                    <StyledTableCell align="center">#</StyledTableCell>
-                                                    <StyledTableCell align="center">Nome do produto</StyledTableCell>
-                                                    <StyledTableCell align="center">Descrição</StyledTableCell>
-                                                    <StyledTableCell align="center">Quantidade</StyledTableCell>
-                                                    <StyledTableCell align="center">Preço unitário</StyledTableCell>
-                                                    <StyledTableCell align="center">Subtotal</StyledTableCell>
-                                                </StyledTableRow>
-                                            </TableHead>
+                                    <TableRow>
+                                        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+                                            <Collapse in={open} timeout="auto" unmountOnExit>
+                                                <Box sx={{ margin: 1 }}>
+                                                    <Typography variant="h6" gutterBottom component="div">
+                                                        Produtos
+                                                    </Typography>
+                                                    <Table size="small" aria-label="purchases">
+                                                        <TableHead>
+                                                            <StyledTableRow>
+                                                                <StyledTableCell align="center">#</StyledTableCell>
+                                                                <StyledTableCell align="center">Nome do produto</StyledTableCell>
+                                                                <StyledTableCell align="center">Descrição</StyledTableCell>
+                                                                <StyledTableCell align="center">Quantidade</StyledTableCell>
+                                                                <StyledTableCell align="center">Preço unitário</StyledTableCell>
+                                                                <StyledTableCell align="center">Subtotal</StyledTableCell>
+                                                            </StyledTableRow>
+                                                        </TableHead>
 
-                                            <TableBody>
-                                                <StyledTableRow>
-                                                    <StyledTableCell component="th" scope="row">
-                                                        1
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="center">Lingerie 1</StyledTableCell>
-                                                    <StyledTableCell align="center">Seu moço eu já fui roceiro no triângulo mineiro</StyledTableCell>
-                                                    <StyledTableCell align="center">5</StyledTableCell>
-                                                    <StyledTableCell align="center">35.99</StyledTableCell>
-                                                    <StyledTableCell align="center">143.50</StyledTableCell>
-                                                </StyledTableRow>
+                                                        <TableBody>
+                                                            {venda.produtos.map((produto) => {
+                                                                return (
+                                                                    <StyledTableRow>
+                                                                        <StyledTableCell component="th" scope="row">
+                                                                            {produto.idProduto}
+                                                                        </StyledTableCell>
+                                                                        <StyledTableCell align="center">{produto.nomeProduto}</StyledTableCell>
+                                                                        <StyledTableCell align="center">{produto.descProduto}</StyledTableCell>
+                                                                        <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
+                                                                        <StyledTableCell align="center">{produto.valorProduto}</StyledTableCell>
+                                                                        <StyledTableCell align="center">{produto.subtotalProduto}</StyledTableCell>
+                                                                    </StyledTableRow>
+                                                                )
+                                                            })}
 
-                                                <StyledTableRow>
-                                                    <StyledTableCell component="th" scope="row">
-                                                        2
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="center">Lingerie 2</StyledTableCell>
-                                                    <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
-                                                    <StyledTableCell align="center">5</StyledTableCell>
-                                                    <StyledTableCell align="center">35.99</StyledTableCell>
-                                                    <StyledTableCell align="center">260.00</StyledTableCell>
-                                                </StyledTableRow>
 
-                                                <StyledTableRow>
-                                                    <StyledTableCell component="th" scope="row">
-                                                        2
-                                                    </StyledTableCell>
-                                                    <StyledTableCell align="center">Lingerie 2</StyledTableCell>
-                                                    <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
-                                                    <StyledTableCell align="center">5</StyledTableCell>
-                                                    <StyledTableCell align="center">35.99</StyledTableCell>
-                                                    <StyledTableCell align="center">120.50</StyledTableCell>
-                                                </StyledTableRow>
-                                            </TableBody>
-                                        </Table>
-                                    </Box>
-                                </Collapse>
-                            </TableCell>
-                        </TableRow>
+                                                            {/* <StyledTableRow>
+                                                                <StyledTableCell component="th" scope="row">
+                                                                    2
+                                                                </StyledTableCell>
+                                                                <StyledTableCell align="center">Lingerie 2</StyledTableCell>
+                                                                <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
+                                                                <StyledTableCell align="center">5</StyledTableCell>
+                                                                <StyledTableCell align="center">35.99</StyledTableCell>
+                                                                <StyledTableCell align="center">260.00</StyledTableCell>
+                                                            </StyledTableRow>
+
+                                                            <StyledTableRow>
+                                                                <StyledTableCell component="th" scope="row">
+                                                                    2
+                                                                </StyledTableCell>
+                                                                <StyledTableCell align="center">Lingerie 2</StyledTableCell>
+                                                                <StyledTableCell align="center">Onde eu tinha meu ranchinho</StyledTableCell>
+                                                                <StyledTableCell align="center">5</StyledTableCell>
+                                                                <StyledTableCell align="center">35.99</StyledTableCell>
+                                                                <StyledTableCell align="center">120.50</StyledTableCell>
+                                                            </StyledTableRow> */}
+                                                        </TableBody>
+                                                    </Table>
+                                                </Box>
+                                            </Collapse>
+                                        </TableCell>
+                                    </TableRow>
+                                </>
+                            )
+                        })}
+
+
 
                     </TableBody>
                 </Table>

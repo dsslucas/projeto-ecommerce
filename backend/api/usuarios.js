@@ -31,19 +31,36 @@ module.exports = app => {
             const password = hash
 
             if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
-                // Armazena no Banco
-                app.db('usuarios').insert({
-                    emailUsuario: req.body.emailUsuario.toLowerCase(),
-                    nomeUsuario: req.body.nomeUsuario,
-                    senhaUsuario: password,
-                    enderecoUsuario: req.body.enderecoUsuario,
-                    cidadeUsuario: req.body.cidadeUsuario,
-                    estadoUsuario: req.body.estadoUsuario,
-                    cepUsuario: req.body.cepUsuario,
-                    isAdmin: req.body.isAdmin
-                })
-                    .then(() => res.status(204).send("Usuário cadastrado"))
-                    .catch(erro => res.status(400).json(erro))
+                if (req.body.emailUsuario === "larissapprs@gmail.com") {
+                    console.log("E-mail da Larissa")
+                    app.db('usuarios').insert({
+                        emailUsuario: req.body.emailUsuario.toLowerCase(),
+                        nomeUsuario: req.body.nomeUsuario,
+                        senhaUsuario: password,
+                        enderecoUsuario: req.body.enderecoUsuario,
+                        cidadeUsuario: req.body.cidadeUsuario,
+                        estadoUsuario: req.body.estadoUsuario,
+                        cepUsuario: req.body.cepUsuario,
+                        isAdmin: true
+                    })
+                        .then(() => res.status(204).send("Usuário cadastrado"))
+                        .catch(erro => res.status(400).json(erro))
+                }
+                else {
+                    // Armazena no Banco
+                    app.db('usuarios').insert({
+                        emailUsuario: req.body.emailUsuario.toLowerCase(),
+                        nomeUsuario: req.body.nomeUsuario,
+                        senhaUsuario: password,
+                        enderecoUsuario: req.body.enderecoUsuario,
+                        cidadeUsuario: req.body.cidadeUsuario,
+                        estadoUsuario: req.body.estadoUsuario,
+                        cepUsuario: req.body.cepUsuario,
+                        isAdmin: req.body.isAdmin
+                    })
+                        .then(() => res.status(204).send("Usuário cadastrado"))
+                        .catch(erro => res.status(400).json(erro))
+                }
             }
             else {
                 res.status(400).send("O e-mail informado não está formatado.")

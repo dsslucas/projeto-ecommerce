@@ -120,8 +120,13 @@ module.exports = app => {
 
         const produtos = await app.db('produto_carrinho')
             .where({ idVenda: req.params.id })
-        
+
+        const usuario = await app.db('usuarios')
+            .where({idUsuario: venda.idUsuario})
+            .first()
+       
         venda.produtos = produtos
+        venda.usuario = usuario
         res.status(200).json(venda)
     }
 

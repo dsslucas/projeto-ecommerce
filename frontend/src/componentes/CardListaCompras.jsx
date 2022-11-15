@@ -47,6 +47,7 @@ export default function CardListaCompras(props) {
                 imagem: data.imagemProduto
             }
         })
+        
         const produtosDetalhados = await Promise.all(produtosPromise);
         setDadosApiVenda([{
             produtos: produtosDetalhados,

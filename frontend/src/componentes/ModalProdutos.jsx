@@ -103,7 +103,6 @@ const ModalProdutos = (props) => {
       return (
             <>
                   <Titulo titulo={props.modoEdit ? "Editar produto" : "Cadastrar produto"} barraLogin />
-                  <Button onClick={() => console.log(cadastroProduto)} >Teste</Button>
 
                   <Input
                         id="nome-produto"
