@@ -2,20 +2,14 @@ import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Titulo from './Titulo';
 import Button from '@mui/material/Button';
-import { ButtonBuy, Cores } from '../styles';
-import Typography from '@mui/material/Typography';
+import { ButtonBuy} from '../styles';
 import api from '../servicos/api';
 import { useSelector } from 'react-redux';
 import Input from '../componentes/Input'
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import InputLabel from '@mui/material/InputLabel';
 
 const ModalProdutos = (props) => {
       // Dados vindo do Redux
       const { signin } = useSelector(state => state)
-
-      console.log("Abri o modal")
 
       const [cadastroProduto, setCadastroProduto] = useState({
             nome: undefined,
@@ -64,8 +58,6 @@ const ModalProdutos = (props) => {
                   imagem: props.dados.imagemProduto
             })
 
-            //console.log(props.dados)
-
             try {
                   await api.put(`/produto/${props.dados.idProduto}`, {
                         nomeProduto: cadastroProduto.nome,
@@ -110,6 +102,7 @@ const ModalProdutos = (props) => {
                         value={cadastroProduto.nome}
                         returnValue={(e) => setCadastroProduto({ ...cadastroProduto, nome: e })}
                         disabled
+                        enterPressionado={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                   />
 
                   <Input
@@ -120,8 +113,9 @@ const ModalProdutos = (props) => {
                         maxRows={2}
                         multiline
                         inputProps={{ maxLength: 70 }}
-                  //error={cadastroProduto.descricao.length >= 70 ? true : false}
-                  //helperText={cadastroProduto.descricao.length >= 70 ? "Você excedeu o limite de 70 caracteres na descrição do produto." : null}
+                        error={cadastroProduto.descricao !== undefined && cadastroProduto.descricao.length >= 70 ? true : false}
+                        helperText={cadastroProduto.descricao !== undefined && cadastroProduto.descricao.length >= 70 ? "Você excedeu o limite de 70 caracteres na descrição do produto." : null}
+                        enterPressionado={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                   />
 
                   <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -132,6 +126,7 @@ const ModalProdutos = (props) => {
                                     value={cadastroProduto.qtd}
                                     returnValue={(e) => setCadastroProduto({ ...cadastroProduto, qtd: e })}
                                     type='number'
+                                    enterPressionado={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                               />
                         </Box>
 
@@ -140,8 +135,9 @@ const ModalProdutos = (props) => {
                                     id="valor-produto"
                                     label="Valor (R$)"
                                     value={cadastroProduto.valor}
-                                    returnValue={(e) => setCadastroProduto({ ...cadastroProduto, valor: e })}
+                                    returnValue={(e) => setCadastroProduto({ ...cadastroProduto, valor: e.replace(",",".")})}
                                     type='number'
+                                    enterPressionado={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                               />
                         </Box>
                   </Box>
@@ -152,6 +148,7 @@ const ModalProdutos = (props) => {
                         value={cadastroProduto.imagem}
                         returnValue={(e) => setCadastroProduto({ ...cadastroProduto, imagem: e })}
                         type='text'
+                        enterPressionado={props.modoEdit ? () => EditProduto() : () => AddProduto()}
                   />
 
                   <Box

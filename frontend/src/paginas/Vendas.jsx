@@ -48,7 +48,7 @@ function Row(props) {
                 <StyledTableCell align="center">{row.metodoPagamento}</StyledTableCell>
             </TableRow>
             <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={10}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
@@ -116,31 +116,6 @@ export default function Relatorio() {
 
         const apiVendaEspecifica = await Promise.all(apiVendaPromise);
 
-        // //3a consulta: Usuário
-        // const apiUsuarioPromise = apiVendaEspecifica.map(async (item) => {
-        //     const { data } = await api.get(`/usuario/${item.idUsuario}`, {
-        //         headers: {
-        //             Authorization: signin.token
-        //         }
-        //     })
-        //     return {
-        //         idVenda: item.idVenda,
-        //         idUsuario: data.idUsuario,
-        //         nomeUsuario: data.nomeUsuario,
-        //         emailUsuario: data.emailUsuario,
-        //         dataVenda: item.dataVenda,
-        //         dataEnvio: item.dataEnvio,
-        //         troca: item.troca,
-        //         devolucao: item.devolucao,
-        //         valorCompra: item.subtotal,
-        //         valorFrete: item.valorFrete,
-        //         valorTotal: item.valorTotal,
-        //         metodoPagamento: item.metodoPagamento,
-        //         produtos: item.produtos
-        //     }
-        // })
-        // const apiUsuario = await Promise.all(apiUsuarioPromise)
-
         // 4a consulta: Produtos
         const apiProdutosPromise = apiVendaEspecifica.map(async (infoVenda) => {
             const temp = infoVenda.produtos.map(async (produto) => {
@@ -149,8 +124,6 @@ export default function Relatorio() {
                         Authorization: signin.token
                     }
                 })
-                console.log("infovenda:", infoVenda, "data:", data);
-
                 produto.nome = data.nomeProduto;
                 produto.desc = data.descProduto;
                 return produto;
@@ -158,7 +131,6 @@ export default function Relatorio() {
 
             // Armazena o que foi recebido
             const infoProduto = await Promise.all(temp)
-            console.log(infoProduto)
             return {
                 ...infoVenda,
                 produtos: { ...infoVenda.produtos, infoProduto }
@@ -166,7 +138,6 @@ export default function Relatorio() {
         })
         const apiProdutos = await Promise.all(apiProdutosPromise)
 
-        console.log(apiProdutos)
         // Armazena tudo no Estado
         setInfoVenda(apiVendaEspecifica)
     }
