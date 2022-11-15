@@ -106,7 +106,7 @@ export default function CardListaCompras(props) {
                                             {produto.qtd} unidades
                                         </Typography>
                                         <Typography gutterBottom variant="p" component="div" >
-                                            R$ {produto.valorProduto.toFixed(2)}
+                                            {produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
                                         </Typography>
                                     </Box>
                                 )
@@ -132,15 +132,15 @@ export default function CardListaCompras(props) {
                                 </Typography>
                             )}
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor dos produtos: R$ {info.subtotal.toFixed(2)}
+                                Valor dos produtos: {info.subtotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
                             </Typography>
 
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor do frete: R$ {info.valorFrete.toFixed(2)}
+                                Valor do frete: {info.valorFrete.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
                             </Typography>
 
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor total: R$ {info.valorTotal.toFixed(2)}
+                                Valor total: {info.valorTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
                             </Typography>
                         </Box>
                     )

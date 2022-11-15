@@ -236,7 +236,7 @@ const Estoque = () => {
                                 </StyledTableCell>
                                 <StyledTableCell align="center">{row.descProduto}</StyledTableCell>
                                 <StyledTableCell align="center">{row.qtdProduto}</StyledTableCell>
-                                <StyledTableCell align="center">R$ {row.valorProduto}</StyledTableCell>
+                                <StyledTableCell align="center">{row.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
                                 <StyledTableCell align="center">{moment(row.dataAquisicaoProduto).format("DD/MM/YYYY HH:mm")}</StyledTableCell>
                                 <StyledTableCell align="center" sx={{}}>
                                     <Button

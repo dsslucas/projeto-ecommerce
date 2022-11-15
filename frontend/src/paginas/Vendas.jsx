@@ -42,9 +42,9 @@ function Row(props) {
                 <StyledTableCell align="center">{row.dataEnvio !== null ? moment(row.dataEnvio).format("DD/MM/YYYY HH:mm") : '-'}</StyledTableCell>
                 <StyledTableCell align="center">{row.troca ? "SIM" : "NÃO"}</StyledTableCell>
                 <StyledTableCell align="center">{row.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
-                <StyledTableCell align="center">R$ {row.subtotal}</StyledTableCell>
-                <StyledTableCell align="center">R$ {row.valorFrete}</StyledTableCell>
-                <StyledTableCell align="center">R$ {row.valorTotal}</StyledTableCell>
+                <StyledTableCell align="center">{row.subtotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
+                <StyledTableCell align="center">{row.valorFrete.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
+                <StyledTableCell align="center">{row.valorTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
                 <StyledTableCell align="center">{row.metodoPagamento}</StyledTableCell>
             </TableRow>
             <TableRow>
@@ -74,8 +74,8 @@ function Row(props) {
                                             <StyledTableCell align="center">{produto.nomeProduto}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.descProduto}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
-                                            <StyledTableCell align="center">{produto.valorProduto}</StyledTableCell>
-                                            <StyledTableCell align="center">{produto.subtotalProduto}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.subtotalProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>

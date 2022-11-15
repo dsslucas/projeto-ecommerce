@@ -53,7 +53,6 @@ const ListaCompras = () => {
                         idVenda={item.idVenda}
                         valorTotal={item.valorTotal}
                         titulo="Conjunto X"
-                        preco={149.99}
                         status={item.statusEntrega}
                     />
                 )

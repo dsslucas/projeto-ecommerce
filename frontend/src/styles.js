@@ -267,7 +267,7 @@ const CardGridLista = theme => ({
     [theme.breakpoints.up('sm')]: {
         width: '100%',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/2, max(64px, 100%/3)), 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%/2, max(64px, 100%/2)), 1fr))',
         //gridTemplateRows: '220px',
     },
 
@@ -296,7 +296,13 @@ const CardListaComprasImage = theme => ({
     display: 'flex',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
-        width: '233px',
+        width: '250px',
+        height: '250px'
+        // height: '50%'
+    },
+    [theme.breakpoints.up('lg')]: {
+        width: '200px',
+        height: '200px'
         // height: '50%'
     },
 })
@@ -310,6 +316,7 @@ const CardListaComprasContentColumn = theme => ({
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
         textAlign: 'center',
+        minHeight: 'auto'
     },
 })
 

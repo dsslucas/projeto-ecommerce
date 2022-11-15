@@ -15,16 +15,6 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
-
-// Imagens
-import Image1 from '../assets/IMG-1310.jpg'
-//import Image2 from '../assets/IMG-1311.jpg'
-// import Image3 from '../assets/IMG-1313.jpg'
-// import Image4 from '../assets/IMG-1326.jpg'
-// import Image5 from '../assets/IMG-1327.jpg'
-// import Image6 from '../assets/IMG-1330.jpg'
-// import Image7 from '../assets/IMG-1334.jpg'
-// import Image8 from '../assets/IMG-1335.jpg'
 import Span from '../componentes/Span';
 import Titulo from '../componentes/Titulo';
 import ModalCadastro from '../componentes/ModalCadastro';
@@ -370,7 +360,7 @@ const Carrinho = () => {
                                     Valor dos produtos
                                 </Typography>
 
-                                <Span number={`R$ ${valorProduto.toFixed(2)}`} />
+                                <Span number={valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} />
                             </Box>
 
                             <Box
@@ -386,7 +376,7 @@ const Carrinho = () => {
                                 </Typography>
                                 {signin.email === null
                                     ? (<Span number={`Disponível após login`} />)
-                                    : (<Span number={`R$ ${valoresFrete(signin.uf)}`} />)
+                                    : (<Span number={valoresFrete(signin.uf).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} />)
                                 }
                             </Box>
 
@@ -404,7 +394,7 @@ const Carrinho = () => {
 
                                 {signin.email === null
                                     ? (<Span number={`Disponível após login`} />)
-                                    : (<Span number={`R$ ${(valorProduto + valoresFrete(signin.uf)).toFixed(2)}`} />)
+                                    : (<Span number={(valorProduto + valoresFrete(signin.uf)).toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})} />)
                                 }                                
                             </Box>
 
