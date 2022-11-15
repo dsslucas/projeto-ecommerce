@@ -24,6 +24,7 @@ import api from '../servicos/api';
 import { useSelector } from 'react-redux';
 import ModalProdutos from '../componentes/ModalProdutos';
 import ModalDelete from '../componentes/ModalDelete';
+import moment from 'moment';
 
 const Estoque = () => {
     // Dados vindo do Redux
@@ -236,7 +237,7 @@ const Estoque = () => {
                                 <StyledTableCell align="center">{row.descProduto}</StyledTableCell>
                                 <StyledTableCell align="center">{row.qtdProduto}</StyledTableCell>
                                 <StyledTableCell align="center">R$ {row.valorProduto}</StyledTableCell>
-                                <StyledTableCell align="center">{row.dataAquisicaoProduto}</StyledTableCell>
+                                <StyledTableCell align="center">{moment(row.dataAquisicaoProduto).format("DD/MM/YYYY HH:mm")}</StyledTableCell>
                                 <StyledTableCell align="center" sx={{}}>
                                     <Button
                                         onClick={() => {

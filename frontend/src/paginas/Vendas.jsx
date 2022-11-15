@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
+import moment from 'moment'
 
 function Row(props) {
     const { row } = props;
@@ -37,8 +38,8 @@ function Row(props) {
                     {row.idVenda}
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.usuario.nomeUsuario}</StyledTableCell>
-                <StyledTableCell align="center">{row.dataVenda}</StyledTableCell>
-                <StyledTableCell align="center">{row.dataEnvio}</StyledTableCell>
+                <StyledTableCell align="center">{moment(row.dataVenda).format("DD/MM/YYYY HH:mm")}</StyledTableCell>
+                <StyledTableCell align="center">{row.dataEnvio !== null ? moment(row.dataEnvio).format("DD/MM/YYYY HH:mm") : '-'}</StyledTableCell>
                 <StyledTableCell align="center">{row.troca ? "SIM" : "NÃO"}</StyledTableCell>
                 <StyledTableCell align="center">{row.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
                 <StyledTableCell align="center">R$ {row.subtotal}</StyledTableCell>

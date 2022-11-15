@@ -10,6 +10,7 @@ import CardHeader from '@mui/material/CardHeader';
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
 import { ListItemIcon } from '@mui/material';
+import moment from 'moment';
 
 export default function CardListaCompras(props) {
     // Pega os dados do Redux
@@ -71,9 +72,9 @@ export default function CardListaCompras(props) {
     return (
         <Card
             sx={CardListaComprasWrapper}
-            key={props.id}
+            key={props.idVenda}
         >
-            <CardHeader subheader={props.dataVenda} />
+            <CardHeader subheader={`Compra #${props.idVenda} - ${moment(props.dataVenda).format("DD/MM/YYYY HH:MM")}`} />
 
             <CardContent
                 sx={CardListaComprasContent}
