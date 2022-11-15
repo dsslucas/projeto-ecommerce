@@ -70,7 +70,7 @@ export default function CardListaCompras(props) {
     return (
         <Card
             sx={CardListaComprasWrapper}
-            key={props.key}
+            key={props.id}
         >
             <CardHeader subheader={props.dataVenda} />
 

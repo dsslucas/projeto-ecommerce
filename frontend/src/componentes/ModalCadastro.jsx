@@ -50,13 +50,13 @@ export default function ModalCadastro(props) {
         })
 
         setCadastroUsuario({
-            nome: data[0].nomeUsuario,
-            email: data[0].emailUsuario,
-            senha: data[0].senhaUsuario,
-            endereco: data[0].enderecoUsuario,
-            cidade: data[0].cidadeUsuario,
-            uf: data[0].estadoUsuario,
-            cep: data[0].cepUsuario
+            nome: data.nomeUsuario,
+            email: data.emailUsuario,
+            senha: data.senhaUsuario,
+            endereco: data.enderecoUsuario,
+            cidade: data.cidadeUsuario,
+            uf: data.estadoUsuario,
+            cep: data.cepUsuario
         })
     }
 

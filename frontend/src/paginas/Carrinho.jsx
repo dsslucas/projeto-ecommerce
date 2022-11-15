@@ -303,7 +303,6 @@ const Carrinho = () => {
                         }}
                     >
                         {carrinho.map((item) => {
-                            console.log(item)
                             return (
                                 <CardCarrinho
                                     key={item.id}

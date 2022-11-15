@@ -20,6 +20,7 @@ module.exports = app => {
     const getUnicoUsuario = (req, res) => {
         app.db('usuarios')
             .where({ idUsuario: req.params.id })
+            .first()
             .then((resultado) => res.json(resultado))
             .catch((erro) => res.status(204).json(erro))
     }
