@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import api from '../servicos/api'
 import { useSelector } from 'react-redux'
+import moment from 'moment'
 
 import Box from '@mui/material/Box';
-import { Cores, EstilosConteudo } from '../styles';
+import { Cores, EstilosConteudo, GridRelatorio, GridTabelaRelatorio, TableRelatorio } from '../styles';
 import Titulo from '../componentes/Titulo';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
@@ -26,6 +27,9 @@ const Relatorio = () => {
     const [apiProdutos, setApiProdutos] = useState([])
     const [apiUsuarios, setApiUsuarios] = useState([])
     const [apiVendas, setApiVendas] = useState([])
+    const [contadorApiVendas, setContadorApiVendas] = useState([])
+    const [contadorPix, setContadorPix] = useState(0)
+    const [contadorBoleto, setContadorBoleto] = useState(0)
 
     const ConsultaApiProdutos = async () => {
         const { data } = await api.get(`/produto`)
@@ -48,129 +52,115 @@ const Relatorio = () => {
             }
         })
 
+        setContadorApiVendas(data)
+
+        // Consulta do usuário (por Id)
+        const apiUsuarioPromise = data.map(async (usuario) => {
+            const teste = await api.get(`/usuario/${usuario.idUsuario}`, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+
+            return {
+                idVenda: usuario.dataVenda,
+                dataVenda: usuario.dataVenda,
+                nomeUsuario: teste.data.nomeUsuario,
+                subtotal: usuario.subtotal,
+                valorFrete: usuario.valorFrete,
+                valorTotal: usuario.valorTotal,
+                metodoPagamento: usuario.metodoPagamento
+            }
+        })
+
+        const apiUsuarioId = await Promise.all(apiUsuarioPromise)
+
         const valorInicial = 0
         const valorTotal = data.reduce((valorInicial, item) => {
             return valorInicial + (item.subtotal)
         }, valorInicial)
 
-        setApiVendas({data, total: valorTotal})
+        const posicaoArray = apiUsuarioId.reverse().slice(0, 6)
+
+        setApiVendas({ data: posicaoArray, total: valorTotal })
+    }
+
+    const ConsultaMetodoPagamento = async () => {
+        console.log("Teste")
+        // Cálculo para PIX e Boleto
+        // const metodoPagamento = data.map((venda) => {
+        //     if (venda.metodoPagamento === "PIX") {
+        //         console.log("Vou meter fazendo pix")
+        //         setContadorPix(contador => contador + 1)
+        //     }
+        //     else if (venda.metodoPagamento === "BOLETO") {
+        //         console.log("Boleto")
+        //     }
+
+        // })
     }
 
     useEffect(() => {
-        ConsultaApiProdutos()
-        ConsultaApiUsuarios()
-        ConsultaApiVenda()
+        const interval = setInterval(() => {
+            ConsultaApiProdutos()
+            ConsultaApiUsuarios()
+            ConsultaApiVenda()
+        }, 3000);
+        return () => clearInterval(interval);
     }, [])
 
     return (
-        <Box sx={EstilosConteudo}>
-            <Titulo titulo="Relatório" />
+        <Box sx={{ ...EstilosConteudo, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+            <Box component="div" sx={{ display: 'flex', width: '100%' }}>
+                <Titulo titulo="Relatório" />
+            </Box>
 
-            <Container maxWidth="lg" sx={{ mt: 4, ml: 0, mr: 0 }}>
+            <Container maxWidth="xl" sx={{ mt: 2, ml: 0, mr: 0 }}>
                 <Grid container spacing={2}>
                     {/* Chart */}
-                    <Grid item xs={12} md={8} lg={9}>
+                    <Grid item xs={12} md={8} lg={9}
+                    >
                         <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 'calc(100vh - 226px)',
-                                background: Cores.fundoAbaixoConteudo
-                            }}
+                            sx={GridTabelaRelatorio}
                         >
-                            <Titulo titulo="Vendas Recentes" />
+                            <Titulo titulo={`Vendas Recentes`} />
 
                             <TableContainer component={Paper}>
-                                <Table size="small" sx={{ minWidth: 650, height: 'calc(100vh - 312px)', overflowY: 'hidden' }} aria-label="simple table">
+                                <Table size="small" sx={TableRelatorio} aria-label="simple table">
                                     <TableHead>
                                         <TableRow>
-                                            <TableCell>Data da venda</TableCell>
-                                            <TableCell align="right">Nome do cliente</TableCell>
-                                            <TableCell align="right">Subtotal</TableCell>
-                                            <TableCell align="right">Frete</TableCell>
-                                            <TableCell align="right">Total</TableCell>
-                                            <TableCell align="right">Forma de pagamento</TableCell>
+                                            <TableCell align="center">Data da venda</TableCell>
+                                            <TableCell align="center">Nome do cliente</TableCell>
+                                            <TableCell align="center">Subtotal</TableCell>
+                                            <TableCell align="center">Frete</TableCell>
+                                            <TableCell align="center">Total</TableCell>
+                                            <TableCell align="center">Forma de pagamento</TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
-
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
-
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
-
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
-
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
-
-                                        <TableRow
-                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                        >
-                                            <TableCell component="th" scope="row">
-                                                20-02-2022
-                                            </TableCell>
-                                            <TableCell align="right">Larissa Reis</TableCell>
-                                            <TableCell align="right">R$ 135,50</TableCell>
-                                            <TableCell align="right">R$ 12,50</TableCell>
-                                            <TableCell align="right">R$ 170,00</TableCell>
-                                            <TableCell align="right">PIX</TableCell>
-                                        </TableRow>
+                                        {apiVendas.data !== undefined
+                                            ? (
+                                                apiVendas.data.map((venda) => {
+                                                    return (
+                                                        <TableRow
+                                                            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                                            key={venda.idVenda}
+                                                        >
+                                                            <TableCell align="center" component="th" scope="row">
+                                                                {moment(venda.dataVenda).format("DD/MM/YYYY HH:mm")}
+                                                            </TableCell>
+                                                            <TableCell align="center">{venda.nomeUsuario}</TableCell>
+                                                            <TableCell align="center">{venda.subtotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</TableCell>
+                                                            <TableCell align="center">{venda.valorFrete.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</TableCell>
+                                                            <TableCell align="center">{venda.valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</TableCell>
+                                                            <TableCell align="center">{venda.metodoPagamento}</TableCell>
+                                                        </TableRow>
+                                                    )
+                                                })
+                                            )
+                                            : (
+                                                ''
+                                            )}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -178,12 +168,7 @@ const Relatorio = () => {
                     </Grid>
                     {/* Recent Deposits */}
                     <Grid item xs={12} md={4} lg={3}
-                        sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            height: 'calc(100vh - 226px)',
-                        }}
+                        sx={GridRelatorio}
                     >
                         <Paper
                             sx={{
@@ -195,18 +180,10 @@ const Relatorio = () => {
                                 background: Cores.fundoAbaixoConteudo
                             }}
                         >
-                            <Titulo titulo="Faturamento" />
+                            <Titulo titulo="Faturamento" marginBottom />
 
-                            <Typography component="p" variant="h4">
-                                {apiVendas.total !== undefined ? apiVendas.total.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) : ''}
-                            </Typography>
-
-                            <Typography color="text.secondary">
-                                PIX: 60%
-                            </Typography>
-
-                            <Typography color="text.secondary" sx={{ flex: 1 }}>
-                                Boleto: 60%
+                            <Typography component="p" variant="h5">
+                                {apiVendas.total !== undefined ? apiVendas.total.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) : ''}
                             </Typography>
                         </Paper>
 
@@ -220,7 +197,25 @@ const Relatorio = () => {
                                 background: Cores.fundoAbaixoConteudo
                             }}
                         >
-                            <Titulo titulo="Produtos" />
+                            <Titulo titulo="Vendas" marginBottom />
+
+                            <Typography component="p" variant="h5">
+                                {contadorApiVendas.length}
+                            </Typography>
+
+                        </Paper>
+
+                        <Paper
+                            sx={{
+                                p: 2,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                height: 'auto',
+                                width: '100%',
+                                background: Cores.fundoAbaixoConteudo
+                            }}
+                        >
+                            <Titulo titulo="Produtos" marginBottom/>
 
                             <Typography component="p" variant="h5">
                                 {apiProdutos.length}
@@ -238,7 +233,7 @@ const Relatorio = () => {
                                 background: Cores.fundoAbaixoConteudo
                             }}
                         >
-                            <Titulo titulo="Usuários" />
+                            <Titulo titulo="Usuários" marginBottom/>
 
                             <Typography component="p" variant="h5">
                                 {apiUsuarios.length}

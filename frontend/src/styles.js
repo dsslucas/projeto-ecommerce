@@ -311,7 +311,7 @@ const CardListaComprasContentColumn = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    minHeight: '320px',   
+    minHeight: '320px',
 
     [theme.breakpoints.down('sm')]: {
         flexDirection: 'column',
@@ -374,4 +374,34 @@ const EstiloModal = theme => ({
     },
 });
 
-export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaInformacao, CardListaDivider, CardListaComprasContent, CardGridLista, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho, LoginCadastroWrapper }
+const GridTabelaRelatorio = theme => ({
+    p: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    background: Cores.fundoAbaixoConteudo,
+    [theme.breakpoints.up('lg')]: {
+        height: 'calc(100vh - 240px)',
+    },
+})
+
+const TableRelatorio = theme => ({
+    //height: '250px',
+    //height: 'calc(100vh - 312px)'
+    minWidth: 650,
+
+    [theme.breakpoints.up('lg')]: {
+        height: 'calc(100vh - 332px)',
+    }
+})
+
+const GridRelatorio = theme => ({
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'stretch',
+
+    [theme.breakpoints.up('lg')]: {
+        height: 'calc(100vh - 226px)',
+    }
+})
+
+export { Drawer, AppBar, Cores, EstilosConteudo, GridWrapperItems, ButtonBuy, WrapperCarrinho, ConteudoCardCarrinho, ImageCardCarrinho, QtdPrecoCardCarrinho, InformacoesCarrinho, CommonBox, CardListaComprasWrapper, CardListaComprasImage, CardListaInformacao, CardListaDivider, CardListaComprasContent, CardGridLista, CardListaComprasButtons, CardListaComprasContentColumn, StyledTableCell, StyledTableRow, EstiloModal, DeletarProdutoCarrinho, LoginCadastroWrapper, GridRelatorio, TableRelatorio, GridTabelaRelatorio }
