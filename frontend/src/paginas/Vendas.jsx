@@ -17,10 +17,31 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
 import moment from 'moment'
+import { Button } from '@mui/material';
+import CheckIcon from '@mui/icons-material/CheckBox';
 
 function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+
+    // Dados vindo do Redux
+    const { signin } = useSelector(state => state)
+
+    const confirmaEnvioPacote = async (idVenda) => {
+        try {
+            await api.put(`/venda/${idVenda}`, {
+                dataEnvio: new Date(),
+                statusEntrega: 'Enviado'
+            }, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+            props.returnBotaoClicado(true)
+        } catch (e) {
+            console.error(e)
+        }
+    }
 
     return (
         <React.Fragment>
@@ -39,12 +60,20 @@ function Row(props) {
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.usuario.nomeUsuario}</StyledTableCell>
                 <StyledTableCell align="center">{moment(row.dataVenda).format("DD/MM/YYYY HH:mm")}</StyledTableCell>
-                <StyledTableCell align="center">{row.dataEnvio !== null ? moment(row.dataEnvio).format("DD/MM/YYYY HH:mm") : '-'}</StyledTableCell>
+                <StyledTableCell align="center">
+                    {row.dataEnvio !== null
+                        ? moment(row.dataEnvio).format("DD/MM/YYYY HH:mm")
+                        : (
+                            <Button onClick={() => confirmaEnvioPacote(row.idVenda)}>
+                                <CheckIcon sx={{ background: 'green', borderRadius: '3px', color: "#fff" }} />
+                            </Button>
+                        )}
+                </StyledTableCell>
                 <StyledTableCell align="center">{row.troca ? "SIM" : "NÃO"}</StyledTableCell>
                 <StyledTableCell align="center">{row.devolucao ? "SIM" : "NÃO"}</StyledTableCell>
-                <StyledTableCell align="center">{row.subtotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
-                <StyledTableCell align="center">{row.valorFrete.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
-                <StyledTableCell align="center">{row.valorTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
+                <StyledTableCell align="center">{row.subtotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</StyledTableCell>
+                <StyledTableCell align="center">{row.valorFrete.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</StyledTableCell>
+                <StyledTableCell align="center">{row.valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</StyledTableCell>
                 <StyledTableCell align="center">{row.metodoPagamento}</StyledTableCell>
             </TableRow>
             <TableRow>
@@ -74,8 +103,8 @@ function Row(props) {
                                             <StyledTableCell align="center">{produto.nome}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.desc}</StyledTableCell>
                                             <StyledTableCell align="center">{produto.qtdProduto}</StyledTableCell>
-                                            <StyledTableCell align="center">{produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
-                                            <StyledTableCell align="center">{produto.subtotalProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.valorProduto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</StyledTableCell>
+                                            <StyledTableCell align="center">{produto.subtotalProduto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}</StyledTableCell>
                                         </StyledTableRow>
                                     ))}
                                 </TableBody>
@@ -94,6 +123,8 @@ export default function Relatorio() {
 
     // Armazena as vendas com os usuários
     const [infoVenda, setInfoVenda] = useState([])
+
+    const [att, setAtt] = useState(false)
 
     // Consulta ao Banco de Dados
     const ConsultaApi = async () => {
@@ -116,7 +147,7 @@ export default function Relatorio() {
 
         const apiVendaEspecifica = await Promise.all(apiVendaPromise);
 
-        // 4a consulta: Produtos
+        //4a consulta: Produtos
         const apiProdutosPromise = apiVendaEspecifica.map(async (infoVenda) => {
             const temp = infoVenda.produtos.map(async (produto) => {
                 const { data } = await api.get(`/produto/${produto.idProduto}`, {
@@ -143,8 +174,13 @@ export default function Relatorio() {
     }
 
     useEffect(() => {
-        ConsultaApi()
+        const interval = setInterval(() => {
+            ConsultaApi()
+        }, 3000);
+        return () => clearInterval(interval);        
     }, [])
+
+    //setInterval(() => {ConsultaApi()}, 3000)
 
     return (
         <Box sx={EstilosConteudo}>

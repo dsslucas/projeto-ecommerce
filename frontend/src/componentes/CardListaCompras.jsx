@@ -103,7 +103,7 @@ export default function CardListaCompras(props) {
                                             {produto.nome}
                                         </Typography>
                                         <Typography gutterBottom variant="p" component="div" >
-                                            {produto.qtd} unidades
+                                            {produto.qtd === 1 ? `${produto.qtd} unidade` : `${produto.qtd} unidades`}
                                         </Typography>
                                         <Typography gutterBottom variant="p" component="div" >
                                             {produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
@@ -116,6 +116,7 @@ export default function CardListaCompras(props) {
                 </Box>
 
                 {dadosApiVenda.map((info) => {
+                    console.log(info)
                     return (
                         <Box component="div" sx={CardListaInformacao}>
                             <Typography gutterBottom variant="p" component="div" >
@@ -123,12 +124,12 @@ export default function CardListaCompras(props) {
                             </Typography>
                             {info.dataEnvio !== null && (
                                 <Typography gutterBottom variant="p" component="div" >
-                                    Enviado em: {info.dataEnvio}
+                                    Enviado em: {moment(info.dataEnvio).format("DD/MM/YYYY HH:mm")}
                                 </Typography>
                             )}
                             {info.dataEntrega !== null && (
                                 <Typography gutterBottom variant="p" component="div" >
-                                    Enviado em: {info.dataEntrega}
+                                    Enviado em: {moment(info.dataEntrega).format("DD/MM/YYYY HH:mm")}
                                 </Typography>
                             )}
                             <Typography gutterBottom variant="p" component="div" >
