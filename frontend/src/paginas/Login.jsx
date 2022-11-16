@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box';
 import Titulo from '../componentes/Titulo';
-import FormControl from '@mui/material/FormControl';
 import { ButtonBuy, EstilosConteudo, LoginCadastroWrapper } from '../styles';
 import Input from '../componentes/Input'
 import Button from '@mui/material/Button';

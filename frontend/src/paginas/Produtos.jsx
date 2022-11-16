@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import Box from '@mui/material/Box';
 import { EstilosConteudo, GridWrapperItems } from '../styles';
+
 // Card (do componente)
 import CardProdutos from '../componentes/CardProdutos'
 import Container from '@mui/material/Container';
-
 import Titulo from '../componentes/Titulo';
+import Box from '@mui/material/Box';
 
 //API onde está localizado o endereço.
 import api from '../servicos/api';
 import { useSelector } from 'react-redux';
-import { Button } from '@mui/material';
 
 const Produtos = () => {
     // Dados vindo do Redux

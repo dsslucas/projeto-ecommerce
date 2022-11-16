@@ -9,14 +9,13 @@ import Box from '@mui/material/Box';
 import CardHeader from '@mui/material/CardHeader';
 import { useSelector } from 'react-redux';
 import api from '../servicos/api';
-import { ListItemIcon } from '@mui/material';
 import moment from 'moment';
 
 export default function CardListaCompras(props) {
     // Pega os dados do Redux
     const { signin } = useSelector(state => state)
 
-    const [dadosApiVenda, setDadosApiVenda] = React.useState([])
+    const [dadosApiVenda, setDadosApiVenda] = useState([])
 
     // Consulta de vendas específicas com base no ID da venda
     const consultaApiVenda = async () => {
@@ -89,7 +88,7 @@ export default function CardListaCompras(props) {
         }
     }
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (signin.email !== null) {
             const interval = setInterval(() => {
                 consultaApiVenda()

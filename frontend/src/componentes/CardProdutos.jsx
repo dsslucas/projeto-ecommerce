@@ -7,7 +7,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { ButtonBuy, Cores } from '../styles';
 import Box from '@mui/material/Box';
-
 import Span from './Span'
 import { useDispatch } from 'react-redux';
 import { AdicionaItemCarrinho } from '../redux/actions/Carrinho';

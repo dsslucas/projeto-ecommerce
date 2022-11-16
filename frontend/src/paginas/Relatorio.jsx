@@ -17,7 +17,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { Button } from '@mui/material';
 
 const Relatorio = () => {
     // Dados do Redux
@@ -28,8 +27,6 @@ const Relatorio = () => {
     const [apiUsuarios, setApiUsuarios] = useState([])
     const [apiVendas, setApiVendas] = useState([])
     const [contadorApiVendas, setContadorApiVendas] = useState([])
-    const [contadorPix, setContadorPix] = useState(0)
-    const [contadorBoleto, setContadorBoleto] = useState(0)
 
     const ConsultaApiProdutos = async () => {
         const { data } = await api.get(`/produto`)

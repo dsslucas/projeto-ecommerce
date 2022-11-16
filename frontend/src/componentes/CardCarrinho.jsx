@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,8 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AdicionaQtdItemCarrinho, RetiraQtdItemCarrinho, RetiraItemCarrinho } from '../redux/actions/Carrinho';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import api from '../servicos/api';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 export default function CardCarrinho(props) {
     // Dados vindo do Redux

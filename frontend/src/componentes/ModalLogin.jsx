@@ -9,9 +9,6 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { SignIn } from '../redux/actions/SignIn';
 
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
-
 export default function ModalLogin(props) {
     // Conexão com o Redux
     const dispatch = useDispatch()

@@ -124,8 +124,6 @@ export default function Relatorio() {
     // Armazena as vendas com os usuários
     const [infoVenda, setInfoVenda] = useState([])
 
-    const [att, setAtt] = useState(false)
-
     // Consulta ao Banco de Dados
     const ConsultaApi = async () => {
         // 1a consulta: API de vendas
@@ -147,7 +145,7 @@ export default function Relatorio() {
         const apiVendaEspecifica = await Promise.all(apiVendaPromise);
 
         //4a consulta: Produtos
-        const apiProdutosPromise = apiVendaEspecifica.map(async (infoVenda) => {
+        apiVendaEspecifica.map(async (infoVenda) => {
             const temp = infoVenda.produtos.map(async (produto) => {
                 const { data } = await api.get(`/produto/${produto.idProduto}`, {
                     headers: {
@@ -166,7 +164,7 @@ export default function Relatorio() {
                 produtos: { ...infoVenda.produtos, infoProduto }
             }
         })
-        const apiProdutos = await Promise.all(apiProdutosPromise)
+        //const apiProdutos = await Promise.all(apiProdutosPromise)
 
         // Armazena tudo no Estado
         setInfoVenda(apiVendaEspecifica)
