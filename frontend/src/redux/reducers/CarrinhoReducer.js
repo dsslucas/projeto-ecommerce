@@ -17,7 +17,7 @@ const carrinhoReducer = (state = ESTADO_INICIAL, action) => {
                 preco: action.payload.preco,
                 imagem: action.payload.imagem,
                 qtd: action.payload.qtd
-            }]
+            }].sort((a, b) => a.id - b.id)
         case "ADICIONA_QTD_ITEM_CARRINHO":
             // const {carrinho, id} = action.payload
             novaLista = carrinho.map((item) => {
