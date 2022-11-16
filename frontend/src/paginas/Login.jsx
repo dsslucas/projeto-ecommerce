@@ -49,7 +49,7 @@ const Login = () => {
     const dispatch = useDispatch()
 
     // Dados que vem do Redux
-    const {signin} = useSelector(estado => estado)
+    const { signin } = useSelector(estado => estado)
 
     // Navegação para outras rotas
     const navigate = useNavigate()
@@ -138,7 +138,7 @@ const Login = () => {
             setMsgAlerta(!msgAlerta)
 
             // Navega para Produtos se o Fade tiver fechado e tiver registro do usuário no Redux
-            if(!msgAlerta && signin.email !== undefined) {
+            if (!msgAlerta && signin.email !== undefined) {
                 setTimeout(() => {
                     navigate('/produtos')
                 }, 4000)
@@ -226,6 +226,7 @@ const Login = () => {
                             returnValue={(e) => setLoginUsuario({ ...loginUsuario, email: e })}
                             error={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? true : false}
                             helperText={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
+                            enterPressionado={() => signIn()}
                         />
 
                         <Input
@@ -237,8 +238,8 @@ const Login = () => {
                             enterPressionado={() => signIn()}
                         />
 
-                        <Button 
-                            sx={{ ...ButtonBuy }} 
+                        <Button
+                            sx={{ ...ButtonBuy }}
                             onClick={() => signIn()}
                         >
                             Login
@@ -254,6 +255,7 @@ const Login = () => {
                             defaultValue={cadastroUsuario.nome}
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, nome: e })}
                             disabled
+                            enterPressionado={() => signUp()}
                         />
 
                         <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -265,6 +267,7 @@ const Login = () => {
                                     returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, email: e })}
                                     error={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? true : false}
                                     helperText={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
+                                    enterPressionado={() => signUp()}
                                 />
                             </Box>
                             <Box component="div" sx={{ width: '48%' }}>
@@ -274,6 +277,7 @@ const Login = () => {
                                     type="password"
                                     defaultValue={cadastroUsuario.senha}
                                     returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, senha: e })}
+                                    enterPressionado={() => signUp()}
                                 />
                             </Box>
                         </Box>
@@ -283,6 +287,7 @@ const Login = () => {
                             label="Endereço"
                             defaultValue={cadastroUsuario.endereco}
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, endereco: e })}
+                            enterPressionado={() => signUp()}
                         />
 
                         <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -299,6 +304,7 @@ const Login = () => {
                                     label="Cidade"
                                     defaultValue={cadastroUsuario.cidade}
                                     returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, cidade: e })}
+                                    enterPressionado={() => signUp()}
                                 />
                             </Box>
 

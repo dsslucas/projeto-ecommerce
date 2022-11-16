@@ -77,6 +77,7 @@ export default function ModalLogin(props) {
                     returnValue={(e) => setLoginUsuario({ ...loginUsuario, email: e })}
                     error={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? true : false}
                     helperText={!loginUsuario.email.includes('@') || !loginUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
+                    enterPressionado={() => signIn()}
                 />
 
                 <Input
@@ -85,6 +86,7 @@ export default function ModalLogin(props) {
                     type="password"
                     defaultValue={loginUsuario.senha}
                     returnValue={(e) => setLoginUsuario({ ...loginUsuario, senha: e })}
+                    enterPressionado={() => signIn()}
                 />
 
                 <Box

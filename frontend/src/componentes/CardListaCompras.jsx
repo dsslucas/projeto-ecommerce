@@ -18,8 +18,6 @@ export default function CardListaCompras(props) {
 
     const [dadosApiVenda, setDadosApiVenda] = React.useState([])
 
-    const [listaProdutosCompra, setListaProdutosCompra] = useState([])
-
     // Consulta de vendas específicas com base no ID da venda
     const consultaApiVenda = async () => {
         // Consulta das compras realizadas pelo usuário
@@ -48,7 +46,7 @@ export default function CardListaCompras(props) {
                 imagem: data.imagemProduto
             }
         })
-        
+
         const produtosDetalhados = await Promise.all(produtosPromise);
         setDadosApiVenda([{
             produtos: produtosDetalhados,
@@ -63,9 +61,40 @@ export default function CardListaCompras(props) {
         }])
     }
 
+    const sinalizaTroca = async (idVenda) => {
+        try {
+            await api.put(`/venda/${idVenda}`, {
+                troca: true
+            }, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
+    const sinalizaDevolucao = async (idVenda) => {
+        try {
+            await api.put(`/venda/${idVenda}`, {
+                devolucao: true
+            }, {
+                headers: {
+                    Authorization: signin.token
+                }
+            })
+        } catch (e) {
+            console.error(e)
+        }
+    }
+
     React.useEffect(() => {
         if (signin.email !== null) {
-            consultaApiVenda()
+            const interval = setInterval(() => {
+                consultaApiVenda()
+            }, 3000);
+            return () => clearInterval(interval);
         }
     }, [])
 
@@ -106,7 +135,7 @@ export default function CardListaCompras(props) {
                                             {produto.qtd === 1 ? `${produto.qtd} unidade` : `${produto.qtd} unidades`}
                                         </Typography>
                                         <Typography gutterBottom variant="p" component="div" >
-                                            {produto.valorProduto.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+                                            {produto.valorProduto.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                                         </Typography>
                                     </Box>
                                 )
@@ -116,7 +145,6 @@ export default function CardListaCompras(props) {
                 </Box>
 
                 {dadosApiVenda.map((info) => {
-                    console.log(info)
                     return (
                         <Box component="div" sx={CardListaInformacao}>
                             <Typography gutterBottom variant="p" component="div" >
@@ -133,16 +161,29 @@ export default function CardListaCompras(props) {
                                 </Typography>
                             )}
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor dos produtos: {info.subtotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+                                Valor dos produtos: {info.subtotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                             </Typography>
 
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor do frete: {info.valorFrete.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+                                Valor do frete: {info.valorFrete.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                             </Typography>
 
                             <Typography gutterBottom variant="p" component="div" >
-                                Valor total: {info.valorTotal.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'})}
+                                Valor total: {info.valorTotal.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' })}
                             </Typography>
+
+                            {info.troca && (
+                                <Typography gutterBottom variant="p" component="div" >
+                                    Troca solicitada
+                                </Typography>
+                            )}
+
+                            {info.devolucao && (
+                                <Typography gutterBottom variant="p" component="div" >
+                                    Devolução solicitada
+                                </Typography>
+                            )}
+
                         </Box>
                     )
                 })}
@@ -157,6 +198,7 @@ export default function CardListaCompras(props) {
                     size="small"
                     variant="contained"
                     sx={{ ...ButtonBuy, width: 'auto', marginRight: '5px' }}
+                    onClick={() => sinalizaTroca(props.idVenda)}
                 >
                     Trocar
                 </Button>
@@ -164,6 +206,7 @@ export default function CardListaCompras(props) {
                     size="small"
                     variant="contained"
                     sx={{ ...ButtonBuy, width: 'auto', marginLeft: '5px' }}
+                    onClick={() => sinalizaDevolucao(props.idVenda)}
                 >
                     Devolver
                 </Button>

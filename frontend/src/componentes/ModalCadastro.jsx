@@ -110,7 +110,7 @@ export default function ModalCadastro(props) {
                 cidadeUsuario: cadastroUsuario.cidade,
                 estadoUsuario: cadastroUsuario.uf,
                 cepUsuario: cadastroUsuario.cep
-            },{
+            }, {
                 headers: {
                     Authorization: signin.token
                 }
@@ -140,6 +140,7 @@ export default function ModalCadastro(props) {
                     value={cadastroUsuario.nome}
                     returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, nome: e })}
                     disabled
+                    enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                 />
 
                 <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -151,6 +152,7 @@ export default function ModalCadastro(props) {
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, email: e })}
                             error={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? true : false}
                             helperText={!cadastroUsuario.email.includes('@') || !cadastroUsuario.email.includes('.') ? "É necessário conter arroba e ponto." : false}
+                            enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                         />
                     </Box>
                     <Box component="div" sx={{ width: '48%' }}>
@@ -160,6 +162,7 @@ export default function ModalCadastro(props) {
                             type="password"
                             //value={undefined}
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, senha: e })}
+                            enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                         />
                     </Box>
                 </Box>
@@ -169,6 +172,7 @@ export default function ModalCadastro(props) {
                     label="Endereço"
                     value={cadastroUsuario.endereco}
                     returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, endereco: e })}
+                    enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                 />
 
                 <Box component="div" sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
@@ -186,6 +190,7 @@ export default function ModalCadastro(props) {
                             type="text"
                             value={cadastroUsuario.cidade}
                             returnValue={(e) => setCadastroUsuario({ ...cadastroUsuario, cidade: e })}
+                            enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                         />
                     </Box>
 
@@ -247,6 +252,7 @@ export default function ModalCadastro(props) {
                     inputProps={{ maxLength: 8 }}
                     error={cadastroUsuario.cep.length > 8 ? true : false}
                     helperText={cadastroUsuario.cep.length > 8 ? "Informe o CEP com oito dígitos e sem o traço (-)." : null}
+                    enterPressionado={props.edicao ? () => atualizaUsuario() : () => signUp()}
                 />
 
                 <Box
