@@ -16,8 +16,6 @@ const Produtos = () => {
     // Dados vindo do Redux
     const { carrinho } = useSelector(state => state)
 
-    //console.log(carrinho)
-
     // Salva o que vem da API de Produtos
     const [conteudoApi, setConteudoApi] = useState([])
 

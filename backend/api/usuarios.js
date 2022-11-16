@@ -32,7 +32,6 @@ module.exports = app => {
 
             if (req.body.emailUsuario.includes('@') && req.body.emailUsuario.includes(".") && req.body.cepUsuario.length === 8) {
                 if (req.body.emailUsuario === "larissapprs@gmail.com") {
-                    console.log("E-mail da Larissa")
                     app.db('usuarios').insert({
                         emailUsuario: req.body.emailUsuario.toLowerCase(),
                         nomeUsuario: req.body.nomeUsuario,

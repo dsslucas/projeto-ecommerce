@@ -38,7 +38,6 @@ const GerenciaUsuario = () => {
                 Authorization: signin.token
             }
         })
-        //console.log(data)
         setInfoUsuario(data)
     }
     

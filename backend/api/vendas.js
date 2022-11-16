@@ -149,7 +149,6 @@ module.exports = app => {
     }
 
     const editarVenda = (req, res) => {
-        console.log(req.params.id)
         app.db('vendas')
             .where({ idVenda: req.params.id })
             .update(req.body)
@@ -157,21 +156,5 @@ module.exports = app => {
             .catch((erro) => res.status(400).json(erro))
     }
 
-    const devolucaoCompra = (req, res) => {
-        app.db('vendas')
-            .orderBy({ idVenda: req.body.idVenda })
-            .update(req.body)
-            .then(() => res.status(200).send("Alteração realizada!"))
-            .catch((erro) => res.status(400).json(erro))
-    }
-
-    const trocaCompra = (req, res) => {
-        app.db('vendas')
-            .orderBy({ idVenda: req.body.idVenda })
-            .update(req.body)
-            .then(() => res.status(200).send("Alteração realizada!"))
-            .catch((erro) => res.status(400).json(erro))
-    }
-
-    return { venda, getVendaEspecifica, getVendasGerais, devolucaoCompra, trocaCompra, getVendasPeloUsuario, editarVenda }
+    return { venda, getVendaEspecifica, getVendasGerais, getVendasPeloUsuario, editarVenda }
 }

@@ -23,7 +23,6 @@ export default function CardProduto(props) {
   // Consulta a API de produtos a fim de verificar a quantidade
   const consultaApiProduto = async () => {
     const { data } = await api.get(`produto/${props.id}`)
-    //console.log(data.qtdProduto)
     setQtdProduto(data.qtdProduto)
   }
 

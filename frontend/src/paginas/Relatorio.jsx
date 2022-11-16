@@ -85,21 +85,6 @@ const Relatorio = () => {
         setApiVendas({ data: posicaoArray, total: valorTotal })
     }
 
-    const ConsultaMetodoPagamento = async () => {
-        console.log("Teste")
-        // Cálculo para PIX e Boleto
-        // const metodoPagamento = data.map((venda) => {
-        //     if (venda.metodoPagamento === "PIX") {
-        //         console.log("Vou meter fazendo pix")
-        //         setContadorPix(contador => contador + 1)
-        //     }
-        //     else if (venda.metodoPagamento === "BOLETO") {
-        //         console.log("Boleto")
-        //     }
-
-        // })
-    }
-
     useEffect(() => {
         const interval = setInterval(() => {
             ConsultaApiProdutos()

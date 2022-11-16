@@ -38,11 +38,6 @@ export default function ModalLogin(props) {
             // Token vindo do backend, para segurança
             axios.defaults.headers.common['Authorization'] = `bearer ${res.data.token}`
 
-            //console.log("TOKEN: ", res.data.token)
-            //setLoginUsuario({ ...loginUsuario, token: 'analise' })
-
-            //alert("Seja bem vindo(a)!")
-
             // Envia para o Redux, por ser importante para as etapas seguintes
             dispatch(SignIn({
                 id: res.data.idUsuario,
