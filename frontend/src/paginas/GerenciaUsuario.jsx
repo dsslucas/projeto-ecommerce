@@ -225,11 +225,12 @@ const GerenciaUsuario = () => {
                 <Table sx={{ minWidth: 700 }} aria-label="customized table">
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell align="center">Nome</StyledTableCell>
-                            <StyledTableCell align="center" sx={{ width: '400px' }}>E-mail</StyledTableCell>
-                            <StyledTableCell align="center">UF</StyledTableCell>
-                            <StyledTableCell align="center">Administrador</StyledTableCell>
-                            <StyledTableCell align="center" sx={{ width: '160px' }}>Ações</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '200px' }}>Nome</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '150px' }}>E-mail</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '200px' }}>Endereço</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '40px' }}>UF</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '100px' }}>Administrador</StyledTableCell>
+                            <StyledTableCell align="center" sx={{ width: '100px' }}>Ações</StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -238,6 +239,7 @@ const GerenciaUsuario = () => {
                                 <StyledTableRow key={row.idUsuario}>
                                     <StyledTableCell component="th" scope="row" align="center">{row.nomeUsuario}</StyledTableCell>
                                     <StyledTableCell align="center">{row.emailUsuario}</StyledTableCell>
+                                    <StyledTableCell align="center">{row.enderecoUsuario}</StyledTableCell>
                                     <StyledTableCell align="center">{row.estadoUsuario}</StyledTableCell>
                                     <StyledTableCell align="center">
                                         <Button

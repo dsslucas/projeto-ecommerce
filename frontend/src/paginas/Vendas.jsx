@@ -144,7 +144,6 @@ export default function Relatorio() {
             })
             return data
         })
-
         const apiVendaEspecifica = await Promise.all(apiVendaPromise);
 
         //4a consulta: Produtos
