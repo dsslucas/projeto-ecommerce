@@ -32,10 +32,6 @@ const ListaCompras = () => {
                 Authorization: signin.token
             }
         })
-
-        // setApiContent(data.products)
-        //console.log("ORDEM NORMAL: ", data)
-        //console.log("ORDENADO: ", data.sort((a, b) => b.idVenda - a.idVenda))
         setDadosApiVenda(data.sort((a, b) => b.idVenda - a.idVenda))
     }
 

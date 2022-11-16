@@ -49,7 +49,7 @@ export default function CardListaCompras(props) {
 
         const produtosDetalhados = await Promise.all(produtosPromise);
         setDadosApiVenda([{
-            produtos: produtosDetalhados,
+            produtos: produtosDetalhados.sort((a, b) => a.id - b.id),
             subtotal: dadosVenda.subtotal,
             valorFrete: dadosVenda.valorFrete,
             valorTotal: dadosVenda.valorTotal,

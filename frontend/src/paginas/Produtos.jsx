@@ -42,7 +42,7 @@ const Produtos = () => {
 
     return (
         <Box sx={EstilosConteudo}>
-            <Titulo titulo="Catálogo" />
+            <Titulo titulo="Produtos" />
 
             <Container
                 sx={GridWrapperItems}
