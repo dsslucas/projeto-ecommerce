@@ -237,6 +237,7 @@ const CardListaComprasContent = theme => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    paddingBottom: 0,
     // flexDirection: 'row',
     // justifyContent: 'space-between',
     // alignItems: 'flex-start',
