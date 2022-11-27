@@ -16,10 +16,57 @@ Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um 
 
 ## Recursos utilizados
 ### Backend
+- Bcrypt (criptografia de senha)
+- Body-Parser (criar um parse com base na requisição)
+- Consign (carregador das funcionalidades)
+- Express (serviço baseado em JS)
+- Knex (ajuda nas consultas e na conexão com o banco de dados)
+- Moment (para horários)
+- Jwt
+- Passport (credenciais)
+
 ### Frontend
+- React.js (framework principal onde a aplicação foi realizada)
+- Redux (gerenciador de estado, que armazena dados do login e itens do carrinho)
+- Axios (realiza requisições para o servidor back-end da aplicação)
+- Material UI (componentes estilizados)
+- Moment (formata datas obtidas pelo backend, importante para as vendas)
+- React Router Dom V6 (criação de rotas do site)
 
 ## Instalação
+Antes, é necessário ter o [Node](https://nodejs.org/en/) (versão LTS) e o [Postgres](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) (utilizamos a versão 14.6) instalados na máquina antes de prosseguir.
 
-## Melhorias
+Também é necessário instalar o Npm de forma global em sua máquina. Digite:
+```
+npm install -g npm
+```
 
-## Screenshots
+Clone o repositório:
+```
+git clone https://github.com/dsslucas/projeto-ecommerce.git
+```
+
+Dentro da pasta `backend`, crie um arquivo `.env` e insira as seguintes linhas:
+```
+module.exports = {
+    segredoAutenticacao: 'TesteTrabalhoProjecao'
+}
+```
+
+Após clonar este repositório, acesse três abas de um terminal de sua preferência e siga os passos:
+### Backend
+- No primeiro terminal, acesse a pasta `backend` e digite `npm i` para instalação das dependências
+- Após a instalação, digite `npm start`
+
+### Frontend
+- No segundo terminal, acesse a pasta `frontend` e digite `npm i` para instalação das dependências
+- Após a instalação, digite `npm start`
+
+### Banco de Dados
+- No terceiro terminal, não é necessário acessar uma pasta. Digite `psql -U [USUARIO] (no nosso, criei com nome "postgres"` durante o ato de instalação do Postgres
+- Crie um banco de dados: `CREATE DATABASE ecommerce`
+- Conectar ao banco de dados (ou database): `\c ecommerce`
+- Com isso, o banco de dados deve ser executado.
+
+## Resultado final
+**Não pude inserir imagens de roupas íntimas por ferir as diretrizes do GitHub. Portanto, ignorem as imagens dos produtos a seguir.**
