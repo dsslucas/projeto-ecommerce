@@ -1,4 +1,4 @@
-# projeto-ecommerce
+# Projeto E-commerce
 Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um comércio já existente e que comercializa roupas íntimas.
 
 ## Funcionalidades
@@ -34,26 +34,26 @@ Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um 
 - React Router Dom V6 (criação de rotas do site)
 
 ## Instalação
-Antes, é necessário ter o [Node](https://nodejs.org/en/) (versão LTS) e o [Postgres](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) (utilizamos a versão 14.6) instalados na máquina antes de prosseguir.
+Antes, **é necessário ter o [Node](https://nodejs.org/en/) (versão LTS) e o [Postgres](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads) (utilizamos a versão 14.6) instalados na máquina**.
 
-Também é necessário instalar o Npm de forma global em sua máquina. Digite:
+Também é necessário **instalar o Npm de forma global em sua máquina**. Digite:
 ```
 npm install -g npm
 ```
 
-Clone o repositório:
+**Clone o repositório**:
 ```
 git clone https://github.com/dsslucas/projeto-ecommerce.git
 ```
 
-Dentro da pasta `backend`, crie um arquivo `.env` e insira as seguintes linhas:
+Dentro da pasta `backend`, **crie um arquivo `.env` e copie as seguintes linhas**:
 ```
 module.exports = {
     segredoAutenticacao: 'TesteTrabalhoProjecao'
 }
 ```
 
-Após clonar este repositório, acesse três abas de um terminal de sua preferência e siga os passos:
+Após clonar este repositório, **acesse três abas de um terminal** de sua preferência e siga os passos:
 ### Backend
 - No primeiro terminal, acesse a pasta `backend` e digite `npm i` para instalação das dependências
 - Após a instalação, digite `npm start`
@@ -69,4 +69,11 @@ Após clonar este repositório, acesse três abas de um terminal de sua preferê
 - Com isso, o banco de dados deve ser executado.
 
 ## Resultado final
-**Não pude inserir imagens de roupas íntimas por ferir as diretrizes do GitHub. Portanto, ignorem as imagens dos produtos a seguir.**
+
+## Futuras melhorias 
+- Identificação que o usuário está logado no topo da página
+- Indicação para uma lista de produtos vazia
+- Meios para que produtos indisponíveis e com 30 dias sem alteração não sejam exibidos. Com isso, podemos desabilitar a remoção
+- Adição de imagens diretamente ao banco de dados sem o uso de URL
+- Alterações na entrega (atualmente não existe meios para sinalizar isto)
+- Sinalização para trocas e devoluções **apenas** quando a entrega for realizada e com prazo de 07 dias
