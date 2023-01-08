@@ -173,7 +173,7 @@ export default function Relatorio() {
     useEffect(() => {
         const interval = setInterval(() => {
             ConsultaApi()
-        }, 3000);
+        }, 30000);
         return () => clearInterval(interval);        
     }, [])
 

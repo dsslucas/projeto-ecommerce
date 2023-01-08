@@ -32,6 +32,7 @@ export default function CardProduto(props) {
   return (
     <Card
       sx={{
+        minWidth: 255,
         maxWidth: 345,
         height: 432,
         background: Cores.fundoAbaixoConteudo,
