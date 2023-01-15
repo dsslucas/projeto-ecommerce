@@ -1,9 +1,11 @@
-# Projeto E-commerce: Marama Lingeries
-Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um comércio já existente e que comercializa roupas íntimas.
+# Projeto E-commerce: Marama Lingerie
+Elaboração de um protótipo de e-commerce da Marama Lingerie, um comércio virtual já existente e que comercializa roupas íntimas.
+
+[Instagram](https://www.instagram.com/maramalingerie/)
 
 ## Funcionalidades
 ### Para o usuário (apenas quando estiver logado)
-- Compra produtos
+- Compra produtos (apenas com usuário cadastrado e logado)
 - Tem acesso ao carrinho, aonde pode incrementar, decrementar ou retirar o item da lista
 - Tem acesso à lista de compras, ordenada de forma decrescente (as compras mais recentes são exibidas antes). Aqui, o usuário pode sinalizar troca ou devolução
 - Consegue alterar os seus dados
@@ -18,11 +20,10 @@ Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um 
 ## Recursos utilizados
 ### Backend
 - Bcrypt (criptografia de senha)
-- Body-Parser (criar um parse com base na requisição)
+- Body-Parser (cria um parse com base na requisição, importante para registro no Banco de Dados)
 - Consign (carregador das funcionalidades)
 - Express (serviço baseado em JS)
 - Knex (ajuda nas consultas e na conexão com o banco de dados)
-- Moment (para horários)
 - Jwt
 - Passport (credenciais)
 
@@ -31,7 +32,7 @@ Trabalho da Larissa Pires que consiste em um e-commerce da Marama Lingeries, um 
 - Redux (gerenciador de estado, que armazena dados do login e itens do carrinho)
 - Axios (realiza requisições para o servidor back-end da aplicação)
 - Material UI (componentes estilizados)
-- Moment (formata datas obtidas pelo backend, importante para as vendas)
+- Moment (formata datas obtidas pelo backend)
 - React Router Dom V6 (criação de rotas do site)
 
 ## Instalação
@@ -50,7 +51,7 @@ git clone https://github.com/dsslucas/projeto-ecommerce.git
 Dentro da pasta `backend`, **crie um arquivo `.env` e copie as seguintes linhas**:
 ```
 module.exports = {
-    segredoAutenticacao: 'MaramaLingeries2020'
+    segredoAutenticacao: 'MaramaLingerie2020'
 }
 ```
 
@@ -73,72 +74,34 @@ Após clonar este repositório, **acesse três abas de um terminal** de sua pref
 
 ### Acesso geral
 
-Login
-![Login](/prints/web/login.png)
-
-Cadastro de usuário
-![Cadastro de usuário](/prints/web/cadastro-usuario.png)
+#### Login
+![Login e Cadastro](/prints/login.gif)
 
 #### Produtos
-Tela para Tablets e Desktops na horizontal
-![Produtos-Desktop](/prints/web/produtos.png)
-
-Tela para dispositivos Mobile
-![Produtos-Mobile](/prints/mobile/produtos_mobile.png)
+![Produtos](/prints/produtos.gif)
 
 #### Carrinho
-Tela para Tablets e Desktops na horizontal
-![Carrinho-Desktop](/prints/web/carrinho.png)
-
-Tela para dispositivos Mobile
-![Carrinho-Mobile](/prints/mobile/carrinho.png)
+![Carrinho](/prints/carrinho.gif)
 
 #### Lista de compras
-Tela para Tablets e Desktops na horizontal
-![Lista de Compras-Desktop](/prints/web/historico-compras.png)
-
-Tela para dispositivos Mobile
-![Lista de Compras-Mobile](/prints/mobile/produtos_mobile.png)
+![Lista de compras](/prints/lista-compras.gif)
 
 #### Área para edição de dados do usuário
-Tela para Tablets e Desktops na horizontal
-![Usuario-Desktop](/prints/web/usuario.png)
-
-Tela para dispositivos Mobile
-![Usuario-Mobile](/prints/mobile/usuario.png)
+![Edição de dados do usuário](/prints/dados-usuario.gif)
 
 ### Acesso restrito ao Administrador
 
 #### Relatório
-Tela para Tablets e Desktops na horizontal
-![Relatorio-Desktop](/prints/web/relatorio.png)
-
-Tela para dispositivos Mobile
-![Relatorio-Mobile](/prints/mobile/relatorio.gif)
+![Relatório](/prints/relatorio.gif)
 
 #### Usuários
-Tela para Tablets e Desktops na horizontal
-![Usuarios-Desktop](/prints/web/usuarios.png)
-
-Tela para dispositivos Mobile
-![Usuarios-Mobile](/prints/mobile/usuarios.gif)
+![Gerenciamento de Usuários](/prints/gerenciamento-usuarios.gif)
 
 #### Estoque
-Tela para Tablets e Desktops na horizontal
-![Estoque-Desktop](/prints/web/estoque.png)
-
-Tela para dispositivos Mobile
-![Estoque-Mobile](/prints/mobile/estoque.gif)
-
-##### Cadastro de produto
-![Estoque-Cadastro](/prints/web/cadastro-produto.png)
+![Estoque](/prints/estoque.gif)
 
 #### Vendas
-Tela para Tablets e Desktops na horizontal
-![Vendas-Desktop](/prints/web/venda-detalhe.png)
-
-Tela para dispositivos Mobile
-![Vendas-Mobile](/prints/mobile/vendas.gif)
+![Vendas](/prints/vendas.gif)
 
 ## Futuras melhorias 
 - Identificação que o usuário está logado no topo da página

@@ -166,7 +166,7 @@ const ImageCardCarrinho = theme => ({
     width: 200,
     height: 200,
     [theme.breakpoints.up('sm')]: {
-        width: 90,
+        maxWidth: 90,
         height: 90
     }
 })
